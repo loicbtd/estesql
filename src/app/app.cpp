@@ -1,9 +1,9 @@
 #include "app.h"
 #include "app/queries/sql_query.h"
 
-void app::start() {
+void app::start(int argc, char const *argv[]) {
 
-    while(1) {
+    while(true) {
 
         string sql;
         cin >> sql;

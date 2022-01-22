@@ -1,15 +1,9 @@
 #include <iostream>
-#include <filesystem>
+#include "app/app.h"
 
 using namespace std;
-using namespace filesystem;
-
 
 int main(int argc, char const *argv[]) {
-
-    cout << "Hello World !" << endl;
-    filesystem:: create_directories("directory");
-
+    (new app())->start(argc, argv);
     return 0;
-
 }
