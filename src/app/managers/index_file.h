@@ -5,7 +5,7 @@
 #include <cstdint>
 #include "table_file.h"
 
-struct index_entry __attribute__((__packed__)) {
+struct __attribute__((__packed__)) index_entry {
     bool is_active;
     uint32_t position ;
     uint16_t length;
