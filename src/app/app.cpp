@@ -2,27 +2,34 @@
 #include "app/queries/sql_query.h"
 
 #include "app/enumerations/query_type.h"
+#include "app/queries/query_singleton.h"
 
 #include <memory>
+#include <sstream>
+#include <iterator>
+#include <vector>
 
 void app::start(int argc, char const *argv[]) {
 
-    while(true) {
+    do {
 
         string sql;
-        cin >> sql;
+        getline(cin, sql);
 
         if (sql == "exit") { break; }
 
         // if request not end with ';'
-        while (sql.back() != ';') {
+/*        while (sql.back() != ';') {
             cout << "--->";
             string temp;
             cin >> temp;
             sql.append(temp);
-        }
+        }*/
 
-//        unique_ptr<sql_query> query = query_factory::generate_query(sql);
+
+//        query_singleton* singleton = query_singleton::GetInstance();
+        cout << query_singleton::test(sql) << endl;
+//        unique_ptr<sql_query> query = singleton->query_generator(sql);
 //        query->check();
 //        query->expand();
 //        query->execute();
@@ -56,6 +63,7 @@ void app::start(int argc, char const *argv[]) {
         } catch (exception & e) {
         }*/
 
-    }
+
+    } while (true);
 
 }

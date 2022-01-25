@@ -3,6 +3,8 @@
 
 #include <string>
 
+#define NUMBER_OF_QUERIES 6
+
 using namespace std;
 
 enum query_type_enum {
@@ -12,10 +14,10 @@ enum query_type_enum {
 static const char *enum_str[] =
         { "create", "select", "insert", "update", "delete", "drop" };
 
-string getStringForEnum(int enum_val) {
-    string tmp(enum_str[enum_val]);
-    return tmp;
-}
+//string getStringForEnum(int enum_val) {
+//    string tmp(enum_str[enum_val]);
+//    return tmp;
+//}
 
 
 
