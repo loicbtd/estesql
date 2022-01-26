@@ -2,12 +2,13 @@
 #include "app/queries/sql_query.h"
 
 #include "app/enumerations/query_type.h"
-#include "app/queries/query_singleton.h"
+#include "app/queries/query_generator.h"
 
 #include <memory>
 #include <sstream>
 #include <iterator>
 #include <vector>
+#include <algorithm>
 
 void app::start(int argc, char const *argv[]) {
 
@@ -19,20 +20,25 @@ void app::start(int argc, char const *argv[]) {
         if (sql == "exit") { break; }
 
         // if request not end with ';'
-/*        while (sql.back() != ';') {
+        while (sql.back() != ';') {
             cout << "--->";
             string temp;
-            cin >> temp;
+            getline(cin, temp);
             sql.append(temp);
-        }*/
+        }
 
+        // put everything in lowercase
+        for_each(sql.begin(), sql.end(), [](char & c) {
+            c = ::tolower(c);
+        });
 
-//        query_singleton* singleton = query_singleton::GetInstance();
-        cout << query_singleton::test(sql) << endl;
-//        unique_ptr<sql_query> query = singleton->query_generator(sql);
-//        query->check();
-//        query->expand();
-//        query->execute();
+//        query_generator* singleton = query_generator::GetInstance();
+        unique_ptr<sql_query> sql_query = query_generator::generate_query(sql);
+        cout << "Query: " << sql_query->getQuery() << endl;
+//        sql_query->parse();
+//        sql_query->check();
+//        sql_query->expand();
+//        sql_query->execute();
 
         /*std::string delimiter = ">=";
 

@@ -8,11 +8,11 @@
 using namespace std;
 
 enum query_type_enum {
-    create, select, insert, update, delete_, drop
+    create, select, insert, update, delete_, drop, use
 };
 
 static const char *enum_str[] =
-        { "create", "select", "insert", "update", "delete", "drop" };
+        { "create", "select", "insert", "update", "delete", "drop", "use" };
 
 //string getStringForEnum(int enum_val) {
 //    string tmp(enum_str[enum_val]);

@@ -7,6 +7,18 @@
 
 using namespace std;
 
-class update_query : public sql_query {};
+class update_query : public sql_query {
+public:
+
+    update_query(string sql) : sql_query(sql) {}
+
+    void parse() override;
+
+    void check() override;
+
+    void expand() override;
+
+    void execute() override;
+};
 
 #endif

@@ -7,6 +7,18 @@
 
 using namespace std;
 
-class drop_database_query : public sql_query {};
+class drop_database_query : public sql_query {
+public:
+
+    drop_database_query(string sql) : sql_query(sql) {}
+
+    void parse() override;
+
+    void check() override;
+
+    void expand() override;
+
+    void execute() override;
+};
 
 #endif
