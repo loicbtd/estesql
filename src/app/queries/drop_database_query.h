@@ -1,16 +1,15 @@
 #ifndef DROP_DATABASE_QUERY
 
-#include <iostream>
-#include "sql_query.h"
+#include "database_related_query.h"
 
 #define DROP_DATABASE_QUERY
 
 using namespace std;
 
-class drop_database_query : public sql_query {
+class drop_database_query : public database_related_query {
 public:
 
-    drop_database_query(string sql) : sql_query(sql) {}
+    drop_database_query(string sql) : database_related_query(sql) {}
 
     void parse() override;
 

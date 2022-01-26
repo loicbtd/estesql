@@ -5,9 +5,6 @@
 #include "app/queries/query_generator.h"
 
 #include <memory>
-#include <sstream>
-#include <iterator>
-#include <vector>
 #include <algorithm>
 
 void app::start(int argc, char const *argv[]) {
@@ -32,15 +29,17 @@ void app::start(int argc, char const *argv[]) {
             c = ::tolower(c);
         });
 
-//        query_generator* singleton = query_generator::GetInstance();
         unique_ptr<sql_query> sql_query = query_generator::generate_query(sql);
         cout << "Query: " << sql_query->getQuery() << endl;
-//        sql_query->parse();
 //        sql_query->check();
 //        sql_query->expand();
 //        sql_query->execute();
 
-        /*std::string delimiter = ">=";
+        /*
+        string first_word;
+        first_word = sql.substr(0, sql.find(SPACE_DELIMITER));
+
+        std::string delimiter = ">=";
 
         size_t pos = 0;
         std::string token;

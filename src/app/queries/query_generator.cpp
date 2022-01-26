@@ -1,42 +1,24 @@
-#include <iterator>
-#include <vector>
-
-#include "app/constants/string_key_words.h"
-
 #include "query_generator.h"
-#include "create_table_query.h"
-#include "create_database_query.h"
-#include "drop_table_query.h"
-#include "drop_database_query.h"
-#include "select_query.h"
-#include "insert_query.h"
-#include "update_query.h"
-#include "delete_query.h"
-#include "use_query.h"
-
 
 unique_ptr<sql_query> query_generator::generate_query(const string& sql) {
 
-//    string first_word;
-//    first_word = sql.substr(0, sql.find(SPACE_DELIMITER));
-
     stringstream ss(sql);
-    istream_iterator<std::string> begin(ss);
-    istream_iterator<std::string> end;
-    vector<std::string> vstrings(begin, end);
+    istream_iterator<string> begin(ss);
+    istream_iterator<string> end;
+    vector<string> vector_strings(begin, end);
 
-    string first_word = vstrings.front();
+    string first_word = vector_strings.front();
 
     for (int i = 0; i < NUMBER_OF_QUERIES; ++i) {
 
         if (first_word == enum_str[i]) {
 
-            if ((vstrings.size() < 2) && ((i==0)||(i==5))) {
+            if ((vector_strings.size() < 2) && ((i == 0) || (i == 5))) {
                 cout << "throw size < 2" << endl;
                 throw ;
             }
 
-            string second_word = next(vstrings.begin())->data();
+            string second_word = next(vector_strings.begin())->data();
 
             switch (i) {
 

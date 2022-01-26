@@ -2,12 +2,13 @@
 #define ESTESQL_CREATE_DATABASE_QUERY_H
 
 
-#include "sql_query.h"
+#include "database_related_query.h"
 
-class create_database_query : public sql_query{
+class create_database_query : public database_related_query {
+
 public:
 
-    create_database_query(string sql) : sql_query(sql) {}
+    create_database_query(string sql) : database_related_query(sql) {}
 
     void parse() override;
 

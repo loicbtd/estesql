@@ -1,16 +1,14 @@
 #ifndef UPDATE_QUERY
-
-#include <iostream>
-#include "sql_query.h"
-
 #define UPDATE_QUERY
+
+#include "table_related_query.h"
 
 using namespace std;
 
-class update_query : public sql_query {
+class update_query : public table_related_query {
 public:
 
-    update_query(string sql) : sql_query(sql) {}
+    update_query(string sql) : table_related_query(sql) {}
 
     void parse() override;
 

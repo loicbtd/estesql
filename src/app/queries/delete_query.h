@@ -1,16 +1,14 @@
 #ifndef DELETE_QUERY
-
-#include <iostream>
-#include "sql_query.h"
-
 #define DELETE_QUERY
+
+#include "table_related_query.h"
 
 using namespace std;
 
-class delete_query : public sql_query {
+class delete_query : public table_related_query {
 public:
 
-    delete_query(string sql) : sql_query(sql) {}
+    delete_query(string sql) : table_related_query(sql) {}
 
     void parse() override;
 

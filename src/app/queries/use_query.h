@@ -2,12 +2,12 @@
 #define ESTESQL_USE_QUERY_H
 
 
-#include "sql_query.h"
+#include "database_related_query.h"
 
-class use_query : public sql_query{
+class use_query : public database_related_query {
 public:
 
-    use_query(string sql) : sql_query(sql) {}
+    use_query(string sql) : database_related_query(sql) {}
 
     void parse() override;
 
