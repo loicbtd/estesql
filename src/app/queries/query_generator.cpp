@@ -1,5 +1,6 @@
 #include "query_generator.h"
 
+
 unique_ptr<sql_query> query_generator::generate_query(const string& sql) {
 
     stringstream ss(sql);
@@ -13,9 +14,8 @@ unique_ptr<sql_query> query_generator::generate_query(const string& sql) {
 
         if (first_word == enum_str[i]) {
 
-            if ((vector_strings.size() < 2) && ((i == 0) || (i == 5))) {
-                cout << "throw size < 2" << endl;
-                throw ;
+            if ((vector_strings.size() < 3) && ((i == 0) || (i == 5))) {
+                throw query_size_exception();
             }
 
             string second_word = next(vector_strings.begin())->data();
@@ -25,14 +25,11 @@ unique_ptr<sql_query> query_generator::generate_query(const string& sql) {
                 case 0:
 
                     if (second_word == TABLE) {
-                        cout << "create table" << endl;
                         return move(make_unique<create_table_query>(sql));
                     } else if ((second_word == DATABASE) || (second_word == DB)) {
-                        cout << "create database" << endl;
                         return move(make_unique<create_database_query>(sql));
                     } else {
-                        cout << "throw second not correct CREATE" << endl;
-                        throw ;
+                        throw create_drop_table_or_db_exception();
                     }
 
                 case 1:
@@ -47,14 +44,11 @@ unique_ptr<sql_query> query_generator::generate_query(const string& sql) {
                 case 5:
 
                     if (second_word == TABLE) {
-                        cout << "drop table" << endl;
                         return move(make_unique<drop_table_query>(sql));
                     } else if ((second_word == DATABASE) || (second_word == DB)) {
-                        cout << "drop database" << endl;
                         return move(make_unique<drop_database_query>(sql));
                     } else {
-                        cout << "throw second not correct DROP" << endl;
-                        throw ;
+                        throw create_drop_table_or_db_exception();
                     }
 
                 case 6:
@@ -66,7 +60,6 @@ unique_ptr<sql_query> query_generator::generate_query(const string& sql) {
 
     }
 
-    cout << "throw non valid query (first word)" << endl;
-    throw ;
+    throw unknown_query_exception();
 
 }

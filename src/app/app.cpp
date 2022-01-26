@@ -3,6 +3,7 @@
 
 #include "app/enumerations/query_type.h"
 #include "app/queries/query_generator.h"
+#include "app/Exceptions/custom_exception.h"
 
 #include <memory>
 #include <algorithm>
@@ -29,11 +30,18 @@ void app::start(int argc, char const *argv[]) {
             c = ::tolower(c);
         });
 
-        unique_ptr<sql_query> sql_query = query_generator::generate_query(sql);
-        cout << "Query: " << sql_query->getQuery() << endl;
+        try {
+
+            unique_ptr<sql_query> sql_query = query_generator::generate_query(sql);
+            cout << "Query: " << sql_query->getQuery() << endl;
 //        sql_query->check();
 //        sql_query->expand();
 //        sql_query->execute();
+
+        } catch (custom_exception& e) {
+            cout << e.what() << endl;
+        }
+
 
         /*
         string first_word;

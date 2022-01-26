@@ -23,6 +23,10 @@
 #include "app/enumerations/query_type.h"
 #include "app/constants/string_delimiters.h"
 
+#include "app/exceptions/query_size_exception.h"
+#include "app/exceptions/create_drop_table_or_db_exception.h"
+#include "app/exceptions/unknown_query_exception.h"
+
 using namespace std;
 
 class query_generator {
