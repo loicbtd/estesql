@@ -11,9 +11,17 @@ private:
     string current_db_path;
 
 public:
+
+    db_info() {}
+
+    static db_info* db_info_;
+
+    static db_info *GetInstance();
+
     const string &getCurrentDbPath() const;
 
     void setCurrentDbPath(const string &currentDbPath);
+
 };
 
 

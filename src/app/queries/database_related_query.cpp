@@ -7,3 +7,5 @@ const string &database_related_query::getDbName() const {
 void database_related_query::setDbName(const string &dbName) {
     db_name = dbName;
 }
+
+database_related_query::database_related_query() {}

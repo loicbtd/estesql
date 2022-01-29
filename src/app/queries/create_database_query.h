@@ -8,6 +8,8 @@ class create_database_query : public database_related_query {
 
 public:
 
+    create_database_query();
+
     create_database_query(string sql) : database_related_query(sql) {}
 
     void parse() override;
@@ -17,6 +19,8 @@ public:
     void expand() override;
 
     void execute() override;
+
+    void createDb(string);
 
 };
 

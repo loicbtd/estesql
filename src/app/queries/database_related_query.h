@@ -9,6 +9,8 @@ class database_related_query : public sql_query {
 public:
     database_related_query(string sql): sql_query(sql) {}
 
+    database_related_query();
+
     const string &getDbName() const;
 
     void setDbName(const string &dbName);

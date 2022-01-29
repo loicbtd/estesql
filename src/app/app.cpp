@@ -2,6 +2,13 @@
 
 void app::start(int argc, char const *argv[]) {
 
+    db_info* db_current = db_info::GetInstance();
+
+    if(!usage(argc, argv, db_current)) {
+        cout << "Usage blopblopblopblop" << endl;
+        exit(-1);
+    }
+
     do {
 
         string sql;
@@ -53,4 +60,50 @@ void app::start(int argc, char const *argv[]) {
 
     } while (true);
 
+}
+
+bool app::usage(int argc, const char **argv, db_info* db_info) {
+
+    if (argc != 5) {
+        return false;
+    }
+
+    string db_name; // -d param
+
+    if (argv[1]=="-d") {
+        db_name = argv[2];
+    } else if (argv[3]=="-d") {
+        db_name = argv[4];
+    } else {
+        cout << "parameters -d not found" << endl;
+        return false;
+    }
+
+    string db_parent_folder_path; // -l param
+
+    if (argv[1]=="-l") {
+        db_parent_folder_path = argv[2];
+    } else if (argv[3]=="-l") {
+        db_parent_folder_path = argv[4];
+    } else {
+        cout << "parameters -l not found" << endl;
+        return false;
+    }
+
+
+    if (db_utilities::exists(db_parent_folder_path)) {
+
+        string db_path = db_parent_folder_path.append("/").append(db_name);
+
+        if (!db_utilities::exists(db_name)) {
+            create_database_query new_db = create_database_query();
+            new_db.createDb(db_name);
+        }
+
+        db_info->setCurrentDbPath(db_path);
+        return true;
+
+    }
+
+    return false;
 }
