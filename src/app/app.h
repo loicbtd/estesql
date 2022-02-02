@@ -13,8 +13,9 @@
 
 #include "app/enumerations/query_type.h"
 
-#include "app/exceptions/custom_exception.h"
+#include "app/constants/inline_parameters.h"
 
+#include "app/exceptions/custom_exception.h"
 
 
 using namespace std;

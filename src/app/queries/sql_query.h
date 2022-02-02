@@ -1,8 +1,7 @@
 #ifndef SQL_QUERY
+#define SQL_QUERY
 
 #include <iostream>
-
-#define SQL_QUERY
 
 using namespace std;
 

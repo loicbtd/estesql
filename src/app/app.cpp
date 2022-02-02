@@ -5,7 +5,10 @@ void app::start(int argc, char const *argv[]) {
     db_info* db_current = db_info::GetInstance();
 
     if(!usage(argc, argv, db_current)) {
-        cout << "Usage blopblopblopblop" << endl;
+        cout << "Usage:" << endl;
+        cout << "Inline parameters needed:" << endl;
+        cout << "-l path/to/parent/folder/of/dataBase" << endl;
+        cout << "-d name of the database folder" << endl;
         exit(-1);
     }
 
@@ -41,7 +44,6 @@ void app::start(int argc, char const *argv[]) {
             cout << e.what() << endl;
         }
 
-
         /*
         string first_word;
         first_word = sql.substr(0, sql.find(SPACE_DELIMITER));
@@ -57,7 +59,6 @@ void app::start(int argc, char const *argv[]) {
         }
         std::cout << sql << std::endl;*/
 
-
     } while (true);
 
 }
@@ -70,34 +71,33 @@ bool app::usage(int argc, const char **argv, db_info* db_info) {
 
     string db_name; // -d param
 
-    if (argv[1]=="-d") {
+    if (strcmp(argv[1],D_PARAM) == 0) {
         db_name = argv[2];
-    } else if (argv[3]=="-d") {
+    } else if (strcmp(argv[3],D_PARAM) == 0) {
         db_name = argv[4];
     } else {
-        cout << "parameters -d not found" << endl;
+        cout << "parameter -d not found" << endl;
         return false;
     }
 
     string db_parent_folder_path; // -l param
 
-    if (argv[1]=="-l") {
+    if (strcmp(argv[1],L_PARAM) == 0) {
         db_parent_folder_path = argv[2];
-    } else if (argv[3]=="-l") {
+    } else if (strcmp(argv[3],L_PARAM) == 0) {
         db_parent_folder_path = argv[4];
     } else {
-        cout << "parameters -l not found" << endl;
+        cout << "parameter -l not found" << endl;
         return false;
     }
 
-
-    if (db_utilities::exists(db_parent_folder_path)) {
+    if (db_utilities::exists(db_parent_folder_path.c_str())) {
 
         string db_path = db_parent_folder_path.append("/").append(db_name);
 
-        if (!db_utilities::exists(db_name)) {
+        if (!db_utilities::exists(db_path.c_str())) {
             create_database_query new_db = create_database_query();
-            new_db.createDb(db_name);
+            new_db.createDb(db_path);
         }
 
         db_info->setCurrentDbPath(db_path);

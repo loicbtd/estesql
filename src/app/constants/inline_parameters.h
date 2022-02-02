@@ -1,0 +1,7 @@
+#ifndef ESTESQL_INLINE_PARAMETERS_H
+#define ESTESQL_INLINE_PARAMETERS_H
+
+#define D_PARAM "-d"
+#define L_PARAM "-l"
+
+#endif //ESTESQL_INLINE_PARAMETERS_H
