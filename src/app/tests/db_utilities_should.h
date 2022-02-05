@@ -14,11 +14,10 @@ using namespace std;
 class db_utilities_should: public test_base {
 public:
     string name() override;
-    map<string, bool> passTests() override;
+    map<string, bool> pass_tests() override;
 
 private:
-    bool findIfADatabaseDirectoryExist();
+    bool find_if_a_database_directory_exists();
 };
-
 
 #endif //ESTESQL_DB_UTILITIES_SHOULD_H

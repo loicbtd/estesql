@@ -10,7 +10,7 @@ using namespace std;
 class test_base {
 public:
     virtual string name() = 0;
-    virtual map<string, bool> passTests() = 0;
+    virtual map<string, bool> pass_tests() = 0;
 };
 
 

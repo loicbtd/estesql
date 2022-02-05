@@ -1,37 +1,35 @@
 #include "app.h"
 
 void app::start(int argc, char const *argv[]) {
-    if(argc == 2 && strcmp(argv[1],"test") == 0){
+    if (argc == 2 && strcmp(argv[1], "test") == 0) {
         cout << "Testing estesql..." << endl;
 
-        vector<test_base*> tests;
+        vector<test_base *> tests;
         tests.push_back(new db_utilities_should());
 
         int successesCount = 0;
         int failuresCount = 0;
 
-//        for (test_base* &test : tests) {
-//            for (map<string, bool>* result : test->passTests()) {
-//
-//            }
-//
-//            if(test->passTests()) {
-//                successesCount++;
-//                cout << typeid(test).name() << ": " << "PASSED" << endl;
-//            } else {
-//                failuresCount++;
-//                cout << typeid(test).name() << ": " << "FAILED" << endl;
-//            }
-//        }
+        for (test_base *&test: tests) {
+            for (auto const&[testName, result]: test->pass_tests()) {
+                if (result) {
+                    successesCount++;
+                    cout << "[PASSED] " << test->name() << " " << testName << endl;
+                } else {
+                    failuresCount++;
+                    cout << "[FAILED] " << test->name() << " " << testName << endl;
+                }
+            }
+        }
 
         cout << "SUCCESSES: " << successesCount << " / FAILURES: " << failuresCount << endl;
         exit(0);
     }
 
 
-    db_info* db_current = db_info::GetInstance();
+    db_info *db_current = db_info::GetInstance();
 
-    if(!usage(argc, argv, db_current)) {
+    if (!usage(argc, argv, db_current)) {
         cout << "Usage:" << endl;
         cout << "Inline parameters needed:" << endl;
         cout << "-l path/to/parent/folder/of/dataBase" << endl;
@@ -55,7 +53,7 @@ void app::start(int argc, char const *argv[]) {
         }
 
         // put everything in lowercase
-        for_each(sql.begin(), sql.end(), [](char & c) {
+        for_each(sql.begin(), sql.end(), [](char &c) {
             c = ::tolower(c);
         });
 
@@ -67,7 +65,7 @@ void app::start(int argc, char const *argv[]) {
 //        sql_query->expand();
 //        sql_query->execute();
 
-        } catch (custom_exception& e) {
+        } catch (custom_exception &e) {
             cout << e.what() << endl;
         }
 
@@ -90,7 +88,7 @@ void app::start(int argc, char const *argv[]) {
 
 }
 
-bool app::usage(int argc, const char **argv, db_info* db_info) {
+bool app::usage(int argc, const char **argv, db_info *db_info) {
 
     if (argc != 5) {
         return false;
@@ -98,9 +96,9 @@ bool app::usage(int argc, const char **argv, db_info* db_info) {
 
     string db_name; // -d param
 
-    if (strcmp(argv[1],D_PARAM) == 0) {
+    if (strcmp(argv[1], D_PARAM) == 0) {
         db_name = argv[2];
-    } else if (strcmp(argv[3],D_PARAM) == 0) {
+    } else if (strcmp(argv[3], D_PARAM) == 0) {
         db_name = argv[4];
     } else {
         cout << "parameter -d not found" << endl;
@@ -109,9 +107,9 @@ bool app::usage(int argc, const char **argv, db_info* db_info) {
 
     string db_parent_folder_path; // -l param
 
-    if (strcmp(argv[1],L_PARAM) == 0) {
+    if (strcmp(argv[1], L_PARAM) == 0) {
         db_parent_folder_path = argv[2];
-    } else if (strcmp(argv[3],L_PARAM) == 0) {
+    } else if (strcmp(argv[3], L_PARAM) == 0) {
         db_parent_folder_path = argv[4];
     } else {
         cout << "parameter -l not found" << endl;
