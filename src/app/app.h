@@ -9,13 +9,15 @@
 #include "app/queries/query_generator.h"
 
 #include "app/managers/db_info.h"
-#include "app/managers/db_utilities.h"
+#include "app/helpers/db_utilities.h"
 
 #include "app/enumerations/query_type.h"
 
 #include "app/constants/inline_parameters.h"
 
 #include "app/exceptions/custom_exception.h"
+
+#include "app/tests/persistence_test.h"
 
 
 using namespace std;

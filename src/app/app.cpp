@@ -1,6 +1,29 @@
 #include "app.h"
 
 void app::start(int argc, char const *argv[]) {
+    if(argc == 2 && strcmp(argv[1],"test") == 0){
+        cout << "Testing estesql..." << endl;
+
+        vector<test_base*> tests;
+        tests.push_back(new persistence_test());
+
+        int successesCount = 0;
+        int failuresCount = 0;
+
+        for (test_base* &test : tests) {
+            if(test->test()) {
+                successesCount++;
+                cout << test->getName() << ": " << "PASSED" << endl;
+            } else {
+                failuresCount++;
+                cout << test->getName() << ": " << "FAILED" << endl;
+            }
+        }
+
+        cout << "SUCCESSES: " << successesCount << " / FAILURES: " << failuresCount << endl;
+        exit(0);
+    }
+
 
     db_info* db_current = db_info::GetInstance();
 
