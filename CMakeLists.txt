@@ -17,8 +17,7 @@ add_executable(${PROJECT_NAME}
   ${HEADER}
 )
 
+file(COPY src/assets DESTINATION ${CMAKE_BINARY_DIR})
+
 source_group("Header include" FILES ${HEADER})
 source_group("Source src"     FILES ${SOURCE})
-
-# link libraries
-#target_link_libraries(${PROJECT_NAME} ${SOME_LIB})

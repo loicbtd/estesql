@@ -4,10 +4,12 @@
 #include <iostream>
 #include <string>
 #include <filesystem>
-
-#include "test_base.h"
 #include <map>
 
+#include "test_base.h"
+
+#include "app/helpers/db_utilities.h"
+#include "app/constants/assets_paths.h"
 
 using namespace std;
 

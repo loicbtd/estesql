@@ -1,13 +1,9 @@
 #include "table_file.h"
 
-bool table_file::exists() {
-    return false;
+const string &table_file::getSourceFile() const {
+    return source_file;
 }
 
-void table_file::open() {
-
-}
-
-void table_file::close() {
-
+void table_file::setSourceFile(const string &sourceFile) {
+    source_file = sourceFile;
 }

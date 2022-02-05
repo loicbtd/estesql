@@ -4,8 +4,10 @@ void app::start(int argc, char const *argv[]) {
     if (argc == 2 && strcmp(argv[1], "test") == 0) {
         cout << "Testing estesql..." << endl;
 
-        vector<test_base *> tests;
-        tests.push_back(new db_utilities_should());
+        vector<test_base *> tests = {
+                new db_utilities_should(),
+                new definition_file_should(),
+        };
 
         int successesCount = 0;
         int failuresCount = 0;
@@ -14,10 +16,10 @@ void app::start(int argc, char const *argv[]) {
             for (auto const&[testName, result]: test->pass_tests()) {
                 if (result) {
                     successesCount++;
-                    cout << "[PASSED] " << test->name() << " " << testName << endl;
+                    cout << "[PASSED] ✅ " << test->name() << " " << testName << endl;
                 } else {
                     failuresCount++;
-                    cout << "[FAILED] " << test->name() << " " << testName << endl;
+                    cout << "[FAILED] ❌ " << test->name() << " " << testName << endl;
                 }
             }
         }
