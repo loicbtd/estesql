@@ -25,6 +25,7 @@ class app {
 public:
     void start (int argc, char const *argv[]);
     bool usage (int argc, char const *argv[], db_info*);
+    void testPersistence();
 };
 
 #endif //ESTESQL_APP_H

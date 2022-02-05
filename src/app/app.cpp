@@ -4,6 +4,13 @@ void app::start(int argc, char const *argv[]) {
 
     db_info* db_current = db_info::GetInstance();
 
+    if(argc == 2){
+        if(strcmp(argv[1],"testPersistence") == 0) {
+            this->testPersistence();
+            exit(0);
+        }
+    }
+
     if(!usage(argc, argv, db_current)) {
         cout << "Usage:" << endl;
         cout << "Inline parameters needed:" << endl;
@@ -106,4 +113,8 @@ bool app::usage(int argc, const char **argv, db_info* db_info) {
     }
 
     return false;
+}
+
+void app::testPersistence() {
+    cout << "Usage:" << endl;
 }
