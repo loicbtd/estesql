@@ -7,6 +7,7 @@
 #include <filesystem>
 #include <map>
 #include <iostream>
+#include <ctime>
 
 #include "test_base.h"
 #include "app/constants/assets_paths.h"
@@ -14,6 +15,7 @@
 #include "app/managers/definition_file.h"
 #include "app/models/table_definition.h"
 #include "app/enumerations/field_type_t.h"
+
 
 using namespace std;
 

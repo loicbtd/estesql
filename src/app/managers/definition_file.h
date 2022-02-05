@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include "app/exceptions/file_is_not_open_exception.h"
-#include "app/exceptions/file_does_not_exist_exception.h"
+#include "app/exceptions/inability_to_create_file_exception.h"
 #include "app/enumerations/field_type_t.h"
 #include "app/models/table_definition.h"
 #include "table_file.h"

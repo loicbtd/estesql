@@ -56,5 +56,32 @@ bool definition_file_should::get_table_definition() {
 }
 
 bool definition_file_should::write_get_table_definition() {
-    return false;
+    // Arrange
+    db_info::GetInstance()->setCurrentDbPath(DATABASE1_PATH);
+    definition_file *file = new definition_file(to_string((time(nullptr))));
+
+    table_definition definition = table_definition();
+
+    column_definition* column1 = new column_definition();
+    column1->setType(PRIMARY_KEY);
+    column1->setName("field1");
+    definition.addColumn(column1);
+
+    column_definition* column2 = new column_definition();
+    column2->setType(FLOAT);
+    column2->setName("field2");
+    definition.addColumn(column2);
+
+    // Act
+    file->write_table_definition(definition);
+
+    // Assert
+    vector<column_definition *> columns = file->get_table_definition().getColumns();
+    return (
+            columns.size() == 2 &&
+            columns[0]->getType() == PRIMARY_KEY &&
+            columns[1]->getType() == FLOAT &&
+            strcmp(columns[0]->getName().c_str(), "field1") == 0 &&
+            strcmp(columns[1]->getName().c_str(), "field2") == 0
+    );
 }
