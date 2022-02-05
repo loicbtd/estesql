@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include <algorithm>
+#include <map>
 
 #include "app/queries/sql_query.h"
 #include "app/queries/query_generator.h"
@@ -17,7 +18,7 @@
 
 #include "app/exceptions/custom_exception.h"
 
-#include "app/tests/persistence_test.h"
+#include "app/tests/db_utilities_should.h"
 
 
 using namespace std;

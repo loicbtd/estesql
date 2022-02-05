@@ -5,20 +5,24 @@ void app::start(int argc, char const *argv[]) {
         cout << "Testing estesql..." << endl;
 
         vector<test_base*> tests;
-        tests.push_back(new persistence_test());
+        tests.push_back(new db_utilities_should());
 
         int successesCount = 0;
         int failuresCount = 0;
 
-        for (test_base* &test : tests) {
-            if(test->test()) {
-                successesCount++;
-                cout << test->getName() << ": " << "PASSED" << endl;
-            } else {
-                failuresCount++;
-                cout << test->getName() << ": " << "FAILED" << endl;
-            }
-        }
+//        for (test_base* &test : tests) {
+//            for (map<string, bool>* result : test->passTests()) {
+//
+//            }
+//
+//            if(test->passTests()) {
+//                successesCount++;
+//                cout << typeid(test).name() << ": " << "PASSED" << endl;
+//            } else {
+//                failuresCount++;
+//                cout << typeid(test).name() << ": " << "FAILED" << endl;
+//            }
+//        }
 
         cout << "SUCCESSES: " << successesCount << " / FAILURES: " << failuresCount << endl;
         exit(0);
