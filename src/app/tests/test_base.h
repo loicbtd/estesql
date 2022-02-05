@@ -4,7 +4,6 @@
 #include <string>
 #include <map>
 
-
 using namespace std;
 
 class test_base {
@@ -12,6 +11,5 @@ public:
     virtual string name() = 0;
     virtual map<string, bool> pass_tests() = 0;
 };
-
 
 #endif //ESTESQL_TEST_BASE_H
