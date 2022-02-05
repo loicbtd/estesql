@@ -12,6 +12,7 @@ protected:
     vector<column_definition*> columns;
 public:
     const vector<column_definition *> &getColumns() const;
+    void addColumn(column_definition* column);
 };
 
 

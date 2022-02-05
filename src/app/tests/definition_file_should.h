@@ -15,7 +15,6 @@
 #include "app/models/table_definition.h"
 #include "app/enumerations/field_type_t.h"
 
-
 using namespace std;
 
 class definition_file_should: public test_base {

@@ -35,28 +35,11 @@ bool definition_file_should::not_exist() {
 
 bool definition_file_should::get_table_definition() {
     // Arrange
-    db_info *dbInfo;
-    try {
-        dbInfo = db_info::GetInstance();
-        dbInfo->setCurrentDbPath(DATABASE1_PATH);
-    } catch (exception &) {
-        return false;
-    }
-
-    definition_file *file;
-    try {
-        file = new definition_file("database1");
-    } catch (exception &) {
-        return false;
-    }
+    db_info::GetInstance()->setCurrentDbPath(DATABASE1_PATH);
+    definition_file *file = new definition_file("table1");
 
     // Act
-    vector<column_definition *> columns;
-    try {
-        columns = file->get_table_definition().getColumns();
-    } catch (exception &) {
-        return false;
-    }
+    vector<column_definition *> columns = file->get_table_definition().getColumns();
 
     // Assert
     return (
