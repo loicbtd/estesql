@@ -7,4 +7,6 @@
 #define DROP_TABLE_SYNTAX "Error: Invalid SQL syntax\DROP TABLE table_name;"
 #define DROP_DB_SYNTAX "Error: Invalid SQL syntax\DROP DATABASE|DB database_name;"
 
+#define SELECT_SYNTAX "Error: Invalid SQL syntax\SELECT *|column_x,column_y FROM table_name [WHERE column_x >|<|<=|>=|=|<> column_y AND|OR column_x >|<|<=|>=|=|<> column_y]\nWarning: Use only AND or only OR in a single where clause"
+
 #endif //ESTESQL_SYNTAX_QUERY_H

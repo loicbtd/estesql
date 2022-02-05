@@ -1,7 +1,12 @@
 #ifndef UPDATE_QUERY
 #define UPDATE_QUERY
 
+#include <regex>
+
 #include "table_related_query.h"
+
+#include "app/exceptions/sql_invalid_syntax_exception.h"
+#include "app/constants/syntax_query.h"
 
 using namespace std;
 
