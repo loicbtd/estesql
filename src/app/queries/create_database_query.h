@@ -2,8 +2,13 @@
 #define ESTESQL_CREATE_DATABASE_QUERY_H
 
 #include <filesystem>
+#include <regex>
 
 #include "database_related_query.h"
+
+#include "app/exceptions/sql_invalid_syntax_exception.h"
+#include "app/constants/syntax_query.h"
+
 
 namespace fs = std::filesystem;
 

@@ -1,7 +1,12 @@
 #ifndef DROP_TABLE_QUERY
 #define DROP_TABLE_QUERY
 
+#include <regex>
+
 #include "table_related_query.h"
+
+#include "app/exceptions/sql_invalid_syntax_exception.h"
+#include "app/constants/syntax_query.h"
 
 using namespace std;
 
