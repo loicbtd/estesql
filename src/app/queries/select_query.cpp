@@ -17,7 +17,7 @@ void select_query::parse() {
     if (regex_search(getQuery(), smatch_, regex(where_clause))) {
         str_regex.append(" where [a-z_-]+( )?(>|<|<=|>=|=|<>)( )?[a-z_-]+( (and|or) [a-z_-]+( )?(>|<|<=|>=|=|<>)( )?[a-z_-]+)*( )?;");
     } else {
-        str_regex.append(";");
+        str_regex.append("( )?;");
     }
 
     regex regex_ (str_regex);

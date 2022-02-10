@@ -63,6 +63,7 @@ void app::start(int argc, char const *argv[]) {
 
             unique_ptr<sql_query> sql_query = query_generator::generate_query(sql);
             cout << "Query: " << sql_query->getQuery() << endl;
+            // Todo retrieve singleton definition_file, then set source_file = getTableName()
         sql_query->check();
 //        sql_query->execute();
 
