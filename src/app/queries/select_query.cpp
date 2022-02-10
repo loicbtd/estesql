@@ -2,18 +2,23 @@
 
 void select_query::parse() {
 
-    smatch smatch_;
-    string all_columns_regex("select \* from ");
-    all_columns_regex.append(getTableName()).append("( )?;");
-    cout << all_columns_regex <<endl;
+    string all_columns("select * from ");
 
-    if (regex_search(getQuery(), smatch_, regex(all_columns_regex))) {
-        cout << "blop" << endl;
+    if (getQuery().find(all_columns) != string::npos) {
         expand();
     }
 
     string str_regex ("select [a-z_-]+(( )?,( )?[a-z_-]+)* from ");
-    str_regex.append(getTableName()).append("( where [a-z_-]+( )?(>|<|<=|>=|=|<>)( )?[a-z_-]+( (AND|OR) [a-z_-]+( )?(>|<|<=|>=|=|<>)( )?[a-z_-]+)*|)( )?;");
+    str_regex.append(getTableName());
+
+    string where_clause = " where ";
+    smatch smatch_;
+
+    if (regex_search(getQuery(), smatch_, regex(where_clause))) {
+        str_regex.append(" where [a-z_-]+( )?(>|<|<=|>=|=|<>)( )?[a-z_-]+( (and|or) [a-z_-]+( )?(>|<|<=|>=|=|<>)( )?[a-z_-]+)*( )?;");
+    } else {
+        str_regex.append(";");
+    }
 
     regex regex_ (str_regex);
 
@@ -31,6 +36,9 @@ void select_query::check() {
 
 void select_query::expand() {
 //TODO retrieve all columns from the tableName and replace '*' by them seprated by ','
+
+    cout << "expand()" << endl;
+
 }
 
 void select_query::execute() {

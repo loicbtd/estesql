@@ -3,7 +3,7 @@
 void create_table_query::parse() {
 
     string str_regex ("create table ");
-    str_regex.append(getTableName()).append("( )?\([a-z]* (long long|unsigned long long|double|string\([0-9]+\))(,( )?[a-z]* (long long|unsigned long long|double|string\([0-9]+\)))*\)( )?;");
+    str_regex.append(getTableName()).append("( )?\([a-z_-]* (int|primarey_key|float|text)(,( )?[a-z_-]* (int|primarey_key|float|text))*\)( )?;");
 
     regex regex_ (str_regex);
 
@@ -14,6 +14,8 @@ void create_table_query::parse() {
 }
 
 void create_table_query::check() {
+
+    parse();
 
 }
 

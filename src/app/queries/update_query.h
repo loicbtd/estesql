@@ -13,7 +13,33 @@ using namespace std;
 class update_query : public table_related_query {
 public:
 
-    update_query(string sql) : table_related_query(sql) {}
+    update_query(string sql) : table_related_query(sql) {
+
+        smatch smatch_;
+        string smatch_regex("update [a-z_-]+( )?");
+
+        if (!regex_search(sql, smatch_, regex(smatch_regex))) {
+            throw slq_invalid_syntax_exception(UPDATE_SYNTAX);
+        }
+
+        stringstream ss(sql);
+        istream_iterator<string> begin(ss);
+        istream_iterator<string> end;
+        vector<string> vector_strings(begin, end);
+
+        bool stop = false;
+        for (auto & vector_string : vector_strings) {
+            if (stop) {
+
+                vector_string.erase(remove(vector_string.begin(), vector_string.end(), ';'), vector_string.end());
+                setTableName(vector_string);
+                break;
+
+            }
+            stop = vector_string=="update";
+        }
+
+    }
 
     void parse() override;
 

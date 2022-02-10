@@ -15,6 +15,8 @@ void drop_database_query::parse() {
 
 void drop_database_query::check() {
 
+    parse();
+
 }
 
 void drop_database_query::expand() {

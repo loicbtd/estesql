@@ -15,6 +15,8 @@ void create_database_query::parse() {
 
 void create_database_query::check() {
 
+    parse();
+
 }
 
 void create_database_query::expand() {
