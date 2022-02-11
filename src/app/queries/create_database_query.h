@@ -21,7 +21,7 @@ public:
     create_database_query(string sql) : database_related_query(sql) {
 
         smatch smatch_;
-        string smatch_regex("create (database|db) [a-z_-]+( )?");
+        string smatch_regex("create (database|db) [a-z0-9_-]+( )?");
 
         if (!regex_search(sql, smatch_, regex(smatch_regex))) {
             throw slq_invalid_syntax_exception(CREATE_DB_SYNTAX);

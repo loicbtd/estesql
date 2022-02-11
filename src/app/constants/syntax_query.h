@@ -10,5 +10,6 @@
 #define SELECT_SYNTAX "Error: Invalid SQL syntax\nSELECT *|column_x,column_y FROM table_name [WHERE column_x >|<|<=|>=|=|<> column_y AND|OR column_x >|<|<=|>=|=|<> column_y]\nWarning: Use only AND or only OR in a single where clause"
 #define INSERT_SYNTAX "Error: Invalid SQL syntax\nINSERT INTO table_name (column_x, column_y) VALUES (value_column_x, value_column_y)"
 #define UPDATE_SYNTAX "Error: Invalid SQL syntax\nUPDATE table_name SET column_x=new_value_column_x, column_y=new_value_column_y [WHERE column_x >|<|<=|>=|=|<> column_y AND|OR column_x >|<|<=|>=|=|<> column_y]\nWarning: Use only AND or only OR in a single where clause"
+#define DELETE_SYNTAX "Error: Invalid SQL syntax\nDELETE FROM table_name [WHERE column_x >|<|<=|>=|=|<> column_y AND|OR column_x >|<|<=|>=|=|<> column_y]\nWarning: Use only AND or only OR in a single where clause"
 
 #endif //ESTESQL_SYNTAX_QUERY_H

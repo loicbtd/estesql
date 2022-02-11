@@ -6,7 +6,14 @@
 #include "table_related_query.h"
 
 #include "app/exceptions/sql_invalid_syntax_exception.h"
+#include "app/exceptions/already_existing_table_exception.h"
+
 #include "app/constants/syntax_query.h"
+#include "app/constants/string_delimiters.h"
+
+#include "app/helpers/string_utilities.h"
+
+#include "app/models/column_definition.h"
 
 using namespace std;
 

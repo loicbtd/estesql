@@ -9,6 +9,10 @@ using namespace std;
 
 class table_definition {
 protected:
+public:
+    void setColumns(const vector<column_definition *> &columns);
+
+protected:
     vector<column_definition*> columns;
 public:
     const vector<column_definition *> &getColumns() const;

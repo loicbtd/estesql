@@ -16,7 +16,7 @@ public:
     insert_query(string sql) : table_related_query(sql) {
 
         smatch smatch_;
-        string smatch_regex("insert into [a-z_-]+ ");
+        string smatch_regex("insert into [a-z0-9_-]+ ");
 
         if (!regex_search(sql, smatch_, regex(smatch_regex))) {
             throw slq_invalid_syntax_exception(INSERT_SYNTAX);

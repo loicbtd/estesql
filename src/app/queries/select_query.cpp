@@ -8,14 +8,14 @@ void select_query::parse() {
         expand();
     }
 
-    string str_regex ("select [a-z_-]+(( )?,( )?[a-z_-]+)* from ");
+    string str_regex ("select [a-z0-9_-]+(( )?,( )?[a-z0-9_-]+)* from ");
     str_regex.append(getTableName());
 
     string where_clause = " where ";
     smatch smatch_;
 
     if (regex_search(getQuery(), smatch_, regex(where_clause))) {
-        str_regex.append(" where [a-z_-]+( )?(>|<|<=|>=|=|<>)( )?[a-z_-]+( (and|or) [a-z_-]+( )?(>|<|<=|>=|=|<>)( )?[a-z_-]+)*( )?;");
+        str_regex.append(" where [a-z0-9_-]+( )?(>|<|<=|>=|=|<>)( )?[a-z0-9_-]+( (and|or) [a-z0-9_-]+( )?(>|<|<=|>=|=|<>)( )?[a-z0-9_-]+)*( )?;");
     } else {
         str_regex.append("( )?;");
     }
