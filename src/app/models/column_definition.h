@@ -9,6 +9,9 @@ using namespace std;
 
 class column_definition {
 public:
+
+    column_definition() {}
+
     field_type_t getType() const;
 
     void setType(field_type_t type);

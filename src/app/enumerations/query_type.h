@@ -3,7 +3,7 @@
 
 #include <string>
 
-#define NUMBER_OF_QUERIES 6
+#define NUMBER_OF_QUERIES 7
 
 using namespace std;
 

@@ -5,15 +5,17 @@ void drop_table_query::parse() {
     string str_regex ("drop table ");
     str_regex.append(getTableName()).append("( )?;");
 
-    regex create_table_regex (str_regex);
+    regex regex_ (str_regex);
 
-    if (!regex_match(getQuery(),create_table_regex)) {
+    if (!regex_match(getQuery(), regex_)) {
         throw slq_invalid_syntax_exception(DROP_TABLE_SYNTAX);
     }
 
 }
 
 void drop_table_query::check() {
+
+    parse();
 
 }
 
