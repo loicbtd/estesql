@@ -19,7 +19,7 @@ void create_table_query::check() {
     //Todo 1 getInstance of definition_file
     //Todo 2 check if table exists ie if diectory with name of the table exists
 
-    bool temp_bool_table_exists = true;
+    bool temp_bool_table_exists = false;
 
     if (temp_bool_table_exists) {
         throw already_existing_table_exception();
@@ -31,15 +31,14 @@ void create_table_query::check() {
     if (regex_search(getQuery(), smatch_, regex(columns))) {
         parameters_str = smatch_.str();
     }
-    cout << parameters_str << endl;
 
     parameters_str.erase(remove(parameters_str.begin(), parameters_str.end(), PARENTHESIS_OPEN_DELIMITER), parameters_str.end());
     parameters_str.erase(remove(parameters_str.begin(), parameters_str.end(), PARENTHESIS_CLOSE_DELIMITER), parameters_str.end());
 
-    cout << parameters_str << endl;
-
     stringstream str_stream(parameters_str);
     vector<column_definition*> columns_vector;
+
+    int count_primary_key(0);
 
     while(str_stream.good()) {
 
@@ -56,17 +55,22 @@ void create_table_query::check() {
         column_definition* column = new column_definition();
         column->setName(names_types_str_vector[0]);
 
-        if (names_types_str_vector[1]=="int") {
+        if (names_types_str_vector[1]==enum_field_type_str[0]) {
             column->setType(INT);
-        } else if (names_types_str_vector[1]=="float") {
+        } else if (names_types_str_vector[1]==enum_field_type_str[1]) {
             column->setType(FLOAT);
-        } else if (names_types_str_vector[1]=="text") {
+        } else if (names_types_str_vector[1]==enum_field_type_str[2]) {
             column->setType(TEXT);
-        } else if (names_types_str_vector[1]=="primary_key") {
+        } else if (names_types_str_vector[1]==enum_field_type_str[3]) {
             column->setType(PRIMARY_KEY);
+            count_primary_key++;
         }
 
         columns_vector.push_back(column);
+    }
+
+    if (count_primary_key != 1) {
+        throw missing_or_multiple_primary_key_exception();
     }
 
     //TODO 1 getInstance of table_definition
@@ -81,7 +85,6 @@ void create_table_query::execute() {
     //Todo 1 getInstance of table_definition
     //Todo 2 getInstance of definition_file
     //Todo 3 definition_file_instance->write_table_definition(table_definition);
-
 
 }
 

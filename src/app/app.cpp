@@ -64,8 +64,8 @@ void app::start(int argc, char const *argv[]) {
             unique_ptr<sql_query> sql_query = query_generator::generate_query(sql);
             cout << "Query: " << sql_query->getQuery() << endl;
             // Todo retrieve singleton definition_file, then set source_file = getTableName()
-        sql_query->check();
-//        sql_query->execute();
+            sql_query->check();
+            sql_query->execute();
 
         } catch (custom_exception &e) {
             cout << e.what() << endl;
@@ -118,16 +118,24 @@ bool app::usage(int argc, const char **argv, db_info *db_info) {
         return false;
     }
 
-    if (db_utilities::exists(db_parent_folder_path.c_str())) {
+    if (db_table_utilities::exists(db_parent_folder_path.c_str())) {
+
+        db_info->setDbParentFolderPath(db_parent_folder_path);
+
+        for_each(db_name.begin(), db_name.end(), [](char & c){
+            c = ::tolower(c);
+        });
 
         string db_path = db_parent_folder_path.append("/").append(db_name);
 
-        if (!db_utilities::exists(db_path.c_str())) {
+        if (!db_table_utilities::exists(db_path.c_str())) {
             create_database_query new_db = create_database_query();
             new_db.createDb(db_path);
         }
 
         db_info->setCurrentDbPath(db_path);
+
+        db_info->setDbName(db_name);
         return true;
 
     }

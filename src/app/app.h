@@ -11,7 +11,7 @@
 
 #include "app/managers/db_info.h"
 
-#include "app/helpers/db_utilities.h"
+#include "app/helpers/db_table_utilities.h"
 
 #include "app/enumerations/query_type.h"
 

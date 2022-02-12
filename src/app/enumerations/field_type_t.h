@@ -8,4 +8,7 @@ enum field_type_t {
     TEXT = 4,
 };
 
+static const char *enum_field_type_str[] =
+        { "int", "float", "text", "primary_key" };
+
 #endif //ESTESQL_FIELD_TYPE_T_H

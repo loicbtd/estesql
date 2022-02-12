@@ -32,6 +32,12 @@ void select_query::check() {
 
     parse();
 
+    //Todo 1 retrieve all columns from query
+    //Todo 2 retrieve all columns from definition_file
+    //Todo 3 check if all columns from query exists
+    //Todo 4 put all columns in the right order
+    //Todo 5 set
+
 }
 
 void select_query::expand() {
@@ -42,5 +48,9 @@ void select_query::expand() {
 }
 
 void select_query::execute() {
+
+    //Todo 1 retrieve infos set in check()
+    //Todo 2 read content_file
+    //Todo 3 print table
 
 }

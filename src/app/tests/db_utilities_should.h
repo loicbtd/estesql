@@ -8,7 +8,7 @@
 
 #include "test_base.h"
 
-#include "app/helpers/db_utilities.h"
+#include "app/helpers/db_table_utilities.h"
 #include "app/constants/assets_paths.h"
 
 using namespace std;

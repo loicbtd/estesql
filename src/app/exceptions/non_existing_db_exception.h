@@ -3,11 +3,11 @@
 
 #include "custom_exception.h"
 
-class already_existing_table_exception : public custom_exception {
+class non_existing_db_exception : public custom_exception {
 
 protected:
     const char *what() const throw() override {
-        return "Error: This table already exist.";
+        return "Error: This database doesn't exist.";
     }
 };
 

@@ -9,8 +9,18 @@ class db_info {
 
 private:
     string current_db_path;
+    string db_name;
+    string db_parent_folder_path;
+public:
+    const string &getDbParentFolderPath() const;
+
+    void setDbParentFolderPath(const string &dbParentFolderPath);
 
 public:
+    const string &getDbName() const;
+
+    void setDbName(const string &dbName);
+
 
     db_info() {}
 

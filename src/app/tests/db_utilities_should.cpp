@@ -21,7 +21,7 @@ bool db_utilities_should::find_if_a_database_directory_exists() {
     // Act
     bool exists;
     try {
-        exists = db_utilities::exists(DATABASE1_PATH);
+        exists = db_table_utilities::exists(DATABASE1_PATH);
     } catch (exception &){
         return false;
     }
