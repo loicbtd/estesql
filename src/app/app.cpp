@@ -5,32 +5,35 @@ void app::start(int argc, char const *argv[]) {
         cout << "Testing estesql..." << endl;
 
         vector<test_base *> tests = {
+                new content_file_should(),
                 new db_utilities_should(),
                 new definition_file_should(),
                 new index_file_should(),
+                new key_file_should(),
+                new table_file_should(),
         };
 
-        int successesCount = 0;
-        int failuresCount = 0;
+        int successes_count = 0;
+        int failures_count = 0;
 
         for (test_base *&test: tests) {
             for (auto const&[testName, result]: test->pass_tests()) {
                 if (result) {
-                    successesCount++;
+                    successes_count++;
                     cout << "[PASSED] " << test->name() << " " << testName << endl;
                 } else {
-                    failuresCount++;
+                    failures_count++;
                     cout << "[FAILED] " << test->name() << " " << testName << endl;
                 }
             }
         }
 
-        cout << "SUCCESSES: " << successesCount << " / FAILURES: " << failuresCount << endl;
+        cout << "SUCCESSES: " << successes_count << " / FAILURES: " << failures_count << endl;
         exit(0);
     }
 
 
-    db_info *db_current = db_info::GetInstance();
+    db_info *db_current = db_info::get_instance();
 
     if (!usage(argc, argv, db_current)) {
         cout << "Usage:" << endl;
@@ -123,7 +126,7 @@ bool app::usage(int argc, const char **argv, db_info *db_info) {
 
         db_info->setDbParentFolderPath(db_parent_folder_path);
 
-        for_each(db_name.begin(), db_name.end(), [](char & c){
+        for_each(db_name.begin(), db_name.end(), [](char &c) {
             c = ::tolower(c);
         });
 

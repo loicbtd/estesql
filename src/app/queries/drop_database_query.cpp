@@ -17,7 +17,7 @@ void drop_database_query::check() {
 
     parse();
 
-    db_info* db_info = db_info::GetInstance();
+    db_info* db_info = db_info::get_instance();
     string parent_db_folder_path = db_info->getDbParentFolderPath();
 
     if (!db_table_utilities::exists(parent_db_folder_path.append("/").append(getDbName()).c_str())) {
@@ -31,7 +31,7 @@ void drop_database_query::expand() {}
 
 void drop_database_query::execute() {
 
-    db_info* db_info = db_info::GetInstance();
+    db_info* db_info = db_info::get_instance();
     string parent_db_folder_path = db_info->getDbParentFolderPath();
 
     if (getDbName() == db_info->getDbName()) {

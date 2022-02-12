@@ -26,7 +26,7 @@ public:
 
     static db_info* db_info_;
 
-    static db_info *GetInstance();
+    static db_info *get_instance();
 
     const string &getCurrentDbPath() const;
 

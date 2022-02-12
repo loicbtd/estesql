@@ -1,18 +1,18 @@
 #include "column_definition.h"
 
-field_type_t column_definition::getType() const {
+field_type_t column_definition::get_type() const {
     return type;
 }
 
-void column_definition::setType(field_type_t type) {
+void column_definition::set_type(field_type_t type) {
     column_definition::type = type;
 }
 
-const string &column_definition::getName() const {
+const string &column_definition::get_name() const {
     return name;
 }
 
-void column_definition::setName(const string &name) {
+void column_definition::set_name(const string &name) {
     column_definition::name = name;
 }
 

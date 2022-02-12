@@ -13,7 +13,7 @@ map<string, bool> db_utilities_should::pass_tests() {
 bool db_utilities_should::find_if_a_database_directory_exists() {
     // Arrange
     try {
-        filesystem::create_directories(DATABASE1_PATH);
+        filesystem::create_directories(TEST_DB_PARENT_FOLDER_PATH);
     } catch (exception &) {
         return false;
     }
@@ -21,7 +21,7 @@ bool db_utilities_should::find_if_a_database_directory_exists() {
     // Act
     bool exists;
     try {
-        exists = db_table_utilities::exists(DATABASE1_PATH);
+        exists = db_table_utilities::exists(TEST_DB_PARENT_FOLDER_PATH);
     } catch (exception &){
         return false;
     }

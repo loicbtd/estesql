@@ -1,16 +1,23 @@
 #ifndef ESTESQL_CONTENT_FILE_H
 #define ESTESQL_CONTENT_FILE_H
 
-
 #include <vector>
+#include <cstring>
 #include "table_file.h"
+#include "app/constants/file_extensions.h"
 
 class content_file : public table_file {
+private:
+    static content_file* content_file_;
 
 public:
-    void write_record(string record, uint32_t offset);
+    static content_file *get_instance();
 
-    vector<string> read_record(uint32_t offset);
+    content_file() : table_file(CONTENT_FILE_EXTENSION) {}
+
+    void write_record(const std::vector<uint8_t> &record, uint32_t offset);
+
+    vector<uint8_t> read_record(uint32_t offset);
 };
 
 #endif //ESTESQL_CONTENT_FILE_H

@@ -19,7 +19,7 @@ void drop_table_query::check() {
 
     parse();
 
-    db_info* db_info = db_info::GetInstance();
+    db_info* db_info = db_info::get_instance();
     string db_folder_path = db_info->getCurrentDbPath();
 
     string table_path = db_folder_path.append("/").append(getTableName());
@@ -34,7 +34,7 @@ void drop_table_query::expand() {}
 
 void drop_table_query::execute() {
 
-    db_info* db_info = db_info::GetInstance();
+    db_info* db_info = db_info::get_instance();
     string db_folder_path = db_info->getCurrentDbPath();
 
     db_table_utilities::delete_db_or_table_folder(db_folder_path.append("/").append(getTableName()));

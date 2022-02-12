@@ -7,7 +7,7 @@ class inability_to_create_file_exception : public custom_exception {
 
 protected:
     const char *what() const throw() override {
-        return "Error: file does not exist";
+        return "Error: inability to create file";
     }
 };
 
