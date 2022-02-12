@@ -7,6 +7,7 @@ void app::start(int argc, char const *argv[]) {
         vector<test_base *> tests = {
                 new db_utilities_should(),
                 new definition_file_should(),
+                new index_file_should(),
         };
 
         int successesCount = 0;

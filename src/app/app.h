@@ -21,6 +21,7 @@
 
 #include "app/tests/db_utilities_should.h"
 #include "app/tests/definition_file_should.h"
+#include "app/tests/index_file_should.h"
 
 
 using namespace std;
@@ -28,8 +29,9 @@ using namespace std;
 class app {
 
 public:
-    void start (int argc, char const *argv[]);
-    bool usage (int argc, char const *argv[], db_info*);
+    void start(int argc, char const *argv[]);
+
+    bool usage(int argc, char const *argv[], db_info *);
 };
 
 #endif //ESTESQL_APP_H
