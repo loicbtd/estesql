@@ -1,10 +1,10 @@
 #include "table_definition.h"
 
-const vector<column_definition *> &table_definition::getColumns() const {
+const vector<column_definition *> &table_definition::get_columns() const {
     return columns;
 }
 
-void table_definition::addColumn(column_definition* column) {
+void table_definition::add_column(column_definition* column) {
     this->columns.push_back(column);
 }
 

@@ -12,13 +12,13 @@ public:
 
     column_definition() {}
 
-    field_type_t getType() const;
+    field_type_t get_type() const;
 
-    void setType(field_type_t type);
+    void set_type(field_type_t type);
 
-    const string &getName() const;
+    const string &get_name() const;
 
-    void setName(const string &name);
+    void set_name(const string &name);
 
 protected:
     field_type_t type;

@@ -27,7 +27,7 @@ void db_info::setDbParentFolderPath(const string &dbParentFolderPath) {
 db_info* db_info::db_info_= nullptr;;
 
 
-db_info *db_info::GetInstance() {
+db_info *db_info::get_instance() {
     if(db_info_==nullptr){
         db_info_ = new db_info();
     }
