@@ -16,10 +16,10 @@ void app::start(int argc, char const *argv[]) {
             for (auto const&[testName, result]: test->pass_tests()) {
                 if (result) {
                     successesCount++;
-                    cout << "[PASSED] ✅ " << test->name() << " " << testName << endl;
+                    cout << "[PASSED] " << test->name() << " " << testName << endl;
                 } else {
                     failuresCount++;
-                    cout << "[FAILED] ❌ " << test->name() << " " << testName << endl;
+                    cout << "[FAILED] " << test->name() << " " << testName << endl;
                 }
             }
         }
