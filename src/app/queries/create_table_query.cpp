@@ -69,6 +69,10 @@ void create_table_query::check() {
         columns_vector.push_back(column);
     }
 
+    if (db_table_utilities::is_duplicate_columns(columns_vector)) {
+        throw insert_duplicate_columns_exception();
+    }
+
     if (count_primary_key != 1) {
         throw missing_or_multiple_primary_key_exception();
     }

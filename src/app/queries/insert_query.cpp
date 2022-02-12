@@ -16,18 +16,138 @@ void insert_query::check() {
 
     parse();
 
-    //Todo 1 retrieve all columns from query -> vector<string>
-    //Todo 2 retrieve all values -> vector<string>
-    //Todo 3 check if nb columns == nb values -> size1 == size2
-    //Todo 4 retrieve all columns from definition_file get_table_definition().getColumns()
-    //Todo 5 compare types values/columns from definition_file -> check if "'"
-    //Todo 6 primary_key management
+    //Todo 1 retrieve all columns from query -> vector<string> OK
+    smatch smatch_;
+    string columns = "\\\([a-z0-9_-]+(( )?,( )?[a-z0-9_-]+)*\\\) values";
+    string columns_str;
 
+    if (regex_search(getQuery(), smatch_, regex(columns))) {
+        columns_str = smatch_.str();
+    }
+
+    string to_erase = " values";
+    size_t pos = columns_str.find(to_erase);
+    if (pos != std::string::npos) {
+        // If found then erase it from string
+        columns_str.erase(pos, to_erase.length());
+    }
+
+    vector<string> columns_vector = string_utilities::convert_parenthesis_string_to_vector_delimiter(columns_str, COMA_DELIMITER);
+
+    //Todo 2 retrieve all values -> vector<string> OK
+
+    string values = "values \\\(('[a-z0-9_-]+'|[0-9]+(.[0-9]+)?)(( )?,( )?('[a-z0-9_-]+'|[0-9]+(.[0-9]+)?))*\\\)";
+    string values_str;
+
+    if (regex_search(getQuery(), smatch_, regex(values))) {
+        values_str = smatch_.str();
+    }
+
+    to_erase = "values ";
+    pos = values_str.find(to_erase);
+    if (pos != std::string::npos) {
+        // If found then erase it from string
+        values_str.erase(pos, to_erase.length());
+    }
+
+    vector<string> values_vector = string_utilities::convert_parenthesis_string_to_vector_delimiter(values_str, COMA_DELIMITER);
+
+    //Todo 3.1 check if nb columns == nb values -> size1 == size2 OK
+    if (columns_vector.size() != values_vector.size()) {
+        throw insert_number_columns_values_exception();
+    }
+
+    //Todo 3.2 check if duplicate in columns OK
+    if (db_table_utilities::is_duplicate_columns(columns_vector)) {
+        throw insert_duplicate_columns_exception();
+    }
+
+    //Todo 4 retrieve all columns from definition_file get_table_definition()->get_table_definition() -> vector of column_def
+/*
+    vector<column_definition*> columns_def_vector = definition_file::GetInstance()->get_table_definition();
+    vector<string> columns_name_from_file;
+    vector<field_type_t> columns_type_from_file;
+    for (auto col_def: columns_def_vector) {
+        columns_name_from_file.push_back(col_def->getName());
+        columns_type_from_file.push_back(col_def->getType());
+    }
+*/
+
+    //Todo 6.1 compare types values/columns from definition_file -> check if "'"
+    //Todo 6.2 convert int, float, PK in long long, ... -> in uint8_t + complete string to be have 255 characters
+    //Todo 6.3 primary_key management
+    //Todo 6.4 put every column in the correct order
+/*
+    for (int i = 0; i < columns_name_from_file.size(); ++i) {
+        for (int j = 0; j < columns_vector.size(); ++j) {
+
+            if (columns_vector[j]==columns_name_from_file[i]) {
+
+                string value = values_vector[j];
+
+                if (
+                       (value.contains("'") && (columns_type_from_file[i]==INT || columns_type_from_file[i]==FLOAT || columns_type_from_file[i]==PRIMARY_KEY))
+                    || (value.contains(".") && (columns_type_from_file[i]==INT || columns_type_from_file[i]==PRIMARY_KEY || ((columns_type_from_file[i]!=TEXT && !value.contains("'")))))
+                ) {
+                    throw wrong_type_exception();
+                }
+
+                if (columns_type_from_file[i]==INT) {
+
+                    record.push_back(stoll(value));
+                    offset += 8;
+
+                } else if (columns_type_from_file[i]==FLOAT) {
+
+                    record.push_back(stod(value));
+                    offset += 8;
+
+                } else if (columns_type_from_file[i]==PRIMARY_KEY) {
+
+                    key_file* p_key_file = key_file::GetInstance();
+                    uint64_t p_key p_key_file->get_next_key();
+
+                    uint64_t p_key_value_proposed stoull(value);
+
+                    if (p_key_value_proposed >= p_key) {
+                        p_key_file->update_key(p_key_value_proposed);
+                        record.push_back(p_key_value_proposed);
+                    } else {
+                        p_key_file->update_key(p_key);
+                        record.push_back(p_key);
+                    }
+
+                    offset += 8;
+
+                } else if (columns_type_from_file[i]==TEXT) {
+
+                    value = string_utilities::format_string_for_uint8_t(value);
+                    vector<uint8_t> str_to_uint8_t_vector(value.begin(), value.end());
+                    record.insert(str_to_uint8_t_vector.end(), str_to_uint8_t_vector.begin(), str_to_uint8_t_vector.end());
+                    offset += 255;
+
+                }
+
+                break;
+            }
+
+        }
+    }
+
+*/
 
 }
 
 void insert_query::expand() {}
 
 void insert_query::execute() {
+
+    cout << "execute()" << endl;
+    //Todo execute insert
+/*
+    content_file* content_file_ = content_file::GetInstance();
+    content_file_->write_record(record,offset);
+*/
+
 
 }

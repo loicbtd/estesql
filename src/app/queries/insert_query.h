@@ -6,11 +6,24 @@
 #include "table_related_query.h"
 
 #include "app/exceptions/sql_invalid_syntax_exception.h"
+#include "app/exceptions/insert_number_columns_values_exception.h"
+#include "app/exceptions/insert_duplicate_columns_exception.h"
+#include "app/exceptions/wrong_type_exception.h"
+
 #include "app/constants/syntax_query.h"
+#include "app/constants/string_delimiters.h"
+
+#include "app/helpers/db_table_utilities.h"
+
+#include "app/helpers/string_utilities.h"
 
 using namespace std;
 
 class insert_query : public table_related_query {
+protected:
+    vector<uint8_t> record;
+    uint32_t offset;
+
 public:
 
     insert_query(string sql) : table_related_query(sql) {
@@ -39,6 +52,8 @@ public:
             stop = vector_string=="into";
         }
 
+        offset = 0;
+
     }
 
     void parse() override;
@@ -48,6 +63,7 @@ public:
     void expand() override;
 
     void execute() override;
+
 };
 
 #endif

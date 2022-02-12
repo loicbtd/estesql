@@ -8,11 +8,13 @@
 #include "app/exceptions/sql_invalid_syntax_exception.h"
 #include "app/exceptions/already_existing_table_exception.h"
 #include "app/exceptions/missing_or_multiple_primary_key_exception.h"
+#include "app/exceptions/insert_duplicate_columns_exception.h"
 
 #include "app/constants/syntax_query.h"
 #include "app/constants/string_delimiters.h"
 
 #include "app/helpers/string_utilities.h"
+#include "app/helpers/db_table_utilities.h"
 
 #include "app/models/column_definition.h"
 

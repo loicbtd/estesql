@@ -21,3 +21,21 @@ bool db_table_utilities::exists(const char *path) {
 void db_table_utilities::delete_db_or_table_folder(const string &db_table_path) {
     filesystem::remove_all(db_table_path);
 }
+
+bool db_table_utilities::is_duplicate_columns(vector<string> columns_vector) {
+
+    unsigned long long size_columns_vector = columns_vector.size();
+    columns_vector.erase(unique(columns_vector.begin(), columns_vector.end() ), columns_vector.end());
+    return size_columns_vector != columns_vector.size();
+
+}
+
+bool db_table_utilities::is_duplicate_columns(vector<column_definition *> columns_def_vector) {
+
+    vector<string> columns_name;
+    for (auto col_def: columns_def_vector) {
+        columns_name.push_back(col_def->getName());
+    }
+
+    return is_duplicate_columns(columns_name);
+}
