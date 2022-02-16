@@ -5,10 +5,10 @@ void update_query::parse() {
     string str_regex ("update ");
     str_regex.append(get_table_name()).append(" set [a-z0-9_-]+( )?=( )?('[a-z0-9_-]+'|[0-9]+(.[0-9]+)?)(( )?,( )?[a-z0-9_-]+( )?=( )?('[a-z0-9_-]+'|[0-9]+(.[0-9]+)?))*");
 
-    string where_clause = " where ";
+    string where_clause_str = " where ";
     smatch smatch_;
 
-    if (regex_search(get_query(), smatch_, regex(where_clause))) {
+    if (regex_search(get_query(), smatch_, regex(where_clause_str))) {
 
         str_regex.append(" where [a-z0-9_-]+( )?(<=|>=|=|<>|>|<)( )?[a-z0-9_-]+( (and|or) [a-z0-9_-]+( )?(<=|>=|=|<>|>|<)( )?[a-z0-9_-]+)*( )?;");
         set_is_where_clause(true);
