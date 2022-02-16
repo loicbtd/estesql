@@ -66,18 +66,3 @@ string string_utilities::delete_quote(string string_) {
 bool string_utilities::contains(string str, string substring) {
     return str.find(substring) != std::string::npos;
 }
-
-
-string string_utilities::convert_vector_into_string_delimiter(vector<string> vector_, char delimiter) {
-
-    string string_conv("");
-
-    for (int i=0; i < vector_.size(); ++i) {
-        string_conv.append(vector_[i]);
-        if (i != vector_.size()-1) {
-            string_conv.append(reinterpret_cast<const char *>(delimiter));
-        }
-    }
-
-    return string_conv;
-}
