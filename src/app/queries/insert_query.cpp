@@ -139,15 +139,11 @@ void insert_query::check() {
 
         }
 
-        if (is_column_in_insert_query==false) {
-            if (columns_type_from_file[i]==INT) {
+        if (!is_column_in_insert_query) {
 
-//                    record.push_back(stoll(XXXXX));
-                    offset += 8;
+            if ((columns_type_from_file[i]==INT) || (columns_type_from_file[i]==FLOAT)) {
 
-                } else if (columns_type_from_file[i]==FLOAT) {
-
-//                    record.push_back(stod(XXXXX));
+                    record.push_back(NULL);
                     offset += 8;
 
                 } else if (columns_type_from_file[i]==PRIMARY_KEY) {
