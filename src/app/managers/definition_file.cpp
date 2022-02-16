@@ -35,7 +35,9 @@ vector<string> definition_file::get_all_columns_names() {
 
     vector<string> columns_name_from_file;
 
-    for (column_definition *col_def: get_table_definition().get_columns()) {
+    table_definition table_def = get_table_definition();
+
+    for (column_definition *col_def: table_def.get_columns()) {
         columns_name_from_file.push_back(col_def->get_name());
     }
 
@@ -47,7 +49,9 @@ vector<field_type_t> definition_file::get_all_columns_types() {
 
     vector<field_type_t> columns_types_from_file;
 
-    for (auto col_def: get_table_definition().get_columns()) {
+    table_definition table_def = get_table_definition();
+
+    for (auto col_def: table_def.get_columns()) {
         columns_types_from_file.push_back(col_def->get_type());
     }
 

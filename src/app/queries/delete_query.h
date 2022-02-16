@@ -6,7 +6,10 @@
 #include "table_related_query.h"
 
 #include "app/exceptions/sql_invalid_syntax_exception.h"
+
 #include "app/constants/syntax_query.h"
+
+#include "app/helpers/file_set_up.h"
 
 using namespace std;
 
@@ -33,6 +36,8 @@ public:
 
                 vector_string.erase(remove(vector_string.begin(), vector_string.end(), ';'), vector_string.end());
                 set_table_name(vector_string);
+                file_set_up::set_up_source_file(get_table_name());
+
                 break;
 
             }

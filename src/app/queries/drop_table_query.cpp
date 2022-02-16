@@ -1,6 +1,5 @@
 #include "drop_table_query.h"
-#include "app/managers/db_info.h"
-#include "app/helpers/db_table_utilities.h"
+
 
 void drop_table_query::parse() {
 

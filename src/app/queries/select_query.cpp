@@ -38,12 +38,12 @@ void select_query::check() {
 
     parse();
 
-    string current_db_path = db_info::get_instance()->get_current_db_path();
-    if (db_table_utilities::exists(current_db_path.append("/").append(get_table_name()).c_str())) {
+    definition_file* definition_file = definition_file::get_instance();
+
+    if (!definition_file->exists()) {
         throw non_existing_table_exception();
     }
-
-
+    
     // 1 retrieve all columns from query
     smatch smatch_;
     string columns = "select [a-z0-9_-]+(( )?,( )?[a-z0-9_-]+)* from ";
@@ -58,8 +58,8 @@ void select_query::check() {
     vector<string> columns_select_vector = string_utilities::convert_string_to_vector_delimiter(columns_str, COMA_DELIMITER);
 
     // 2.2 retrieve all columns from definition_file
-    vector<string> columns_name_from_file = definition_file::get_instance()->get_all_columns_names();
-    vector<field_type_t> columns_type_from_file = definition_file::get_instance()->get_all_columns_types();
+    vector<string> columns_name_from_file = definition_file->get_all_columns_names();
+    vector<field_type_t> columns_type_from_file = definition_file->get_all_columns_types();
 
     // 2.2 check if nb columns query <= nb columns file
     if (columns_select_vector.size() > columns_name_from_file.size()) {
@@ -110,13 +110,13 @@ void select_query::check() {
 void select_query::expand() {
 // retrieve all columns from the tableName and replace '*' by them seprated by ','
 
-    cout << "expand()" << endl;
     vector<string> columns_name_from_file = definition_file::get_instance()->get_all_columns_names();
+
     string replace = string_utilities::convert_vector_into_string_delimiter(columns_name_from_file, COMA_DELIMITER);
 
     string str_regex = "\\\*";
     string query_ = regex_replace(get_query(), regex(str_regex), replace);
-    cout << "query: " << query_<< endl;
+//    cout << "query: " << query_<< endl;
 
     set_query(query_);
 
@@ -125,8 +125,17 @@ void select_query::expand() {
 void select_query::execute() {
 
     content_file* content_file = content_file::get_instance();
-    vector<uint8_t> content = content_file->read_record(offset);
-    //Todo convert into proper types
+    index_file* index_file = index_file::get_instance();
+
+    //Todo retrieve all ative records
+    vector<vector<uint8_t>> all_records;
+    for (int i = 0; i < index_file->get_entries_count(); ++i) {
+        index_entry entry = index_file->get_index_entry(i);
+        if (entry.is_active) {
+            all_records.push_back(content_file->read_record(entry.position));
+        }
+    }
+
 
     vector<string> columns_name_from_file = definition_file::get_instance()->get_all_columns_names();
 

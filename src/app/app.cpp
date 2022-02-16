@@ -67,28 +67,12 @@ void app::start(int argc, char const *argv[]) {
 
             unique_ptr<sql_query> sql_query = query_generator::generate_query(sql);
             cout << "Query: " << sql_query->get_query() << endl;
-            // Todo retrieve singleton definition_file, then set source_file = get_table_name()
             sql_query->check();
             sql_query->execute();
 
         } catch (custom_exception &e) {
             cout << e.what() << endl;
         }
-
-        /*
-        string first_word;
-        first_word = sql.substr(0, sql.find(SPACE_DELIMITER));
-
-        std::string delimiter = ">=";
-
-        size_t pos = 0;
-        std::string token;
-        while ((pos = sql.find(delimiter)) != std::string::npos) {
-            token = sql.substr(0, pos);
-            std::cout << token << std::endl;
-            sql.erase(0, pos + delimiter.length());
-        }
-        std::cout << sql << std::endl;*/
 
     } while (true);
 
