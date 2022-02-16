@@ -15,7 +15,7 @@ public:
 
     content_file() : table_file(CONTENT_FILE_EXTENSION) {}
 
-    void write_record(const std::vector<uint8_t> &record, uint32_t offset);
+    void write_record(const vector<uint8_t> &record, uint32_t offset);
 
     vector<uint8_t> read_record(uint16_t length, uint32_t offset);
 };
