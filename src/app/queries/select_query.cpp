@@ -64,7 +64,7 @@ void select_query::check() {
         throw select_number_columns_exception();
     }
 
-    // 3 memorize indexes of selected columns + test if all columns from query exist + set offset for reading
+    // 3 memorize indexes of selected columns + test if all columns from query exist + set length for reading
     bool is_column_exist;
     offset = 0;
     vector<int> columns_selected_indexes_(columns_name_from_file.size(),0);
@@ -126,13 +126,13 @@ void select_query::execute() {
     index_file* index_file = index_file::get_instance();
 
     //Todo retrieve all ative records
-    vector<vector<uint8_t>> all_records;
+    /*vector<vector<uint8_t>> all_records;
     for (int i = 0; i < index_file->get_entries_count(); ++i) {
         index_entry entry = index_file->get_index_entry(i);
         if (entry.is_active) {
             all_records.push_back(content_file->read_record(entry.position));
         }
-    }
+    }*/
 
 
     vector<string> columns_name_from_file = definition_file::get_instance()->get_all_columns_names();

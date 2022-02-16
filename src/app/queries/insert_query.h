@@ -29,7 +29,7 @@ using namespace std;
 class insert_query : public table_related_query {
 protected:
     vector<uint8_t> record;
-    uint32_t offset;
+    uint32_t length;
 
 public:
 
@@ -61,7 +61,7 @@ public:
             stop = vector_string=="into";
         }
 
-        offset = 0;
+        length = 0;
 
     }
 

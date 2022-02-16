@@ -51,7 +51,7 @@ string string_utilities::format_string_for_uint8_t(string string_) {
 
     string tmp = delete_quote(string_);
     unsigned size = tmp.size();
-    tmp.resize (size + (255-size), ' ');
+    tmp.resize (255, ' ');
     return tmp;
 
 }

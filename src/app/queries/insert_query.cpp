@@ -89,12 +89,12 @@ void insert_query::check() {
                 if (columns_type_from_file[i]==INT) {
 
                     record.push_back(stoll(value));
-                    offset += 8;
+                    length += 8;
 
                 } else if (columns_type_from_file[i]==FLOAT) {
 
                     record.push_back(stod(value));
-                    offset += 8;
+                    length += 8;
 
                 } else if (columns_type_from_file[i]==PRIMARY_KEY) {
 
@@ -111,14 +111,14 @@ void insert_query::check() {
                         record.push_back(p_key);
                     }
 
-                    offset += 8;
+                    length += 8;
 
                 } else if (columns_type_from_file[i]==TEXT) {
 
                     value = string_utilities::format_string_for_uint8_t(value);
                     vector<uint8_t> str_to_uint8_t_vector(value.begin(), value.end());
                     record.insert(str_to_uint8_t_vector.end(), str_to_uint8_t_vector.begin(), str_to_uint8_t_vector.end());
-                    offset += 255;
+                    length += 255;
 
                 }
 
@@ -132,7 +132,7 @@ void insert_query::check() {
             if ((columns_type_from_file[i]==INT) || (columns_type_from_file[i]==FLOAT)) {
 
                     record.push_back('\0');
-                    offset += 8;
+                    length += 8;
 
                 } else if (columns_type_from_file[i]==PRIMARY_KEY) {
 
@@ -142,14 +142,16 @@ void insert_query::check() {
                     p_key_file->update_key(p_key);
 
                     record.push_back(p_key);
-                    offset += 8;
+                    length += 8;
 
                 } else if (columns_type_from_file[i]==TEXT) {
 
                     string empty_str = string_utilities::format_string_for_uint8_t("''");
                     vector<uint8_t> str_to_uint8_t_vector(empty_str.begin(), empty_str.end());
-                    record.insert(str_to_uint8_t_vector.end(), str_to_uint8_t_vector.begin(), str_to_uint8_t_vector.end());
-                    offset += 255;
+                    for (auto a : str_to_uint8_t_vector) {
+                        record.push_back(a);
+                    }
+                    length += 255;
 
                 }
         }
@@ -166,6 +168,7 @@ void insert_query::execute() {
 
     // execute insert
     content_file* content_file_ = content_file::get_instance();
-    content_file_->write_record(record,offset);
+    index_file* index_file = index_file::get_instance();
+    content_file_->write_record(record, index_file->get_first_inactive_index());
 
 }
