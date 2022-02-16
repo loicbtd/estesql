@@ -2,8 +2,10 @@
 #define ESTESQL_TABLE_FILE_H
 
 #include <string>
-#include <fstream>
 #include <filesystem>
+#include <fstream>
+#include <cstring>
+#include <cstddef>
 
 #include "db_info.h"
 #include "app/constants/test_strings.h"
@@ -13,6 +15,7 @@
 #include "app/exceptions/inability_to_create_file_exception.h"
 #include "app/exceptions/inability_to_create_directory_exception.h"
 #include "app/exceptions/inability_to_open_file_exception.h"
+#include "app/exceptions/inability_to_retrieve_file_length_exception.h"
 
 using namespace std;
 
@@ -34,6 +37,8 @@ public:
     void open();
 
     void close();
+
+    uintmax_t get_size();
 };
 
 #endif //ESTESQL_TABLE_FILE_H
