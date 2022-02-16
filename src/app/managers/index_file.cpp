@@ -62,4 +62,14 @@ int index_file::get_entries_count() {
     return get_size() / INDEX_ENTRY_PERSISTED_SIZE_IN_BITS;
 }
 
+uint32_t index_file::get_first_inactive_index() {
+    for (uint32_t position = 0; position < get_entries_count(); ++position) {
+        if(!get_index_entry(position).is_active) {
+           return position;
+        }
+    }
+
+    return get_entries_count();
+}
+
 

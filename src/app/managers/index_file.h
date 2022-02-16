@@ -45,6 +45,8 @@ public:
     index_entry get_index_entry(uint32_t position);
 
     int get_entries_count();
+
+    uint32_t get_first_inactive_index();
 };
 
 
