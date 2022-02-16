@@ -20,6 +20,9 @@ public:
 
     static string format_string_for_uint8_t(string string_);
     static string delete_quote(string string_);
+
+    static bool contains(string str, string substring);
+
 };
 
 

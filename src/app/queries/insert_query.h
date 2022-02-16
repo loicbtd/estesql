@@ -14,8 +14,13 @@
 #include "app/constants/string_delimiters.h"
 
 #include "app/helpers/db_table_utilities.h"
-
 #include "app/helpers/string_utilities.h"
+
+#include "app/managers/definition_file.h"
+#include "app/managers/key_file.h"
+#include "app/managers/content_file.h"
+
+#include "app/models/column_definition.h"
 
 using namespace std;
 

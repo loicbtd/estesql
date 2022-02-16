@@ -46,3 +46,6 @@ string string_utilities::delete_quote(string string_) {
 
 }
 
+bool string_utilities::contains(string str, string substring) {
+    return str.find(substring) != std::string::npos;
+}

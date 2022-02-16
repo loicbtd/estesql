@@ -63,21 +63,21 @@ void insert_query::check() {
     }
 
     //Todo 4 retrieve all columns from definition_file get_table_definition()->get_table_definition() -> vector of column_def
-/*
-    vector<column_definition*> columns_def_vector = definition_file::GetInstance()->get_table_definition();
+
+    vector<column_definition*> columns_def_vector = definition_file::get_instance()->get_table_definition().get_columns();
     vector<string> columns_name_from_file;
     vector<field_type_t> columns_type_from_file;
     for (auto col_def: columns_def_vector) {
-        columns_name_from_file.push_back(col_def->getName());
-        columns_type_from_file.push_back(col_def->getType());
+        columns_name_from_file.push_back(col_def->get_name());
+        columns_type_from_file.push_back(col_def->get_type());
     }
-*/
+
 
     //Todo 6.1 compare types values/columns from definition_file -> check if "'"
     //Todo 6.2 convert int, float, PK in long long, ... -> in uint8_t + complete string to be have 255 characters
     //Todo 6.3 primary_key management
     //Todo 6.4 put every column in the correct order
-/*
+
     bool is_column_in_insert_query;
     for (int i = 0; i < columns_name_from_file.size(); ++i) {
 
@@ -92,8 +92,8 @@ void insert_query::check() {
                 string value = values_vector[j];
 
                 if (
-                       (value.contains("'") && (columns_type_from_file[i]==INT || columns_type_from_file[i]==FLOAT || columns_type_from_file[i]==PRIMARY_KEY))
-                    || (value.contains(".") && (columns_type_from_file[i]==INT || columns_type_from_file[i]==PRIMARY_KEY || ((columns_type_from_file[i]!=TEXT && !value.contains("'")))))
+                       (string_utilities::contains(value,"'") && (columns_type_from_file[i]==INT || columns_type_from_file[i]==FLOAT || columns_type_from_file[i]==PRIMARY_KEY))
+                    || (string_utilities::contains(value,".") && (columns_type_from_file[i]==INT || columns_type_from_file[i]==PRIMARY_KEY || ((columns_type_from_file[i]!=TEXT && !string_utilities::contains(value,"'")))))
                 ) {
                     throw wrong_type_exception();
                 }
@@ -110,10 +110,10 @@ void insert_query::check() {
 
                 } else if (columns_type_from_file[i]==PRIMARY_KEY) {
 
-                    key_file* p_key_file = key_file::GetInstance();
-                    uint64_t p_key p_key_file->get_next_key();
+                    key_file* p_key_file = key_file::get_instance();
+                    uint64_t p_key(p_key_file->get_next_key());
 
-                    uint64_t p_key_value_proposed stoull(value);
+                    uint64_t p_key_value_proposed(stoull(value));
 
                     if (p_key_value_proposed >= p_key) {
                         p_key_file->update_key(p_key_value_proposed);
@@ -142,18 +142,18 @@ void insert_query::check() {
         if (is_column_in_insert_query==false) {
             if (columns_type_from_file[i]==INT) {
 
-                    record.push_back(stoll(XXXXX));
+//                    record.push_back(stoll(XXXXX));
                     offset += 8;
 
                 } else if (columns_type_from_file[i]==FLOAT) {
 
-                    record.push_back(stod(XXXXX));
+//                    record.push_back(stod(XXXXX));
                     offset += 8;
 
                 } else if (columns_type_from_file[i]==PRIMARY_KEY) {
 
-                    key_file* p_key_file = key_file::GetInstance();
-                    uint64_t p_key p_key_file->get_next_key();
+                    key_file* p_key_file = key_file::get_instance();
+                    uint64_t p_key(p_key_file->get_next_key());
 
                     p_key_file->update_key(p_key);
 
@@ -162,7 +162,7 @@ void insert_query::check() {
 
                 } else if (columns_type_from_file[i]==TEXT) {
 
-                    string empty_str = string_utilities::format_string_for_uint8_t('');
+                    string empty_str = string_utilities::format_string_for_uint8_t("''");
                     vector<uint8_t> str_to_uint8_t_vector(empty_str.begin(), empty_str.end());
                     record.insert(str_to_uint8_t_vector.end(), str_to_uint8_t_vector.begin(), str_to_uint8_t_vector.end());
                     offset += 255;
@@ -172,7 +172,7 @@ void insert_query::check() {
 
     }
 
-*/
+
 
 }
 
@@ -182,10 +182,7 @@ void insert_query::execute() {
 
     cout << "execute()" << endl;
     //Todo execute insert
-/*
-    content_file* content_file_ = content_file::GetInstance();
+    content_file* content_file_ = content_file::get_instance();
     content_file_->write_record(record,offset);
-*/
-
 
 }
