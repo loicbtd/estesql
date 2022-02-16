@@ -16,6 +16,12 @@ void insert_query::check() {
 
     parse();
 
+    definition_file* definition_file = definition_file::get_instance();
+
+    if (!definition_file->exists()) {
+        throw non_existing_table_exception();
+    }
+
     // 1 retrieve all columns from query -> vector<string> OK
     smatch smatch_;
     string columns = "\\\([a-z0-9_-]+(( )?,( )?[a-z0-9_-]+)*\\\) values";
@@ -125,7 +131,7 @@ void insert_query::check() {
 
             if ((columns_type_from_file[i]==INT) || (columns_type_from_file[i]==FLOAT)) {
 
-                    record.push_back(NULL);
+                    record.push_back('\0');
                     offset += 8;
 
                 } else if (columns_type_from_file[i]==PRIMARY_KEY) {

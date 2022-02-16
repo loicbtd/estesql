@@ -47,11 +47,9 @@ void select_query::check() {
     // 1 retrieve all columns from query
     smatch smatch_;
     string columns = "select [a-z0-9_-]+(( )?,( )?[a-z0-9_-]+)* from ";
-    string columns_str;
+    regex_search(get_query(), smatch_, regex(columns));
+    string columns_str = smatch_.str();
 
-    if (regex_search(get_query(), smatch_, regex(columns))) {
-        columns_str = smatch_.str();
-    }
     columns_str = string_utilities::erase_substring(columns_str, "select ");
     columns_str = string_utilities::erase_substring(columns_str, " from ");
 

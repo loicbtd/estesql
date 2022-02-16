@@ -7,6 +7,7 @@
 
 #include "app/exceptions/non_existing_table_exception.h"
 #include "app/exceptions/sql_invalid_syntax_exception.h"
+#include "app/exceptions/update_primary_key_exception.h"
 
 #include "app/constants/syntax_query.h"
 
@@ -25,6 +26,7 @@ class update_query : public table_related_query {
 private:
     bool is_where_clause;
     where_clause where_clause;
+    vector<uint8_t> updated_record;
 
 public:
 
