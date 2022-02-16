@@ -16,10 +16,10 @@ void sql_query::execute() {
 
 }
 
-const string &sql_query::getQuery() const {
+const string &sql_query::get_query() const {
     return query;
 }
 
-void sql_query::setQuery(const string &query) {
+void sql_query::set_query(const string &query) {
     sql_query::query = query;
 }

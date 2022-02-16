@@ -7,7 +7,7 @@ void create_database_query::parse() {
 
     regex regex_ (str_regex);
 
-    if (!regex_match(getQuery(), regex_)) {
+    if (!regex_match(get_query(), regex_)) {
         throw slq_invalid_syntax_exception(CREATE_DB_SYNTAX);
     }
 

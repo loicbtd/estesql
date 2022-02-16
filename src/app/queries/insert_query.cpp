@@ -6,7 +6,7 @@ void insert_query::parse() {
     str_regex.append(get_table_name()).append(" \\\([a-z0-9_-]+(( )?,( )?[a-z0-9_-]+)*\\\) values \\\(('[.\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?)(( )?,( )?('[.\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?))*\\\)( )?;");
     regex regex_ (str_regex);
 
-    if (!regex_match(getQuery(), regex_)) {
+    if (!regex_match(get_query(), regex_)) {
         throw slq_invalid_syntax_exception(INSERT_SYNTAX);
     }
 
@@ -21,7 +21,7 @@ void insert_query::check() {
     string columns = "\\\([a-z0-9_-]+(( )?,( )?[a-z0-9_-]+)*\\\) values";
     string columns_str;
 
-    if (regex_search(getQuery(), smatch_, regex(columns))) {
+    if (regex_search(get_query(), smatch_, regex(columns))) {
         columns_str = smatch_.str();
     }
 
@@ -39,7 +39,7 @@ void insert_query::check() {
     string values = "values \\\(('[\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?)(( )?,( )?('[\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?))*\\\)";
     string values_str;
 
-    if (regex_search(getQuery(), smatch_, regex(values))) {
+    if (regex_search(get_query(), smatch_, regex(values))) {
         values_str = smatch_.str();
     }
 

@@ -15,9 +15,9 @@ public:
     sql_query() {}
     sql_query(string sql): query(sql) {}
 
-    const string &getQuery() const;
+    const string &get_query() const;
 
-    void setQuery(const string &query);
+    void set_query(const string &query);
 
     virtual void parse()=0;
     virtual  void check()=0;

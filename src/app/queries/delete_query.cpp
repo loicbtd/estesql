@@ -8,7 +8,7 @@ void delete_query::parse() {
     string where_clause = " where ";
     smatch smatch_;
 
-    if (regex_search(getQuery(), smatch_, regex(where_clause))) {
+    if (regex_search(get_query(), smatch_, regex(where_clause))) {
         str_regex.append(" where [a-z0-9_-]+( )?(>|<|<=|>=|=|<>)( )?[a-z0-9_-]+( (and|or) [a-z0-9_-]+( )?(>|<|<=|>=|=|<>)( )?[a-z0-9_-]+)*( )?;");
     } else {
         str_regex.append("( )?;");
@@ -16,7 +16,7 @@ void delete_query::parse() {
 
     regex regex_ (str_regex);
 
-    if (!regex_match(getQuery(), regex_)) {
+    if (!regex_match(get_query(), regex_)) {
         throw slq_invalid_syntax_exception(DELETE_SYNTAX);
     }
 

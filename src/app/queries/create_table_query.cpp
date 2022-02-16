@@ -7,7 +7,7 @@ void create_table_query::parse() {
 
     regex regex_ (str_regex);
 
-    if (!regex_match(getQuery(), regex_)) {
+    if (!regex_match(get_query(), regex_)) {
         throw slq_invalid_syntax_exception(CREATE_TABLE_SYNTAX);
     }
 
@@ -26,7 +26,7 @@ void create_table_query::check() {
     smatch smatch_;
     string columns = "\\\([a-z0-9_-]+ (int|primary_key|float|text)(,( )?[a-z0-9_-]+ (int|primary_key|float|text)( )?)*\\\)";
     string parameters_str;
-    if (regex_search(getQuery(), smatch_, regex(columns))) {
+    if (regex_search(get_query(), smatch_, regex(columns))) {
         parameters_str = smatch_.str();
     }
 
@@ -75,7 +75,7 @@ void create_table_query::check() {
         throw missing_or_multiple_primary_key_exception();
     }
 
-    def_file->get_table_definition().setColumns(columns_vector);
+    set_table_definition_create(table_definition(columns_vector));
 
 }
 
@@ -83,8 +83,15 @@ void create_table_query::expand() {}
 
 void create_table_query::execute() {
 
-    definition_file* def_file = definition_file::get_instance();
-    def_file->write_table_definition(def_file->get_table_definition());
+    definition_file::get_instance()->write_table_definition(get_table_definition_create());
 
+}
+
+const table_definition &create_table_query::get_table_definition_create() const {
+    return table_definition_create;
+}
+
+void create_table_query::set_table_definition_create(const table_definition &tableDefinitionCreate) {
+    table_definition_create = tableDefinitionCreate;
 }
 

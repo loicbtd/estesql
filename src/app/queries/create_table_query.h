@@ -61,6 +61,13 @@ public:
 
     void execute() override;
 
+    const table_definition &get_table_definition_create() const;
+
+    void set_table_definition_create(const table_definition &tableDefinitionCreate);
+
+private:
+    table_definition table_definition_create;
+
 
 };
 
