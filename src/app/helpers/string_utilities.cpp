@@ -73,12 +73,11 @@ string string_utilities::convert_vector_into_string_delimiter(vector<string> vec
 
     string string_conv("");
 
-    for (int i=0; i < vector_.size(); ++i) {
-        string_conv.append(vector_[i]);
-        if (i != vector_.size()-1) {
-            string_conv.append(reinterpret_cast<const char *>(delimiter));
-        }
+    for (int i=0; i < vector_.size()-1; ++i) {
+        string_conv.append(vector_.at(i) + delimiter);
     }
+
+    string_conv.append(vector_.at(vector_.size()-1));
 
     return string_conv;
 }
