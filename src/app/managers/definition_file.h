@@ -28,6 +28,10 @@ public:
     table_definition get_table_definition();
 
     void write_table_definition(const table_definition &);
+
+    vector<string> get_all_columns_names();
+
+    vector<field_type_t> get_all_columns_types();
 };
 
 

@@ -51,14 +51,8 @@ void insert_query::check() {
     }
 
     //Todo 4 retrieve all columns from definition_file get_table_definition()->get_table_definition() -> vector of column_def
-
-    vector<column_definition*> columns_def_vector = definition_file::get_instance()->get_table_definition().get_columns();
-    vector<string> columns_name_from_file;
-    vector<field_type_t> columns_type_from_file;
-    for (auto col_def: columns_def_vector) {
-        columns_name_from_file.push_back(col_def->get_name());
-        columns_type_from_file.push_back(col_def->get_type());
-    }
+    vector<string> columns_name_from_file = definition_file::get_instance()->get_all_columns_names();
+    vector<field_type_t> columns_type_from_file = definition_file::get_instance()->get_all_columns_types();
 
 
     //Todo 6.1 compare types values/columns from definition_file -> check if "'"
