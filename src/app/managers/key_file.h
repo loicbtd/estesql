@@ -1,12 +1,15 @@
 #ifndef ESTESQL_KEY_FILE_H
 #define ESTESQL_KEY_FILE_H
 
+#define UNSIGNED_LONG_LONG_SIZE_IN_BITS 32
+
+#include <bitset>
 #include "table_file.h"
 #include "app/constants/file_extensions.h"
 
 class key_file : public table_file {
 private:
-    static key_file* key_file_;
+    static key_file *key_file_;
 
 public:
     static key_file *get_instance();

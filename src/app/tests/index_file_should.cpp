@@ -45,5 +45,15 @@ bool index_file_should::write_and_retrieve_the_same() {
     index_entry final_entry2 = file->get_index_entry(2);
 
     // Assert
-    return true;
+    return (
+            initial_entry0.is_active == final_entry0.is_active &&
+            initial_entry0.position == final_entry0.position &&
+            initial_entry0.length == final_entry0.length &&
+            initial_entry1.is_active == final_entry1.is_active &&
+            initial_entry1.position == final_entry1.position &&
+            initial_entry1.length == final_entry1.length &&
+            initial_entry2.is_active == final_entry2.is_active &&
+            initial_entry2.position == final_entry2.position &&
+            initial_entry2.length == final_entry2.length
+    );
 }

@@ -17,7 +17,7 @@ using namespace std;
 
 class definition_file : public table_file {
 private:
-    static definition_file* definition_file_;
+    static definition_file *definition_file_;
 
 public:
     static definition_file *get_instance();
