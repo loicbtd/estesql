@@ -5,12 +5,24 @@
 
 #include "table_related_query.h"
 
+#include "app/exceptions/non_existing_table_exception.h"
 #include "app/exceptions/sql_invalid_syntax_exception.h"
+
 #include "app/constants/syntax_query.h"
+
+#include "app/models/where_clause.h"
+
+#include "app/managers/db_info.h"
+
+#include "app/helpers/db_table_utilities.h"
 
 using namespace std;
 
 class update_query : public table_related_query {
+private:
+    bool is_where_clause;
+    where_clause where_clause;
+
 public:
 
     update_query(string sql) : table_related_query(sql) {
@@ -48,6 +60,15 @@ public:
     void expand() override;
 
     void execute() override;
+
+    bool is_where_clause_get() const;
+
+    void set_is_where_clause(bool isWhereClause);
+
+    const class where_clause &get_where_clause() const;
+
+    void set_where_clause(const class where_clause &whereClause);
+
 };
 
 #endif
