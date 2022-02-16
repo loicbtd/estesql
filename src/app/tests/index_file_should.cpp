@@ -6,37 +6,20 @@ string index_file_should::name() {
 
 map<string, bool> index_file_should::pass_tests() {
     return {
-            {"exist",                      exist()},
-            {"not_exist",                  not_exist()},
             {"get_index_entry",       get_index_entry()},
             {"write_index_entry", write_index_entry()},
     };
 }
 
-bool index_file_should::exist() {
-    // Arrange
-    db_info::GetInstance()->setCurrentDbPath(DATABASE1_PATH);
-    index_file *index = new index_file("table1");
-
-    // Act
-    // Assert
-    return index->exists();
-}
-
-bool index_file_should::not_exist() {
-    // Arrange
-    db_info::GetInstance()->setCurrentDbPath(DATABASE1_PATH);
-    index_file *definition = new index_file(to_string((time(nullptr))));
-
-    // Act
-    // Assert
-    return !definition->exists();
-}
-
 bool index_file_should::get_index_entry() {
     // Arrange
-    db_info::GetInstance()->setCurrentDbPath(DATABASE1_PATH);
-    index_file *file = new index_file("table1");
+    db_info* info = db_info::get_instance();
+    info->setCurrentDbPath(TEST_CURRENT_DB_PATH);
+    info->setDbName(TEST_DB_NAME);
+    info->setDbParentFolderPath(TEST_DB_PARENT_FOLDER_PATH);
+
+    index_file *file = index_file::get_instance();
+    file->set_current_table_name(TEST_TABLE_NAME);
 
     // Act
     index_entry entry;
@@ -48,13 +31,13 @@ bool index_file_should::get_index_entry() {
     }
 
     // Assert
-    return false;
+    return true;
 }
 
 bool index_file_should::write_index_entry() {
     return false;
 //    // Arrange
-//    db_info::GetInstance()->setCurrentDbPath(DATABASE1_PATH);
+//    db_info::get_instance()->setCurrentDbPath(DATABASE1_PATH);
 //    index_file *file = new index_file(to_string((time(nullptr))));
 //
 //    table_definition definition = table_definition();

@@ -1,5 +1,5 @@
-#ifndef ESTESQL_INDEX_FILE_SHOULD_H
-#define ESTESQL_INDEX_FILE_SHOULD_H
+#ifndef ESTESQL_TABLE_FILE_SHOULD_H
+#define ESTESQL_TABLE_FILE_SHOULD_H
 
 #include <string>
 #include <cstring>
@@ -17,14 +17,18 @@
 
 using namespace std;
 
-class index_file_should: public test_base {
+class table_file_should: public test_base {
 public:
     string name() override;
     map<string, bool> pass_tests() override;
 
 private:
-    bool get_index_entry();
-    bool write_index_entry();
+    bool exist();
+    bool not_exist();
+    bool open();
+    bool not_open();
+    bool close();
+    bool not_close();
 };
 
-#endif //ESTESQL_INDEX_FILE_SHOULD_H
+#endif //ESTESQL_TABLE_FILE_SHOULD_H

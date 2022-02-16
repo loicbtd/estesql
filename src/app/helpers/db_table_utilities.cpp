@@ -34,7 +34,7 @@ bool db_table_utilities::is_duplicate_columns(vector<column_definition *> column
 
     vector<string> columns_name;
     for (auto col_def: columns_def_vector) {
-        columns_name.push_back(col_def->getName());
+        columns_name.push_back(col_def->get_name());
     }
 
     return is_duplicate_columns(columns_name);

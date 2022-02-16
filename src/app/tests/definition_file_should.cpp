@@ -6,82 +6,71 @@ string definition_file_should::name() {
 
 map<string, bool> definition_file_should::pass_tests() {
     return {
-            {"exist",                      exist()},
-            {"not_exist",                  not_exist()},
             {"get_table_definition",       get_table_definition()},
             {"write_get_table_definition", write_get_table_definition()},
     };
 }
 
-bool definition_file_should::exist() {
-    // Arrange
-    db_info::GetInstance()->setCurrentDbPath(DATABASE1_PATH);
-    definition_file *definition = new definition_file("table1");
-
-    // Act
-    // Assert
-    return definition->exists();
-}
-
-bool definition_file_should::not_exist() {
-    // Arrange
-    db_info::GetInstance()->setCurrentDbPath(DATABASE1_PATH);
-    definition_file *definition = new definition_file("lorem");
-
-    // Act
-    // Assert
-    return !definition->exists();
-}
 
 bool definition_file_should::get_table_definition() {
     // Arrange
-    db_info::GetInstance()->setCurrentDbPath(DATABASE1_PATH);
-    definition_file *file = new definition_file("table1");
+    db_info *info = db_info::get_instance();
+    info->setCurrentDbPath(TEST_CURRENT_DB_PATH);
+    info->setDbName(TEST_DB_NAME);
+    info->setDbParentFolderPath(TEST_DB_PARENT_FOLDER_PATH);
+
+    definition_file *file = definition_file::get_instance();
+    file->set_current_table_name(TEST_TABLE_NAME);
 
     // Act
-    vector<column_definition *> columns = file->get_table_definition().getColumns();
+    vector<column_definition *> columns = file->get_table_definition().get_columns();
 
     // Assert
     return (
             columns.size() == 4 &&
-            columns[0]->getType() == PRIMARY_KEY &&
-            columns[1]->getType() == INT &&
-            columns[2]->getType() == FLOAT &&
-            columns[3]->getType() == TEXT &&
-            strcmp(columns[0]->getName().c_str(), "field1") == 0 &&
-            strcmp(columns[1]->getName().c_str(), "field2") == 0 &&
-            strcmp(columns[2]->getName().c_str(), "field3") == 0 &&
-            strcmp(columns[3]->getName().c_str(), "field4") == 0
+            columns[0]->get_type() == PRIMARY_KEY &&
+            columns[1]->get_type() == INT &&
+            columns[2]->get_type() == FLOAT &&
+            columns[3]->get_type() == TEXT &&
+            strcmp(columns[0]->get_name().c_str(), "field1") == 0 &&
+            strcmp(columns[1]->get_name().c_str(), "field2") == 0 &&
+            strcmp(columns[2]->get_name().c_str(), "field3") == 0 &&
+            strcmp(columns[3]->get_name().c_str(), "field4") == 0
     );
 }
 
 bool definition_file_should::write_get_table_definition() {
     // Arrange
-    db_info::GetInstance()->setCurrentDbPath(DATABASE1_PATH);
-    definition_file *file = new definition_file(to_string((time(nullptr))));
+    db_info *info = db_info::get_instance();
+    info->setCurrentDbPath(TEST_CURRENT_DB_PATH);
+    info->setDbName(TEST_DB_NAME);
+    info->setDbParentFolderPath(TEST_DB_PARENT_FOLDER_PATH);
+
+    definition_file *file = definition_file::get_instance();
+    file->set_current_table_name(to_string((time(nullptr))));
 
     table_definition definition = table_definition();
 
-    column_definition* column1 = new column_definition();
-    column1->setType(PRIMARY_KEY);
-    column1->setName("field1");
-    definition.addColumn(column1);
+    column_definition *column1 = new column_definition();
+    column1->set_type(PRIMARY_KEY);
+    column1->set_name("field1");
+    definition.add_column(column1);
 
-    column_definition* column2 = new column_definition();
-    column2->setType(FLOAT);
-    column2->setName("field2");
-    definition.addColumn(column2);
+    column_definition *column2 = new column_definition();
+    column2->set_type(FLOAT);
+    column2->set_name("field2");
+    definition.add_column(column2);
 
     // Act
     file->write_table_definition(definition);
 
     // Assert
-    vector<column_definition *> columns = file->get_table_definition().getColumns();
+    vector<column_definition *> columns = file->get_table_definition().get_columns();
     return (
             columns.size() == 2 &&
-            columns[0]->getType() == PRIMARY_KEY &&
-            columns[1]->getType() == FLOAT &&
-            strcmp(columns[0]->getName().c_str(), "field1") == 0 &&
-            strcmp(columns[1]->getName().c_str(), "field2") == 0
+            columns[0]->get_type() == PRIMARY_KEY &&
+            columns[1]->get_type() == FLOAT &&
+            strcmp(columns[0]->get_name().c_str(), "field1") == 0 &&
+            strcmp(columns[1]->get_name().c_str(), "field2") == 0
     );
 }

@@ -10,7 +10,7 @@
 #include <ctime>
 
 #include "test_base.h"
-#include "app/constants/assets_paths.h"
+#include "app/constants/test_strings.h"
 #include "app/managers/db_info.h"
 #include "app/managers/definition_file.h"
 #include "app/models/table_definition.h"
@@ -25,8 +25,6 @@ public:
     map<string, bool> pass_tests() override;
 
 private:
-    bool exist();
-    bool not_exist();
     bool get_table_definition();
     bool write_get_table_definition();
 };

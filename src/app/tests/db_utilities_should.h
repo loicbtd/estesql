@@ -9,7 +9,7 @@
 #include "test_base.h"
 
 #include "app/helpers/db_table_utilities.h"
-#include "app/constants/assets_paths.h"
+#include "app/constants/test_strings.h"
 
 using namespace std;
 
