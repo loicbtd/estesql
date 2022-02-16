@@ -20,6 +20,7 @@ public:
 
     void add_column(column_definition* column);
 
+    table_definition();
 };
 
 

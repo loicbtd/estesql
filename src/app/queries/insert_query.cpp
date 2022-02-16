@@ -25,13 +25,7 @@ void insert_query::check() {
         columns_str = smatch_.str();
     }
 
-    string to_erase = " values";
-    size_t pos = columns_str.find(to_erase);
-    if (pos != std::string::npos) {
-        // If found then erase it from string
-        columns_str.erase(pos, to_erase.length());
-    }
-
+    columns_str = string_utilities::erase_substring(columns_str, " values");
     vector<string> columns_vector = string_utilities::convert_parenthesis_string_to_vector_delimiter(columns_str, COMA_DELIMITER);
 
     //Todo 2 retrieve all values -> vector<string> OK
@@ -43,13 +37,7 @@ void insert_query::check() {
         values_str = smatch_.str();
     }
 
-    to_erase = "values ";
-    pos = values_str.find(to_erase);
-    if (pos != std::string::npos) {
-        // If found then erase it from string
-        values_str.erase(pos, to_erase.length());
-    }
-
+    values_str = string_utilities::erase_substring(values_str, "values ");
     vector<string> values_vector = string_utilities::convert_parenthesis_string_to_vector_delimiter(values_str, COMA_DELIMITER);
 
     //Todo 3.1 check if nb columns == nb values -> size1 == size2 OK

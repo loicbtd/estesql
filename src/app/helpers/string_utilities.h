@@ -23,6 +23,9 @@ public:
 
     static bool contains(string str, string substring);
 
+    static vector<string> convert_string_to_vector_delimiter(string &string_, char delimiter);
+
+    static string erase_substring(string &string_, string substring);
 };
 
 

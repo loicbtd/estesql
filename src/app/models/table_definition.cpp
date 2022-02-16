@@ -18,3 +18,5 @@ void table_definition::set_columns(const vector<column_definition *> &columns) {
 
     table_definition::columns = columns;
 }
+
+table_definition::table_definition() {}

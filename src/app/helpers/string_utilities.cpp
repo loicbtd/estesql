@@ -17,6 +17,11 @@ vector<string> string_utilities::convert_parenthesis_string_to_vector_delimiter(
     string_.erase(remove(string_.begin(), string_.end(), PARENTHESIS_OPEN_DELIMITER), string_.end());
     string_.erase(remove(string_.begin(), string_.end(), PARENTHESIS_CLOSE_DELIMITER), string_.end());
 
+    return convert_string_to_vector_delimiter(string_, delimiter);
+}
+
+vector<string> string_utilities::convert_string_to_vector_delimiter(string &string_, char delimiter) {
+
     stringstream str_stream(string_);
     vector<string> vector_str;
 
@@ -27,6 +32,18 @@ vector<string> string_utilities::convert_parenthesis_string_to_vector_delimiter(
     }
 
     return vector_str;
+}
+
+string string_utilities::erase_substring(string &string_, string substring) {
+
+    size_t pos = string_.find(substring);
+
+    if (pos != std::string::npos) {
+        string_.erase(pos, substring.length());
+    }
+
+    return string_;
+
 }
 
 string string_utilities::format_string_for_uint8_t(string string_) {
