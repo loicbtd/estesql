@@ -125,8 +125,17 @@ void select_query::expand() {
 void select_query::execute() {
 
     content_file* content_file = content_file::get_instance();
-    vector<uint8_t> content = content_file->read_record(offset);
-    //Todo convert into proper types
+    index_file* index_file = index_file::get_instance();
+
+    //Todo retrieve all ative records
+    vector<vector<uint8_t>> all_records;
+    for (int i = 0; i < index_file->get_entries_count(); ++i) {
+        index_entry entry = index_file->get_index_entry(i);
+        if (entry.is_active) {
+            all_records.push_back(content_file->read_record(entry.position));
+        }
+    }
+
 
     vector<string> columns_name_from_file = definition_file::get_instance()->get_all_columns_names();
 
