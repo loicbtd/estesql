@@ -17,7 +17,7 @@ bool table_file::exists() {
 
     try {
         exist = filesystem::exists(
-                db_info::get_instance()->getCurrentDbPath() + "/" + source_file + "/" + source_file + file_extension);
+                db_info::get_instance()->get_current_db_path() + "/" + source_file + "/" + source_file + file_extension);
     } catch (exception &) {
         throw inability_to_check_if_file_exists_exception();
     }
@@ -28,13 +28,13 @@ bool table_file::exists() {
 void table_file::open() {
     if (!exists()) {
         try {
-            filesystem::create_directories(db_info::get_instance()->getCurrentDbPath() + "/" + source_file);
+            filesystem::create_directories(db_info::get_instance()->get_current_db_path() + "/" + source_file);
         } catch (exception &) {
             throw inability_to_create_directory_exception();
         }
 
         try {
-            fopen((db_info::get_instance()->getCurrentDbPath() + "/" + source_file + "/" + source_file +
+            fopen((db_info::get_instance()->get_current_db_path() + "/" + source_file + "/" + source_file +
                    file_extension).c_str(), "w+");
         } catch (exception &) {
             throw inability_to_create_file_exception();
@@ -42,7 +42,8 @@ void table_file::open() {
     }
 
     try {
-        file.open(db_info::get_instance()->getCurrentDbPath() + "/" + source_file + "/" + source_file + file_extension);
+        file.open(
+                db_info::get_instance()->get_current_db_path() + "/" + source_file + "/" + source_file + file_extension);
     }
     catch (exception &) {
         throw inability_to_open_file_exception();

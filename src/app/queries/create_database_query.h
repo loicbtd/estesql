@@ -7,8 +7,13 @@
 #include "database_related_query.h"
 
 #include "app/exceptions/sql_invalid_syntax_exception.h"
+#include "app/exceptions/already_existing_db_exception.h"
+
 #include "app/constants/syntax_query.h"
 
+#include "app/managers/db_info.h"
+
+#include "app/helpers/db_table_utilities.h"
 
 namespace fs = std::filesystem;
 
@@ -16,7 +21,7 @@ class create_database_query : public database_related_query {
 
 public:
 
-    create_database_query();
+    create_database_query() {}
 
     create_database_query(string sql) : database_related_query(sql) {
 
@@ -37,7 +42,7 @@ public:
             if (stop) {
 
                 vector_string.erase(remove(vector_string.begin(), vector_string.end(), ';'), vector_string.end());
-                setDbName(vector_string);
+                set_db_name(vector_string);
                 break;
 
             }
@@ -54,7 +59,7 @@ public:
 
     void execute() override;
 
-    void createDb(string);
+    void create_db_at_path(string db_path_name);
 
 };
 

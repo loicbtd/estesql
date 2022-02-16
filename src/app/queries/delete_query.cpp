@@ -3,7 +3,7 @@
 void delete_query::parse() {
 
     string str_regex ("delete from ");
-    str_regex.append(getTableName());
+    str_regex.append(get_table_name());
 
     string where_clause = " where ";
     smatch smatch_;

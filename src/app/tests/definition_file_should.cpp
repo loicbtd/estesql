@@ -15,9 +15,9 @@ map<string, bool> definition_file_should::pass_tests() {
 bool definition_file_should::get_table_definition() {
     // Arrange
     db_info *info = db_info::get_instance();
-    info->setCurrentDbPath(TEST_CURRENT_DB_PATH);
-    info->setDbName(TEST_DB_NAME);
-    info->setDbParentFolderPath(TEST_DB_PARENT_FOLDER_PATH);
+    info->set_current_db_path(TEST_CURRENT_DB_PATH);
+    info->set_db_name(TEST_DB_NAME);
+    info->set_db_parent_folder_path(TEST_DB_PARENT_FOLDER_PATH);
 
     definition_file *file = definition_file::get_instance();
     file->set_current_table_name(TEST_TABLE_NAME);
@@ -42,9 +42,9 @@ bool definition_file_should::get_table_definition() {
 bool definition_file_should::write_get_table_definition() {
     // Arrange
     db_info *info = db_info::get_instance();
-    info->setCurrentDbPath(TEST_CURRENT_DB_PATH);
-    info->setDbName(TEST_DB_NAME);
-    info->setDbParentFolderPath(TEST_DB_PARENT_FOLDER_PATH);
+    info->set_current_db_path(TEST_CURRENT_DB_PATH);
+    info->set_db_name(TEST_DB_NAME);
+    info->set_db_parent_folder_path(TEST_DB_PARENT_FOLDER_PATH);
 
     definition_file *file = definition_file::get_instance();
     file->set_current_table_name(to_string((time(nullptr))));

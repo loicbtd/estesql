@@ -38,7 +38,7 @@ public:
             if (stop) {
 
                 vector_string.erase(remove(vector_string.begin(), vector_string.end(), ';'), vector_string.end());
-                setDbName(vector_string);
+                set_db_name(vector_string);
                 break;
 
             }

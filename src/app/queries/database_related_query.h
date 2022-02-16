@@ -11,9 +11,9 @@ public:
 
     database_related_query();
 
-    const string &getDbName() const;
+    const string &get_db_name() const;
 
-    void setDbName(const string &dbName);
+    void set_db_name(const string &dbName);
 
 protected:
     virtual void parse() override = 0;

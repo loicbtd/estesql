@@ -14,9 +14,9 @@ map<string, bool> index_file_should::pass_tests() {
 bool index_file_should::get_index_entry() {
     // Arrange
     db_info* info = db_info::get_instance();
-    info->setCurrentDbPath(TEST_CURRENT_DB_PATH);
-    info->setDbName(TEST_DB_NAME);
-    info->setDbParentFolderPath(TEST_DB_PARENT_FOLDER_PATH);
+    info->set_current_db_path(TEST_CURRENT_DB_PATH);
+    info->set_db_name(TEST_DB_NAME);
+    info->set_db_parent_folder_path(TEST_DB_PARENT_FOLDER_PATH);
 
     index_file *file = index_file::get_instance();
     file->set_current_table_name(TEST_TABLE_NAME);
@@ -37,7 +37,7 @@ bool index_file_should::get_index_entry() {
 bool index_file_should::write_index_entry() {
     return false;
 //    // Arrange
-//    db_info::get_instance()->setCurrentDbPath(DATABASE1_PATH);
+//    db_info::get_instance()->set_current_db_path(DATABASE1_PATH);
 //    index_file *file = new index_file(to_string((time(nullptr))));
 //
 //    table_definition definition = table_definition();

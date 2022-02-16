@@ -3,7 +3,7 @@
 void insert_query::parse() {
 
     string str_regex ("insert into ");
-    str_regex.append(getTableName()).append(" \\\([a-z0-9_-]+(( )?,( )?[a-z0-9_-]+)*\\\) values \\\(('[.\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?)(( )?,( )?('[.\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?))*\\\)( )?;");
+    str_regex.append(get_table_name()).append(" \\\([a-z0-9_-]+(( )?,( )?[a-z0-9_-]+)*\\\) values \\\(('[.\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?)(( )?,( )?('[.\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?))*\\\)( )?;");
     regex regex_ (str_regex);
 
     if (!regex_match(getQuery(), regex_)) {
