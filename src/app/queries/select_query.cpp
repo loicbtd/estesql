@@ -102,10 +102,17 @@ void select_query::check() {
 }
 
 void select_query::expand() {
-//TODO retrieve all columns from the tableName and replace '*' by them seprated by ','
+// retrieve all columns from the tableName and replace '*' by them seprated by ','
 
     cout << "expand()" << endl;
+    vector<string> columns_name_from_file = definition_file::get_instance()->get_all_columns_names();
+    string replace = string_utilities::convert_vector_into_string_delimiter(columns_name_from_file, COMA_DELIMITER);
 
+    string str_regex = "\\\*";
+    string query_ = regex_replace(get_query(), std::regex(str_regex), replace);
+    cout << "query: " << query_<< endl;
+
+    set_query(query_);
 
 }
 
