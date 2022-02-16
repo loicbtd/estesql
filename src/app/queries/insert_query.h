@@ -9,6 +9,7 @@
 #include "app/exceptions/insert_number_columns_values_exception.h"
 #include "app/exceptions/insert_duplicate_columns_exception.h"
 #include "app/exceptions/wrong_type_exception.h"
+#include "app/exceptions/non_existing_table_exception.h"
 
 #include "app/constants/syntax_query.h"
 #include "app/constants/string_delimiters.h"
