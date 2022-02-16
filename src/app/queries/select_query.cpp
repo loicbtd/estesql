@@ -38,12 +38,11 @@ void select_query::check() {
 
     parse();
 
-/*
     string current_db_path = db_info::get_instance()->get_current_db_path();
     if (db_table_utilities::exists(current_db_path.append("/").append(get_table_name()).c_str())) {
         throw non_existing_table_exception();
     }
-*/
+
 
     // 1 retrieve all columns from query
     smatch smatch_;
@@ -204,6 +203,15 @@ void select_query::execute() {
         if (columns_selected_indexes[i]==1) {
             //Todo put all values of this column into structure => need to be determined
             //Todo where clause management /!\
+
+            pair<string, vector<string>> where_element;
+            for (const auto & element : get_where_clause().get_elements()){
+//            cout << element.first.c_str() << " | " << element.second.at(0) << endl;
+                if (std::find(columns_name_from_file.begin(), columns_name_from_file.end(), element.second.at(0)) != columns_name_from_file.end()) {
+                    where_element = element;
+                    break;
+                }
+            }
 
         }
     }
