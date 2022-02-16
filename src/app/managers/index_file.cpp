@@ -11,9 +11,8 @@ index_file *index_file::get_instance() {
 }
 
 void index_file::open() {
-    table_file::open();
-
     uintmax_t size;
+    
     try {
         size = filesystem::file_size(
                 db_info::get_instance()->getCurrentDbPath() + "/" + source_file + "/" + source_file + file_extension);
@@ -24,6 +23,8 @@ void index_file::open() {
     if ((size % 7) != 0) {
         throw index_file_is_not_valid_exception();
     }
+
+    table_file::open();
 }
 
 void index_file::write_index_entry(const index_entry &entry, uint32_t offset) {
