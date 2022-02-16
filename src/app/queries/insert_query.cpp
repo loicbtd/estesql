@@ -16,7 +16,7 @@ void insert_query::check() {
 
     parse();
 
-    //Todo 1 retrieve all columns from query -> vector<string> OK
+    // 1 retrieve all columns from query -> vector<string> OK
     smatch smatch_;
     string columns = "\\\([a-z0-9_-]+(( )?,( )?[a-z0-9_-]+)*\\\) values";
     string columns_str;
@@ -28,7 +28,7 @@ void insert_query::check() {
     columns_str = string_utilities::erase_substring(columns_str, " values");
     vector<string> columns_vector = string_utilities::convert_parenthesis_string_to_vector_delimiter(columns_str, COMA_DELIMITER);
 
-    //Todo 2 retrieve all values -> vector<string> OK
+    // 2 retrieve all values -> vector<string> OK
 
     string values = "values \\\(('[\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?)(( )?,( )?('[\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?))*\\\)";
     string values_str;
@@ -40,25 +40,25 @@ void insert_query::check() {
     values_str = string_utilities::erase_substring(values_str, "values ");
     vector<string> values_vector = string_utilities::convert_parenthesis_string_to_vector_delimiter(values_str, COMA_DELIMITER);
 
-    //Todo 3.1 check if nb columns == nb values -> size1 == size2 OK
+    // 3.1 check if nb columns == nb values -> size1 == size2 OK
     if (columns_vector.size() != values_vector.size()) {
         throw insert_number_columns_values_exception();
     }
 
-    //Todo 3.2 check if duplicate in columns OK
+    // 3.2 check if duplicate in columns OK
     if (db_table_utilities::is_duplicate_columns(columns_vector)) {
         throw insert_duplicate_columns_exception();
     }
 
-    //Todo 4 retrieve all columns from definition_file get_table_definition()->get_table_definition() -> vector of column_def
+    // 4 retrieve all columns from definition_file get_table_definition()->get_table_definition() -> vector of column_def
     vector<string> columns_name_from_file = definition_file::get_instance()->get_all_columns_names();
     vector<field_type_t> columns_type_from_file = definition_file::get_instance()->get_all_columns_types();
 
 
-    //Todo 6.1 compare types values/columns from definition_file -> check if "'"
-    //Todo 6.2 convert int, float, PK in long long, ... -> in uint8_t + complete string to be have 255 characters
-    //Todo 6.3 primary_key management
-    //Todo 6.4 put every column in the correct order
+    // 6.1 compare types values/columns from definition_file -> check if "'"
+    // 6.2 convert int, float, PK in long long, ... -> in uint8_t + complete string to be have 255 characters
+    // 6.3 primary_key management
+    // 6.4 put every column in the correct order
 
     bool is_column_in_insert_query;
     for (int i = 0; i < columns_name_from_file.size(); ++i) {
@@ -158,8 +158,7 @@ void insert_query::expand() {}
 
 void insert_query::execute() {
 
-    cout << "execute()" << endl;
-    //Todo execute insert
+    // execute insert
     content_file* content_file_ = content_file::get_instance();
     content_file_->write_record(record,offset);
 

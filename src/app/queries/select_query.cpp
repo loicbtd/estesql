@@ -43,7 +43,7 @@ void select_query::check() {
     }
 */
 
-    //Todo 1 retrieve all columns from query
+    // 1 retrieve all columns from query
     smatch smatch_;
     string columns = "select [a-z0-9_-]+(( )?,( )?[a-z0-9_-]+)* from ";
     string columns_str;
@@ -56,16 +56,16 @@ void select_query::check() {
 
     vector<string> columns_select_vector = string_utilities::convert_string_to_vector_delimiter(columns_str, COMA_DELIMITER);
 
-    //Todo 2.2 retrieve all columns from definition_file
+    // 2.2 retrieve all columns from definition_file
     vector<string> columns_name_from_file = definition_file::get_instance()->get_all_columns_names();
     vector<field_type_t> columns_type_from_file = definition_file::get_instance()->get_all_columns_types();
 
-    //Todo 2.2 check if nb columns query <= nb columns file
+    // 2.2 check if nb columns query <= nb columns file
     if (columns_select_vector.size() > columns_name_from_file.size()) {
         throw select_number_columns_exception();
     }
 
-    //Todo 3 memorize indexes of selected columns + test if all columns from query exist + set offset for reading
+    // 3 memorize indexes of selected columns + test if all columns from query exist + set offset for reading
     bool is_column_exist;
     offset = 0;
     vector<int> columns_selected_indexes_(columns_name_from_file.size(),0);
@@ -94,9 +94,9 @@ void select_query::check() {
 
     }
 
-    //Todo clear vector
+    //clear vector
     columns_selected_indexes.clear();
-    //Todo copy * in attribute
+    //copy * in attribute
     copy(columns_selected_indexes_.begin(), columns_selected_indexes_.end(), back_inserter(columns_selected_indexes));
 
 }
@@ -113,6 +113,7 @@ void select_query::execute() {
 
     content_file* content_file = content_file::get_instance();
     vector<uint8_t> content = content_file->read_record(offset);
+    //Todo convert into proper types
 
     vector<string> columns_name_from_file = definition_file::get_instance()->get_all_columns_names();
 
