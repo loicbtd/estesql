@@ -2,8 +2,10 @@
 #define ESTESQL_TABLE_FILE_H
 
 #include <string>
-#include <fstream>
 #include <filesystem>
+#include <fstream>
+#include <cstring>
+#include <cstddef>
 
 #include "db_info.h"
 #include "app/constants/test_strings.h"
@@ -31,7 +33,7 @@ public:
 
     bool exists();
 
-    void open();
+    virtual void open();
 
     void close();
 };

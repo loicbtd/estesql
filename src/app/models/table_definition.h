@@ -13,10 +13,11 @@ public:
     void setColumns(const vector<column_definition *> &columns);
 
 protected:
-    vector<column_definition*> columns;
+    vector<column_definition *> columns;
 public:
     const vector<column_definition *> &get_columns() const;
-    void add_column(column_definition* column);
+
+    void add_column(column_definition *column);
 };
 
 

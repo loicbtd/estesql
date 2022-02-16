@@ -6,14 +6,14 @@ string index_file_should::name() {
 
 map<string, bool> index_file_should::pass_tests() {
     return {
-            {"get_index_entry",       get_index_entry()},
             {"write_index_entry", write_index_entry()},
+            {"get_index_entry", get_index_entry()},
     };
 }
 
-bool index_file_should::get_index_entry() {
+bool index_file_should::write_index_entry() {
     // Arrange
-    db_info* info = db_info::get_instance();
+    db_info *info = db_info::get_instance();
     info->setCurrentDbPath(TEST_CURRENT_DB_PATH);
     info->setDbName(TEST_DB_NAME);
     info->setDbParentFolderPath(TEST_DB_PARENT_FOLDER_PATH);
@@ -21,20 +21,10 @@ bool index_file_should::get_index_entry() {
     index_file *file = index_file::get_instance();
     file->set_current_table_name(TEST_TABLE_NAME);
 
-    // Act
-    index_entry entry;
+    index_entry entry = index_entry();
 
-    try {
-        entry = file->get_index_entry(0);
-    } catch (exception &) {
-        return false;
-    }
+    file->write_index_entry(entry, 0);
 
-    // Assert
-    return true;
-}
-
-bool index_file_should::write_index_entry() {
     return false;
 //    // Arrange
 //    db_info::get_instance()->setCurrentDbPath(DATABASE1_PATH);
@@ -65,3 +55,24 @@ bool index_file_should::write_index_entry() {
 //            strcmp(columns[1]->getName().c_str(), "field2") == 0
 //    );
 }
+
+bool index_file_should::get_index_entry() {
+    // Arrange
+    db_info *info = db_info::get_instance();
+    info->setCurrentDbPath(TEST_CURRENT_DB_PATH);
+    info->setDbName(TEST_DB_NAME);
+    info->setDbParentFolderPath(TEST_DB_PARENT_FOLDER_PATH);
+
+    index_file *file = index_file::get_instance();
+    file->set_current_table_name(TEST_TABLE_NAME);
+
+    // Act
+    index_entry entry;
+    entry = file->get_index_entry(0);
+
+
+    // Assert
+    return false;
+}
+
+

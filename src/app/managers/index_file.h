@@ -6,6 +6,8 @@
 #include <filesystem>
 
 #include "app/exceptions/file_is_not_open_exception.h"
+#include "app/exceptions/index_file_is_not_valid_exception.h"
+#include "app/exceptions/inability_to_retrieve_file_length_exception.h"
 #include "db_info.h"
 #include "table_file.h"
 #include "app/constants/file_extensions.h"
@@ -24,6 +26,8 @@ public:
     static index_file *get_instance();
 
     index_file() : table_file(INDEX_FILE_EXTENSION) {}
+
+    void open() override;
 
     void write_index_entry(const index_entry &entry, uint32_t offset);
 

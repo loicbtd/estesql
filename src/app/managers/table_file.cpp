@@ -34,8 +34,10 @@ void table_file::open() {
         }
 
         try {
-            fopen((db_info::get_instance()->getCurrentDbPath() + "/" + source_file + "/" + source_file +
+            auto a= fopen((db_info::get_instance()->getCurrentDbPath() + "/" + source_file + "/" + source_file +
                    file_extension).c_str(), "w+");
+
+            fclose(a);
         } catch (exception &) {
             throw inability_to_create_file_exception();
         }
