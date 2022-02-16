@@ -9,9 +9,8 @@ map<string, bool> table_file_should::pass_tests() {
             {"exist",     exist()},
             {"not_exist", not_exist()},
             {"open",      open()},
-            {"not_open",  not_open()},
             {"close",     close()},
-            {"not_open",  not_open()},
+            {"not_close",  not_close()},
     };
 }
 
@@ -22,7 +21,7 @@ bool table_file_should::exist() {
     info->setDbName(TEST_DB_NAME);
     info->setDbParentFolderPath(TEST_DB_PARENT_FOLDER_PATH);
 
-    table_file *file = new table_file("");
+    table_file *file = new table_file(DEFINITION_FILE_EXTENSION);
     file->set_current_table_name(TEST_TABLE_NAME);
 
     // Act
@@ -47,28 +46,64 @@ bool table_file_should::not_exist() {
 
 bool table_file_should::open() {
     // Arrange
-    // Act
-    // Assert
-    return false;
-}
+    db_info *info = db_info::get_instance();
+    info->setCurrentDbPath(TEST_CURRENT_DB_PATH);
+    info->setDbName(TEST_DB_NAME);
+    info->setDbParentFolderPath(TEST_DB_PARENT_FOLDER_PATH);
 
-bool table_file_should::not_open() {
-    // Arrange
+    table_file *file = new table_file(DEFINITION_FILE_EXTENSION);
+    file->set_current_table_name(TEST_TABLE_NAME);
+
     // Act
+    try {
+        file->open();
+    } catch (exception &) {
+        return false;
+    }
+
     // Assert
-    return false;
+    return true;
 }
 
 bool table_file_should::close() {
     // Arrange
+    db_info *info = db_info::get_instance();
+    info->setCurrentDbPath(TEST_CURRENT_DB_PATH);
+    info->setDbName(TEST_DB_NAME);
+    info->setDbParentFolderPath(TEST_DB_PARENT_FOLDER_PATH);
+
+    table_file *file = new table_file(DEFINITION_FILE_EXTENSION);
+    file->set_current_table_name(TEST_TABLE_NAME);
+
     // Act
+    try {
+        file->open();
+        file->close();
+    } catch (exception &) {
+        return false;
+    }
+
     // Assert
-    return false;
+    return true;
 }
 
 bool table_file_should::not_close() {
     // Arrange
+    db_info *info = db_info::get_instance();
+    info->setCurrentDbPath(TEST_CURRENT_DB_PATH);
+    info->setDbName(TEST_DB_NAME);
+    info->setDbParentFolderPath(TEST_DB_PARENT_FOLDER_PATH);
+
+    table_file *file = new table_file(DEFINITION_FILE_EXTENSION);
+    file->set_current_table_name(to_string((time(nullptr))));
+
     // Act
+    try {
+        file->close();
+    } catch (exception &) {
+        return true;
+    }
+
     // Assert
     return false;
 }

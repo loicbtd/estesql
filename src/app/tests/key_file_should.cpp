@@ -6,7 +6,17 @@ string key_file_should::name() {
 
 map<string, bool> key_file_should::pass_tests() {
     return {
+            {"get_next_key", get_next_key()},
+            {"update_key", update_key()},
     };
+}
+
+bool key_file_should::get_next_key() {
+    return false;
+}
+
+bool key_file_should::update_key() {
+    return false;
 }
 
 
