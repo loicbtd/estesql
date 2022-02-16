@@ -3,11 +3,11 @@
 void create_table_query::parse() {
 
     string str_regex ("create table ");
-    str_regex.append(getTableName()).append(" \\\([a-z0-9_-]+ (int|primary_key|float|text)(,( )?[a-z0-9_-]+ (int|primary_key|float|text)( )?)*\\\)( )?;");
+    str_regex.append(get_table_name()).append(" \\\([a-z0-9_-]+ (int|primary_key|float|text)(,( )?[a-z0-9_-]+ (int|primary_key|float|text)( )?)*\\\)( )?;");
 
     regex regex_ (str_regex);
 
-    if (!regex_match(getQuery(), regex_)) {
+    if (!regex_match(get_query(), regex_)) {
         throw slq_invalid_syntax_exception(CREATE_TABLE_SYNTAX);
     }
 
@@ -16,19 +16,17 @@ void create_table_query::parse() {
 void create_table_query::check() {
 
     parse();
-    //Todo 1 getInstance of definition_file
-    //Todo 2 check if table exists ie if diectory with name of the table exists
 
-    bool temp_bool_table_exists = false;
+    definition_file* def_file = definition_file::get_instance();
 
-    if (temp_bool_table_exists) {
+    if (def_file->exists()) {
         throw already_existing_table_exception();
     }
 
     smatch smatch_;
     string columns = "\\\([a-z0-9_-]+ (int|primary_key|float|text)(,( )?[a-z0-9_-]+ (int|primary_key|float|text)( )?)*\\\)";
     string parameters_str;
-    if (regex_search(getQuery(), smatch_, regex(columns))) {
+    if (regex_search(get_query(), smatch_, regex(columns))) {
         parameters_str = smatch_.str();
     }
 
@@ -77,8 +75,7 @@ void create_table_query::check() {
         throw missing_or_multiple_primary_key_exception();
     }
 
-    //TODO 1 getInstance of table_definition
-    //TODO 2 setColumnVector
+    set_table_definition_create(table_definition(columns_vector));
 
 }
 
@@ -86,9 +83,15 @@ void create_table_query::expand() {}
 
 void create_table_query::execute() {
 
-    //Todo 1 getInstance of table_definition
-    //Todo 2 getInstance of definition_file
-    //Todo 3 definition_file_instance->write_table_definition(table_definition);
+    definition_file::get_instance()->write_table_definition(get_table_definition_create());
 
+}
+
+const table_definition &create_table_query::get_table_definition_create() const {
+    return table_definition_create;
+}
+
+void create_table_query::set_table_definition_create(const table_definition &tableDefinitionCreate) {
+    table_definition_create = tableDefinitionCreate;
 }
 

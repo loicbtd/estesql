@@ -9,15 +9,18 @@ using namespace std;
 
 class table_definition {
 protected:
-public:
-    void setColumns(const vector<column_definition *> &columns);
+    vector<column_definition*> columns;
 
-protected:
-    vector<column_definition *> columns;
 public:
+    table_definition(vector<column_definition*> columns_): columns(columns_) {}
+
+    void set_columns(const vector<column_definition *> &columns);
+    
     const vector<column_definition *> &get_columns() const;
 
-    void add_column(column_definition *column);
+    void add_column(column_definition* column);
+
+    table_definition();
 };
 
 

@@ -31,6 +31,30 @@ table_definition definition_file::get_table_definition() {
     return table;
 }
 
+vector<string> definition_file::get_all_columns_names() {
+
+    vector<string> columns_name_from_file;
+
+    for (auto col_def: get_table_definition().get_columns()) {
+        columns_name_from_file.push_back(col_def->get_name());
+    }
+
+    return columns_name_from_file;
+
+}
+
+vector<field_type_t> definition_file::get_all_columns_types() {
+
+    vector<field_type_t> columns_types_from_file;
+
+    for (auto col_def: get_table_definition().get_columns()) {
+        columns_types_from_file.push_back(col_def->get_type());
+    }
+
+    return columns_types_from_file;
+
+}
+
 void definition_file::write_table_definition(const table_definition &definition) {
     open();
 

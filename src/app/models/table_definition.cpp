@@ -8,7 +8,7 @@ void table_definition::add_column(column_definition* column) {
     this->columns.push_back(column);
 }
 
-void table_definition::setColumns(const vector<column_definition *> &columns) {
+void table_definition::set_columns(const vector<column_definition *> &columns) {
 
     for (auto column : table_definition::columns) {
         delete column;
@@ -18,3 +18,5 @@ void table_definition::setColumns(const vector<column_definition *> &columns) {
 
     table_definition::columns = columns;
 }
+
+table_definition::table_definition() {}

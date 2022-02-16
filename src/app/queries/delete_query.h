@@ -32,7 +32,7 @@ public:
             if (stop) {
 
                 vector_string.erase(remove(vector_string.begin(), vector_string.end(), ';'), vector_string.end());
-                setTableName(vector_string);
+                set_table_name(vector_string);
                 break;
 
             }

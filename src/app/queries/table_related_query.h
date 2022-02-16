@@ -9,9 +9,9 @@ class table_related_query : public sql_query {
 public:
     table_related_query(string sql): sql_query(sql) {}
 
-    const string &getTableName() const;
+    const string &get_table_name() const;
 
-    void setTableName(const string &tableName);
+    void set_table_name(const string &tableName);
 
 
 protected:

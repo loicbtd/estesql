@@ -20,6 +20,14 @@ public:
 
     static string format_string_for_uint8_t(string string_);
     static string delete_quote(string string_);
+
+    static bool contains(string str, string substring);
+
+    static vector<string> convert_string_to_vector_delimiter(string &string_, char delimiter);
+
+    static string erase_substring(string &string_, string substring);
+
+    static string convert_vector_into_string_delimiter(vector<string> vector_, char delimiter);
 };
 
 

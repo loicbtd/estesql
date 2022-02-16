@@ -1,6 +1,6 @@
 #include "index_file.h"
 
-index_file *index_file::index_file_ = nullptr;;
+index_file* index_file::index_file_ = nullptr;
 
 index_file *index_file::get_instance() {
     if (index_file_ == nullptr) {

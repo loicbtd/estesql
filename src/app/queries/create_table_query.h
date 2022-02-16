@@ -16,6 +16,8 @@
 #include "app/helpers/string_utilities.h"
 #include "app/helpers/db_table_utilities.h"
 
+#include "app/managers/definition_file.h"
+
 #include "app/models/column_definition.h"
 
 using namespace std;
@@ -42,7 +44,7 @@ public:
             if (stop) {
 
                 vector_string.erase(remove(vector_string.begin(), vector_string.end(), ';'), vector_string.end());
-                setTableName(vector_string);
+                set_table_name(vector_string);
                 break;
 
             }
@@ -58,6 +60,13 @@ public:
     void expand() override;
 
     void execute() override;
+
+    const table_definition &get_table_definition_create() const;
+
+    void set_table_definition_create(const table_definition &tableDefinitionCreate);
+
+private:
+    table_definition table_definition_create;
 
 
 };

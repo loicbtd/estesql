@@ -12,14 +12,14 @@ private:
     string db_name;
     string db_parent_folder_path;
 public:
-    const string &getDbParentFolderPath() const;
+    const string &get_db_parent_folder_path() const;
 
-    void setDbParentFolderPath(const string &dbParentFolderPath);
+    void set_db_parent_folder_path(const string &dbParentFolderPath);
 
 public:
-    const string &getDbName() const;
+    const string &get_db_name() const;
 
-    void setDbName(const string &dbName);
+    void set_db_name(const string &dbName);
 
 
     db_info() {}
@@ -28,9 +28,9 @@ public:
 
     static db_info *get_instance();
 
-    const string &getCurrentDbPath() const;
+    const string &get_current_db_path() const;
 
-    void setCurrentDbPath(const string &currentDbPath);
+    void set_current_db_path(const string &currentDbPath);
 
 };
 

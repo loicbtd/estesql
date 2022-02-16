@@ -66,8 +66,8 @@ void app::start(int argc, char const *argv[]) {
         try {
 
             unique_ptr<sql_query> sql_query = query_generator::generate_query(sql);
-            cout << "Query: " << sql_query->getQuery() << endl;
-            // Todo retrieve singleton definition_file, then set source_file = getTableName()
+            cout << "Query: " << sql_query->get_query() << endl;
+            // Todo retrieve singleton definition_file, then set source_file = get_table_name()
             sql_query->check();
             sql_query->execute();
 
@@ -124,7 +124,7 @@ bool app::usage(int argc, const char **argv, db_info *db_info) {
 
     if (db_table_utilities::exists(db_parent_folder_path.c_str())) {
 
-        db_info->setDbParentFolderPath(db_parent_folder_path);
+        db_info->set_db_parent_folder_path(db_parent_folder_path);
 
         for_each(db_name.begin(), db_name.end(), [](char &c) {
             c = ::tolower(c);
@@ -134,12 +134,12 @@ bool app::usage(int argc, const char **argv, db_info *db_info) {
 
         if (!db_table_utilities::exists(db_path.c_str())) {
             create_database_query new_db = create_database_query();
-            new_db.createDb(db_path);
+            new_db.create_db_at_path(db_path);
         }
 
-        db_info->setCurrentDbPath(db_path);
+        db_info->set_current_db_path(db_path);
 
-        db_info->setDbName(db_name);
+        db_info->set_db_name(db_name);
         return true;
 
     }
