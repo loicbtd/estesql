@@ -3,7 +3,6 @@
 
 #include <fstream>
 #include <filesystem>
-#include <iostream>
 
 #include "app/constants/file_extensions.h"
 #include "app/exceptions/file_is_not_open_exception.h"

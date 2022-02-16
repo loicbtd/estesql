@@ -14,8 +14,8 @@ protected:
 public:
     table_definition(vector<column_definition*> columns_): columns(columns_) {}
 
-
     void set_columns(const vector<column_definition *> &columns);
+    
     const vector<column_definition *> &get_columns() const;
 
     void add_column(column_definition* column);

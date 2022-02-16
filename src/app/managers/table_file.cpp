@@ -1,3 +1,4 @@
+#include <iostream>
 #include "table_file.h"
 
 table_file::table_file(string extension) {
@@ -17,7 +18,8 @@ bool table_file::exists() {
 
     try {
         exist = filesystem::exists(
-                db_info::get_instance()->get_current_db_path() + "/" + source_file + "/" + source_file + file_extension);
+                db_info::get_instance()->get_current_db_path() + "/" + source_file + "/" + source_file +
+                file_extension);
     } catch (exception &) {
         throw inability_to_check_if_file_exists_exception();
     }
@@ -43,7 +45,8 @@ void table_file::open() {
 
     try {
         file.open(
-                db_info::get_instance()->get_current_db_path() + "/" + source_file + "/" + source_file + file_extension);
+                db_info::get_instance()->get_current_db_path() + "/" + source_file + "/" + source_file +
+                file_extension);
     }
     catch (exception &) {
         throw inability_to_open_file_exception();
@@ -55,4 +58,14 @@ void table_file::close() {
         throw file_is_not_open_exception();
     }
     file.close();
+}
+
+uintmax_t table_file::get_size() {
+    try {
+        return filesystem::file_size(
+                db_info::get_instance()->get_current_db_path() + "/" + source_file + "/" + source_file +
+                file_extension);
+    } catch (exception &) {
+        throw inability_to_retrieve_file_length_exception();
+    }
 }
