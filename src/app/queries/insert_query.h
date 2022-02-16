@@ -29,6 +29,10 @@ using namespace std;
 class insert_query : public table_related_query {
 protected:
     vector<uint8_t> record;
+public:
+    const vector<uint8_t> &get_record() const;
+
+protected:
     uint32_t length;
 
 public:

@@ -169,6 +169,12 @@ void insert_query::execute() {
     // execute insert
     content_file* content_file_ = content_file::get_instance();
     index_file* index_file = index_file::get_instance();
-    content_file_->write_record(record, index_file->get_first_inactive_index());
+    content_file_->write_record(get_record(), index_file->get_first_inactive_index());
 
 }
+
+const vector<uint8_t> &insert_query::get_record() const {
+    return record;
+}
+
+
