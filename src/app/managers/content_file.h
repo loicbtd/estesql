@@ -17,7 +17,7 @@ public:
 
     void write_record(const std::vector<uint8_t> &record, uint32_t offset);
 
-    vector<uint8_t> read_record(uint32_t offset);
+    vector<uint8_t> read_record(uint16_t length, uint32_t offset);
 };
 
 #endif //ESTESQL_CONTENT_FILE_H

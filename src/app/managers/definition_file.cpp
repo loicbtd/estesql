@@ -35,7 +35,7 @@ vector<string> definition_file::get_all_columns_names() {
 
     vector<string> columns_name_from_file;
 
-    for (auto col_def: get_table_definition().get_columns()) {
+    for (column_definition *col_def: get_table_definition().get_columns()) {
         columns_name_from_file.push_back(col_def->get_name());
     }
 
