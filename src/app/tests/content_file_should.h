@@ -19,10 +19,16 @@
 
 using namespace std;
 
-class content_file_should: public test_base {
+class content_file_should : public test_base {
 public:
     string name() override;
+
     map<string, bool> pass_tests() override;
+
+private:
+    bool write_record();
+
+    bool read_record();
 };
 
 

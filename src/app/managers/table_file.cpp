@@ -8,8 +8,8 @@ const string &table_file::get_current_table_name() const {
     return source_file;
 }
 
-void table_file::set_current_table_name(const string &sourceFile) {
-    source_file = sourceFile;
+void table_file::set_current_table_name(const string &source) {
+    this->source_file = source;
 }
 
 bool table_file::exists() {

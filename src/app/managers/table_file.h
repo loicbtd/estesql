@@ -27,7 +27,7 @@ public:
 
     const string &get_current_table_name() const;
 
-    void set_current_table_name(const string &sourceFile);
+    void set_current_table_name(const string &source);
 
     bool exists();
 

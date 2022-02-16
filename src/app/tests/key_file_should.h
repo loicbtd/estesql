@@ -23,6 +23,11 @@ class key_file_should: public test_base {
 public:
     string name() override;
     map<string, bool> pass_tests() override;
+
+private:
+    bool get_next_key();
+
+    bool update_key();
 };
 
 

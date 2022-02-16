@@ -26,7 +26,6 @@ private:
     bool exist();
     bool not_exist();
     bool open();
-    bool not_open();
     bool close();
     bool not_close();
 };
