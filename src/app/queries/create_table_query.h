@@ -15,6 +15,7 @@
 
 #include "app/helpers/string_utilities.h"
 #include "app/helpers/db_table_utilities.h"
+#include "app/helpers/file_set_up.h"
 
 #include "app/managers/definition_file.h"
 
@@ -45,6 +46,8 @@ public:
 
                 vector_string.erase(remove(vector_string.begin(), vector_string.end(), ';'), vector_string.end());
                 set_table_name(vector_string);
+                file_set_up::set_up_source_file(get_table_name());
+
                 break;
 
             }
