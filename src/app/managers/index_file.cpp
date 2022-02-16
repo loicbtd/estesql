@@ -59,6 +59,8 @@ index_entry index_file::get_index_entry(uint32_t position) {
 }
 
 int index_file::get_entries_count() {
+    open();
+    close();
     return get_size() / INDEX_ENTRY_PERSISTED_SIZE_IN_BITS;
 }
 
