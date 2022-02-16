@@ -3,7 +3,7 @@
 void insert_query::parse() {
 
     string str_regex ("insert into ");
-    str_regex.append(getTableName()).append(" \\\([a-z0-9_-]+(( )?,( )?[a-z0-9_-]+)*\\\) values \\\(('[a-z0-9_-]+'|[0-9]+(.[0-9]+)?)(( )?,( )?('[a-z0-9_-]+'|[0-9]+(.[0-9]+)?))*\\\)( )?;");
+    str_regex.append(getTableName()).append(" \\\([a-z0-9_-]+(( )?,( )?[a-z0-9_-]+)*\\\) values \\\(('[.\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?)(( )?,( )?('[.\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?))*\\\)( )?;");
     regex regex_ (str_regex);
 
     if (!regex_match(getQuery(), regex_)) {
@@ -36,7 +36,7 @@ void insert_query::check() {
 
     //Todo 2 retrieve all values -> vector<string> OK
 
-    string values = "values \\\(('[a-z0-9_-]+'|[0-9]+(.[0-9]+)?)(( )?,( )?('[a-z0-9_-]+'|[0-9]+(.[0-9]+)?))*\\\)";
+    string values = "values \\\(('[\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?)(( )?,( )?('[\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?))*\\\)";
     string values_str;
 
     if (regex_search(getQuery(), smatch_, regex(values))) {
@@ -78,10 +78,16 @@ void insert_query::check() {
     //Todo 6.3 primary_key management
     //Todo 6.4 put every column in the correct order
 /*
+    bool is_column_in_insert_query;
     for (int i = 0; i < columns_name_from_file.size(); ++i) {
+
+        is_column_in_insert_query = false;
+
         for (int j = 0; j < columns_vector.size(); ++j) {
 
             if (columns_vector[j]==columns_name_from_file[i]) {
+
+                is_column_in_insert_query = true;
 
                 string value = values_vector[j];
 
@@ -132,6 +138,38 @@ void insert_query::check() {
             }
 
         }
+
+        if (is_column_in_insert_query==false) {
+            if (columns_type_from_file[i]==INT) {
+
+                    record.push_back(stoll(XXXXX));
+                    offset += 8;
+
+                } else if (columns_type_from_file[i]==FLOAT) {
+
+                    record.push_back(stod(XXXXX));
+                    offset += 8;
+
+                } else if (columns_type_from_file[i]==PRIMARY_KEY) {
+
+                    key_file* p_key_file = key_file::GetInstance();
+                    uint64_t p_key p_key_file->get_next_key();
+
+                    p_key_file->update_key(p_key);
+
+                    record.push_back(p_key);
+                    offset += 8;
+
+                } else if (columns_type_from_file[i]==TEXT) {
+
+                    string empty_str = string_utilities::format_string_for_uint8_t('');
+                    vector<uint8_t> str_to_uint8_t_vector(empty_str.begin(), empty_str.end());
+                    record.insert(str_to_uint8_t_vector.end(), str_to_uint8_t_vector.begin(), str_to_uint8_t_vector.end());
+                    offset += 255;
+
+                }
+        }
+
     }
 
 */
