@@ -13,8 +13,10 @@
 #include "app/models/where_clause.h"
 
 #include "app/managers/db_info.h"
+#include "app/managers/definition_file.h"
 
 #include "app/helpers/db_table_utilities.h"
+#include "app/helpers/build_where_clause.h"
 
 using namespace std;
 

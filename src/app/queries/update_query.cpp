@@ -10,7 +10,7 @@ void update_query::parse() {
 
     if (regex_search(get_query(), smatch_, regex(where_clause))) {
 
-        str_regex.append(" where [a-z0-9_-]+( )?(>|<|<=|>=|=|<>)( )?[a-z0-9_-]+( (and|or) [a-z0-9_-]+( )?(>|<|<=|>=|=|<>)( )?[a-z0-9_-]+)*( )?;");
+        str_regex.append(" where [a-z0-9_-]+( )?(<=|>=|=|<>|>|<)( )?[a-z0-9_-]+( (and|or) [a-z0-9_-]+( )?(<=|>=|=|<>|>|<)( )?[a-z0-9_-]+)*( )?;");
         set_is_where_clause(true);
 
     } else {
@@ -35,6 +35,17 @@ void update_query::check() {
     string current_db_path = db_info::get_instance()->get_current_db_path();
     if (db_table_utilities::exists(current_db_path.append("/").append(get_table_name()).c_str())) {
         throw non_existing_table_exception();
+    }
+
+    //Todo 2.2 retrieve all columns from definition_file
+    vector<string> columns_name_from_file = definition_file::get_instance()->get_all_columns_names();
+    vector<field_type_t> columns_type_from_file = definition_file::get_instance()->get_all_columns_types();
+
+
+
+
+    if (is_where_clause_get()) {
+        set_where_clause(build_where_clause::build_where(get_query(), UPDATE_SYNTAX, columns_name_from_file));
     }
 
 }
