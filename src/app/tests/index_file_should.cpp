@@ -6,12 +6,11 @@ string index_file_should::name() {
 
 map<string, bool> index_file_should::pass_tests() {
     return {
-            {"write_index_entry", write_index_entry()},
-            {"get_index_entry", get_index_entry()},
+            {"write_and_retrieve_the_same", write_and_retrieve_the_same()},
     };
 }
 
-bool index_file_should::write_index_entry() {
+bool index_file_should::write_and_retrieve_the_same() {
     // Arrange
     db_info *info = db_info::get_instance();
     info->setCurrentDbPath(TEST_CURRENT_DB_PATH);
@@ -19,60 +18,42 @@ bool index_file_should::write_index_entry() {
     info->setDbParentFolderPath(TEST_DB_PARENT_FOLDER_PATH);
 
     index_file *file = index_file::get_instance();
-    file->set_current_table_name(TEST_TABLE_NAME);
+    file->set_current_table_name(to_string((time(nullptr))));
 
-    index_entry entry = index_entry();
+    index_entry initial_entry0 = index_entry();
+    initial_entry0.is_active = false;
+    initial_entry0.position = 65;
+    initial_entry0.length = 254;
 
-    file->write_index_entry(entry, 0);
+    index_entry initial_entry1 = index_entry();
+    initial_entry1.is_active = true;
+    initial_entry1.position = 5954;
+    initial_entry1.length = 41;
 
-    return false;
-//    // Arrange
-//    db_info::get_instance()->setCurrentDbPath(DATABASE1_PATH);
-//    index_file *file = new index_file(to_string((time(nullptr))));
-//
-//    table_definition definition = table_definition();
-//
-//    column_definition* column1 = new column_definition();
-//    column1->setType(PRIMARY_KEY);
-//    column1->setName("field1");
-//    definition.addColumn(column1);
-//
-//    column_definition* column2 = new column_definition();
-//    column2->setType(FLOAT);
-//    column2->setName("field2");
-//    definition.addColumn(column2);
-//
-//    // Act
-//    file->write_table_definition(definition);
-//
-//    // Assert
-//    vector<column_definition *> columns = file->get_table_definition().getColumns();
-//    return (
-//            columns.size() == 2 &&
-//            columns[0]->getType() == PRIMARY_KEY &&
-//            columns[1]->getType() == FLOAT &&
-//            strcmp(columns[0]->getName().c_str(), "field1") == 0 &&
-//            strcmp(columns[1]->getName().c_str(), "field2") == 0
-//    );
-}
-
-bool index_file_should::get_index_entry() {
-    // Arrange
-    db_info *info = db_info::get_instance();
-    info->setCurrentDbPath(TEST_CURRENT_DB_PATH);
-    info->setDbName(TEST_DB_NAME);
-    info->setDbParentFolderPath(TEST_DB_PARENT_FOLDER_PATH);
-
-    index_file *file = index_file::get_instance();
-    file->set_current_table_name(TEST_TABLE_NAME);
+    index_entry initial_entry2 = index_entry();
+    initial_entry2.is_active = true;
+    initial_entry2.position = 1551994;
+    initial_entry2.length = 8118;
 
     // Act
-    index_entry entry;
-    entry = file->get_index_entry(0);
+    file->write_index_entry(initial_entry0, 0);
+    file->write_index_entry(initial_entry1, 1);
+    file->write_index_entry(initial_entry2, 2);
 
+    index_entry final_entry0 = file->get_index_entry(0);
+    index_entry final_entry1 = file->get_index_entry(1);
+    index_entry final_entry2 = file->get_index_entry(2);
 
     // Assert
-    return false;
+    return (
+            initial_entry0.is_active == final_entry0.is_active &&
+            initial_entry0.position == final_entry0.position &&
+            initial_entry0.length == final_entry0.length &&
+            initial_entry1.is_active == final_entry1.is_active &&
+            initial_entry1.position == final_entry1.position &&
+            initial_entry1.length == final_entry1.length &&
+            initial_entry2.is_active == final_entry2.is_active &&
+            initial_entry2.position == final_entry2.position &&
+            initial_entry2.length == final_entry2.length
+    );
 }
-
-

@@ -15,6 +15,7 @@
 #include "app/exceptions/inability_to_create_file_exception.h"
 #include "app/exceptions/inability_to_create_directory_exception.h"
 #include "app/exceptions/inability_to_open_file_exception.h"
+#include "app/exceptions/inability_to_retrieve_file_length_exception.h"
 
 using namespace std;
 
@@ -33,9 +34,11 @@ public:
 
     bool exists();
 
-    virtual void open();
+    void open();
 
     void close();
+
+    uintmax_t get_size();
 };
 
 #endif //ESTESQL_TABLE_FILE_H

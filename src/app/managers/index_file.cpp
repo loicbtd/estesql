@@ -10,68 +10,56 @@ index_file *index_file::get_instance() {
     return index_file_;
 }
 
-void index_file::open() {
-    uintmax_t size;
-    
-    try {
-        size = filesystem::file_size(
-                db_info::get_instance()->getCurrentDbPath() + "/" + source_file + "/" + source_file + file_extension);
-    } catch (exception &) {
-        throw inability_to_retrieve_file_length_exception();
-    }
-
-    if ((size % 7) != 0) {
-        throw index_file_is_not_valid_exception();
-    }
-
-    table_file::open();
-}
-
 void index_file::write_index_entry(const index_entry &entry, uint32_t offset) {
     open();
 
+    if (get_size() < ((offset) * sizeof(index_entry))) {
+        throw inability_to_write_after_undefined_index_file_position_exception();
+    }
+
+    file.seekp(56 * offset);
+
+    file << bitset<INDEX_ENTRY_PERSISTED_IS_ACTIVE_SIZE_IN_BITS>(entry.is_active ? "0" : "1")
+         << bitset<INDEX_ENTRY_PERSISTED_POSITION_SIZE_IN_BITS>(entry.position)
+         << bitset<INDEX_ENTRY_PERSISTED_LENGTH_SIZE_IN_BITS>(entry.length);
 
     close();
 }
+
 
 index_entry index_file::get_index_entry(uint32_t position) {
     open();
 
-    ifstream::pos_type position_in_file = file.tellg();
-
-    if (position == 0) {
-        return index_entry();
+    if (get_size() < ((position + 1) * sizeof(index_entry))) {
+        throw inability_to_read_undefined_index_file_position_exception();
     }
 
-    vector<char> result(position_in_file);
+    file.seekg(position * INDEX_ENTRY_PERSISTED_SIZE_IN_BITS);
 
-    file.seekg(0, ios::beg);
-    file.read(&result[0], position_in_file);
+    char is_active_data[INDEX_ENTRY_PERSISTED_IS_ACTIVE_SIZE_IN_BITS];
+    file.read(is_active_data, INDEX_ENTRY_PERSISTED_IS_ACTIVE_SIZE_IN_BITS);
+    string is_active_binary_string = "00000000000000000000000000" + (string) is_active_data;
 
-    close();
-    return index_entry();
+    char position_data[INDEX_ENTRY_PERSISTED_POSITION_SIZE_IN_BITS];
+    file.read(position_data, INDEX_ENTRY_PERSISTED_POSITION_SIZE_IN_BITS);
+    string position_binary_string = (string) position_data;
 
+    char length_data[INDEX_ENTRY_PERSISTED_LENGTH_SIZE_IN_BITS];
+    file.read(length_data, INDEX_ENTRY_PERSISTED_LENGTH_SIZE_IN_BITS);
+    string length_binary_string = "0000000000000000" + (string) length_data;
 
-
-//    size_t size = 0;
-//    char *data = 0;
-//
-//    file.seekg(0, ios::end);
-//    size = file.tellg();
-//
-//    file.seekg(0, ios::beg);
-//
-//    data = new char[size + 1];
-//    file.read(data, size);
-//    data[size]= '\0';
-//
-//    for(size_t counter = 0; counter < strlen(data); counter++) {
-//
-//    }
+    index_entry entry = index_entry();
+    entry.is_active = stoi(is_active_binary_string, nullptr, 2) == 0;
+    entry.position = stoi(position_binary_string, nullptr, 2);
+    entry.length = stoi(length_binary_string, nullptr, 2);
 
     close();
 
-    return index_entry();
+    return entry;
+}
+
+int index_file::get_entries_count() {
+    return get_size() / INDEX_ENTRY_PERSISTED_SIZE_IN_BITS;
 }
 
 

@@ -3,7 +3,6 @@
 
 #include <fstream>
 #include <filesystem>
-#include <iostream>
 
 #include "app/constants/file_extensions.h"
 #include "app/exceptions/file_is_not_open_exception.h"
@@ -18,7 +17,7 @@ using namespace std;
 
 class definition_file : public table_file {
 private:
-    static definition_file* definition_file_;
+    static definition_file *definition_file_;
 
 public:
     static definition_file *get_instance();

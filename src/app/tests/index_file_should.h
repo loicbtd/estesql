@@ -23,8 +23,7 @@ public:
     map<string, bool> pass_tests() override;
 
 private:
-    bool get_index_entry();
-    bool write_index_entry();
+    bool write_and_retrieve_the_same();
 };
 
 #endif //ESTESQL_INDEX_FILE_SHOULD_H
