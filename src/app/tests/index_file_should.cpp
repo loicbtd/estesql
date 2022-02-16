@@ -43,12 +43,12 @@ bool index_file_should::write_index_entry() {
 //    table_definition definition = table_definition();
 //
 //    column_definition* column1 = new column_definition();
-//    column1->setType(PRIMARY_KEY);
+//    column1->set_type(PRIMARY_KEY);
 //    column1->setName("field1");
 //    definition.addColumn(column1);
 //
 //    column_definition* column2 = new column_definition();
-//    column2->setType(FLOAT);
+//    column2->set_type(FLOAT);
 //    column2->setName("field2");
 //    definition.addColumn(column2);
 //
@@ -59,8 +59,8 @@ bool index_file_should::write_index_entry() {
 //    vector<column_definition *> columns = file->get_table_definition().getColumns();
 //    return (
 //            columns.size() == 2 &&
-//            columns[0]->getType() == PRIMARY_KEY &&
-//            columns[1]->getType() == FLOAT &&
+//            columns[0]->get_type() == PRIMARY_KEY &&
+//            columns[1]->get_type() == FLOAT &&
 //            strcmp(columns[0]->getName().c_str(), "field1") == 0 &&
 //            strcmp(columns[1]->getName().c_str(), "field2") == 0
 //    );

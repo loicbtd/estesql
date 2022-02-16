@@ -36,9 +36,10 @@ vector<string> string_utilities::convert_string_to_vector_delimiter(string &stri
 
 string string_utilities::erase_substring(string &string_, string substring) {
 
-    size_t pos = string_.find(substring);
+    size_t pos = string::npos;
 
-    if (pos != std::string::npos) {
+    while ((pos = string_.find(substring) )!= std::string::npos) {
+        // If found then erase it from string
         string_.erase(pos, substring.length());
     }
 

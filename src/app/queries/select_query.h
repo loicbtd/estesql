@@ -18,6 +18,10 @@
 
 #include "app/managers/db_info.h"
 #include "app/managers/definition_file.h"
+#include "app/managers/content_file.h"
+#include "app/managers/index_file.h"
+
+#include "app/models/where_clause.h"
 
 using namespace std;
 
@@ -72,10 +76,15 @@ public:
 
     void set_is_where_clause(bool isWhereClause);
 
+    const where_clause &get_where_clause() const;
+
+    void set_where_clause(const where_clause &whereClause);
+
 private:
     vector<int> columns_selected_indexes;
     uint32_t offset;
     bool is_where_clause;
+    where_clause where_clause;
 
 };
 

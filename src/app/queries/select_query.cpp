@@ -1,6 +1,4 @@
 #include "select_query.h"
-#include "app/managers/content_file.h"
-#include "app/managers/index_file.h"
 
 void select_query::parse() {
 
@@ -13,15 +11,19 @@ void select_query::parse() {
     string str_regex ("select [a-z0-9_-]+(( )?,( )?[a-z0-9_-]+)* from ");
     str_regex.append(get_table_name());
 
-    string where_clause = " where ";
+    string where_clause_str = " where ";
     smatch smatch_;
 
-    if (regex_search(get_query(), smatch_, regex(where_clause))) {
-        str_regex.append(" where [a-z0-9_-]+( )?(>|<|<=|>=|=|<>)( )?[a-z0-9_-]+( (and|or) [a-z0-9_-]+( )?(>|<|<=|>=|=|<>)( )?[a-z0-9_-]+)*( )?;");
+    if (regex_search(get_query(), smatch_, regex(where_clause_str))) {
+
+        str_regex.append(" where [a-z0-9_-]+( )?(<=|>=|=|<>|>|<)( )?[a-z0-9_-]+( (and|or) [a-z0-9_-]+( )?(<=|>=|=|<>|>|<)( )?[a-z0-9_-]+)*( )?;");
         set_is_where_clause(true);
+
     } else {
+
         str_regex.append("( )?;");
         set_is_where_clause(false);
+
     }
 
     regex regex_ (str_regex);
@@ -99,6 +101,80 @@ void select_query::check() {
     //copy * in attribute
     copy(columns_selected_indexes_.begin(), columns_selected_indexes_.end(), back_inserter(columns_selected_indexes));
 
+    if (is_where_clause_get()) {
+
+        smatch smatch_where;
+        string where_regex("where [a-z0-9_-]+( )?(<=|>=|=|<>|>|<)( )?[a-z0-9_-]+( (and|or) [a-z0-9_-]+( )?(<=|>=|=|<>|>|<)( )?[a-z0-9_-]+)*");
+        regex_search(get_query(), smatch_where, regex(where_regex));
+        string where_str = smatch_where[0];
+
+        where_str = string_utilities::erase_substring(where_str, "where ");
+
+        int occurrences_and = 0;
+        string::size_type pos = 0;
+        string target_and = "and";
+        while ((pos = where_str.find(target_and, pos )) != string::npos) {
+            ++occurrences_and;
+            pos += target_and.length();
+        }
+
+        int occurrences_or = 0;
+        pos = 0;
+        string target_or = "or";
+        while ((pos = where_str.find(target_or, pos )) != string::npos) {
+            ++occurrences_or;
+            pos += target_or.length();
+        }
+
+        if ((occurrences_and != 0) && (occurrences_or != 0)) {
+            throw slq_invalid_syntax_exception(SELECT_SYNTAX);
+        }
+
+        if (occurrences_or != 0) {
+            where_clause.set_type("or");
+        } else {
+            where_clause.set_type("and");
+        }
+
+        vector<pair<string, vector<string>>> elements;
+
+        int iterator_int=1;
+        smatch match_boolean_clause;
+        string rgx_where_boolean_clause = "[a-z0-9_-]+( )?(<=|>=|=|<>|>|<)( )?[a-z0-9_-]+";
+        while (regex_search(where_str, match_boolean_clause, regex(rgx_where_boolean_clause))) {
+            string boolean_clause_str = match_boolean_clause.str(0);
+
+            boolean_clause_str = string_utilities::erase_substring(boolean_clause_str, " ");
+            smatch smatch_operator;
+            string operators = "(<=|>=|=|<>|>|<)";
+            regex_search(boolean_clause_str, smatch_operator, regex(operators));
+            string op = smatch_operator.str(0);
+
+            boolean_clause_str = regex_replace(boolean_clause_str,regex(smatch_operator.str(0))," ");
+            vector<string> elem = string_utilities::convert_string_to_vector_delimiter(boolean_clause_str, SPACE_DELIMITER);
+
+            elements.emplace_back(op, elem);
+
+            iterator_int++;
+
+            // suffix to find the rest of the string.
+            where_str = match_boolean_clause.suffix().str();
+        }
+
+
+        // check column_names of where clause
+        for (const auto & element : elements){
+//            cout << element.first.c_str() << " | " << element.second.at(0) << endl;
+            if (!(std::find(columns_name_from_file.begin(), columns_name_from_file.end(), element.second.at(0)) != columns_name_from_file.end())) {
+                throw column_non_existing_exception();
+            }
+        }
+
+        where_clause.set_elements(elements);
+
+    }
+
+
 }
 
 void select_query::expand() {
@@ -109,7 +185,7 @@ void select_query::expand() {
     string replace = string_utilities::convert_vector_into_string_delimiter(columns_name_from_file, COMA_DELIMITER);
 
     string str_regex = "\\\*";
-    string query_ = regex_replace(get_query(), std::regex(str_regex), replace);
+    string query_ = regex_replace(get_query(), regex(str_regex), replace);
     cout << "query: " << query_<< endl;
 
     set_query(query_);
@@ -124,11 +200,11 @@ void select_query::execute() {
 
     vector<string> columns_name_from_file = definition_file::get_instance()->get_all_columns_names();
 
-    //Todo where clause management /!\
-
     for (int i = 0; i < columns_name_from_file.size(); ++i) {
         if (columns_selected_indexes[i]==1) {
             //Todo put all values of this column into structure => need to be determined
+            //Todo where clause management /!\
+
         }
     }
 
@@ -158,4 +234,12 @@ bool select_query::is_where_clause_get() const {
 
 void select_query::set_is_where_clause(bool isWhereClause) {
     is_where_clause = isWhereClause;
+}
+
+const where_clause &select_query::get_where_clause() const {
+    return where_clause;
+}
+
+void select_query::set_where_clause(const class where_clause &whereClause) {
+    where_clause = whereClause;
 }
