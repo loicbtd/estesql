@@ -63,14 +63,14 @@ void delete_query::execute() {
 
     if (!is_where_clause_get()) {
 
-        for (int i = 0; i < vector_all_indexes.size(); ++i) {
+        for (auto & vector_all_indexe : vector_all_indexes) {
 
-            if (vector_all_indexes.at(i).is_active) {
+            if (vector_all_indexe.is_active) {
 
                 index_entry index_entry;
                 index_entry.is_active = false;
-                index_entry.position = vector_all_indexes.at(i).position;
-                index_entry.length = vector_all_indexes.at(i).length;
+                index_entry.position = vector_all_indexe.position;
+                index_entry.length = vector_all_indexe.length;
                 index_file->write_index_entry(index_entry, index_entry.position);
 
             }
