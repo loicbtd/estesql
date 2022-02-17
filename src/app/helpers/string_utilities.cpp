@@ -1,6 +1,6 @@
 #include "string_utilities.h"
 
- string string_utilities::left_trim(const string &str) {
+string string_utilities::left_trim(const string &str) {
      return std::regex_replace(str, std::regex("^\\s+"), std::string(""));
 }
 
@@ -92,4 +92,50 @@ vector<uint8_t> string_utilities::append_vector_uint8t_into_another(vector<uint8
 
     return vector_temp;
 
+}
+
+vector<vector<uint8_t>> string_utilities::split_vector_with_type_length(vector<uint8_t> vector_full_record, vector<field_type_t> vector_type) {
+
+    vector<vector<uint8_t>> result;
+
+    int cursor = 0;
+    for (int i = 0; i < vector_type.size(); ++i) {
+
+        int length;
+        switch (vector_type.at(i)) {
+            case INT:
+            case FLOAT:
+            case PRIMARY_KEY:
+                length = 8;
+                break;
+            case TEXT:
+                length = 255;
+                break;
+        }
+
+        int start = cursor;
+        int end = cursor + length;
+        vector<uint8_t> temp;
+        for (int j = start; j < end; ++j) {
+            temp.push_back(vector_full_record.at(j));
+        }
+
+        result.push_back(temp);
+        cursor = end;
+    }
+
+    return result;
+}
+
+vector<uint8_t> string_utilities::convert_vector_of_vector_uint8t_into_vector(const vector<vector<uint8_t>>& vector_to_transform) {
+
+    vector<uint8_t> result;
+
+    for (const auto& vector_uint8_t: vector_to_transform) {
+        for (auto element: vector_uint8_t) {
+            result.push_back(element);
+        }
+    }
+
+    return result;
 }

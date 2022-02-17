@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "app/helpers/db_table_utilities.h"
+
 using namespace std;
 
 class where_clause {
@@ -24,6 +26,8 @@ public:
     const string &get_type() const;
 
     void set_type(const string &type);
+
+    bool is_where_clause_apply(vector<vector<uint8_t>> record, const vector<string>& columns_names, const vector<field_type_t>& columns_types);
 
 };
 
