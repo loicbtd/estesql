@@ -26,9 +26,11 @@ void content_file::write_record(const vector<uint8_t> &record, uint32_t offset) 
 
     for (uint8_t record_item: record) {
         file << record_item;
-        file.seekp(offset + cursor, ios::beg);
+//        file.seekp(offset + cursor, ios::beg);
         cursor++;
     }
+
+    file << endl;
 
     close();
 }
