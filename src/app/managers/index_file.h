@@ -47,6 +47,8 @@ public:
     int get_entries_count();
 
     uint32_t get_first_inactive_index();
+
+    vector<index_entry> retrieve_all();
 };
 
 

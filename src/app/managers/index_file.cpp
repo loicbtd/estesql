@@ -74,4 +74,8 @@ uint32_t index_file::get_first_inactive_index() {
     return get_entries_count();
 }
 
+vector<index_entry> index_file::retrieve_all() {
+    return vector<index_entry>();
+}
+
 
