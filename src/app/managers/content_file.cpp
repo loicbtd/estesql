@@ -20,16 +20,15 @@ void content_file::write_record(const vector<uint8_t> &record, uint32_t offset) 
 
     index_file::get_instance()->write_index_entry(entry, offset);
 
-    file.seekg(offset, ios::end);
-
-    uint8_t cursor = 1;
+    file.seekp(0);
+    string line_buffer;
+    for (long long counter = 0; counter < offset; ++counter) {
+        getline(file, line_buffer);
+    }
 
     for (uint8_t record_item: record) {
         file << record_item;
-//        file.seekp(offset + cursor, ios::beg);
-        cursor++;
     }
-
     file << endl;
 
     close();
@@ -43,5 +42,26 @@ vector<uint8_t> content_file::read_record(uint16_t length, uint32_t offset) {
     close();
 
     return {data.begin() + offset, data.begin() + offset + length};
+}
+
+vector<vector<uint8_t>> content_file::retrieve_all() {
+    open();
+
+    vector<vector<uint8_t>> contents;
+    string line_buffer;
+    vector<uint8_t> temporary_content;
+
+    file.seekg(0);
+    while (getline(file, line_buffer)) {
+        temporary_content = {};
+        for (char character: line_buffer) {
+            temporary_content.push_back(character);
+        }
+        contents.push_back(temporary_content);
+    }
+
+    close();
+
+    return contents;
 }
 

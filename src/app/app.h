@@ -19,11 +19,9 @@
 
 #include "app/exceptions/custom_exception.h"
 
-#include "app/tests/content_file_should.h"
 #include "app/tests/db_utilities_should.h"
 #include "app/tests/definition_file_should.h"
 #include "app/tests/index_file_should.h"
-#include "app/tests/key_file_should.h"
 #include "app/tests/table_file_should.h"
 
 using namespace std;

@@ -21,6 +21,8 @@ public:
     void write_record(const vector<uint8_t> &record, uint32_t offset);
 
     vector<uint8_t> read_record(uint16_t length, uint32_t offset);
+
+    vector<vector<uint8_t>> retrieve_all();
 };
 
 #endif //ESTESQL_CONTENT_FILE_H

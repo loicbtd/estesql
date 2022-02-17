@@ -74,4 +74,17 @@ uint32_t index_file::get_first_inactive_index() {
     return get_entries_count();
 }
 
+vector<index_entry> index_file::retrieve_all() {
+    open();
+    close();
+
+    uintmax_t size = get_size();
+    vector<index_entry> entries(size);
+    for (int position = 0; position < size; ++position) {
+        entries.push_back(get_index_entry(position));
+    }
+
+    return entries;
+}
+
 

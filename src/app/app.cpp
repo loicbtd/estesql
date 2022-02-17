@@ -5,12 +5,10 @@ void app::start(int argc, char const *argv[]) {
         cout << "Testing estesql..." << endl;
 
         vector<test_base *> tests = {
-//                new content_file_should(),
-//                new db_utilities_should(),
-//                new definition_file_should(),
+                new db_utilities_should(),
+                new definition_file_should(),
                 new index_file_should(),
-//                new key_file_should(),
-//                new table_file_should(),
+                new table_file_should(),
         };
 
         int successes_count = 0;
