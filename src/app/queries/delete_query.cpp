@@ -51,7 +51,54 @@ void delete_query::expand() {}
 
 void delete_query::execute() {
 
+    content_file* content_file = content_file::get_instance();
+    vector<vector<uint8_t>> vector_all_records = content_file->retrieve_all();
 
+    index_file* index_file = index_file::get_instance();
+    vector<index_entry> vector_all_indexes = index_file->retrieve_all();
+
+    definition_file* definition_file = definition_file::get_instance();
+    vector<string> columns_name_from_file = definition_file->get_all_columns_names();
+    vector<field_type_t> columns_type_from_file = definition_file->get_all_columns_types();
+
+    if (!is_where_clause_get()) {
+
+        for (int i = 0; i < vector_all_indexes.size(); ++i) {
+
+            if (vector_all_indexes.at(i).is_active) {
+
+                index_entry index_entry;
+                index_entry.is_active = false;
+                index_entry.position = vector_all_indexes.at(i).position;
+                index_entry.length = vector_all_indexes.at(i).length;
+                index_file->write_index_entry(index_entry, index_entry.position);
+
+            }
+
+        }
+
+    } else {
+
+        for (int i = 0; i < vector_all_indexes.size(); ++i) {
+
+            if (vector_all_indexes.at(i).is_active) {
+
+                vector<uint8_t> record = vector_all_records.at(i);
+                vector<vector<uint8_t>> columns_record = string_utilities::split_vector_with_type_length(record, columns_type_from_file);
+
+                if (where_clause.is_where_clause_apply(columns_record, columns_name_from_file, columns_type_from_file)) {
+                    index_entry index_entry;
+                    index_entry.is_active = false;
+                    index_entry.position = vector_all_indexes.at(i).position;
+                    index_entry.length = vector_all_indexes.at(i).length;
+                    index_file->write_index_entry(index_entry, index_entry.position);
+                }
+
+            }
+
+        }
+
+    }
 
 
 }
