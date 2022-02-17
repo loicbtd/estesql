@@ -63,3 +63,35 @@ vector<uint8_t> db_table_utilities::float_to_binary_string_to_vector(double valu
 
     return u_data;
 }
+
+unsigned long long db_table_utilities::uint8_t_vector_to_unsigned_long_long(vector<uint8_t> data) {
+    if(data.size() != UINT8_VECTOR_REQUIRED_SIZE) {
+        throw invalid_uint8_t_vector_size_exception();
+    }
+
+    return stoull(string(data.begin(), data.end()), nullptr, 2);
+}
+
+long long db_table_utilities::uint8_t_vector_to_long_long(vector<uint8_t> data) {
+    if(data.size() != UINT8_VECTOR_REQUIRED_SIZE) {
+        throw invalid_uint8_t_vector_size_exception();
+    }
+
+    return stoll(string(data.begin(), data.end()), nullptr, 2);
+}
+
+double db_table_utilities::uint8_t_vector_to_double(vector<uint8_t> data) {
+    if(data.size() != UINT8_VECTOR_REQUIRED_SIZE_FOR_DOUBLE_QUICK_WORKAROUND) {
+        throw invalid_uint8_t_vector_size_exception();
+    }
+
+    return stod(string(data.begin(), data.end()));
+}
+
+string db_table_utilities::uint8_t_vector_to_string(vector<uint8_t> data) {
+    if(data.size() != UINT8_VECTOR_REQUIRED_SIZE_FOR_STRING) {
+        throw invalid_uint8_t_vector_size_exception();
+    }
+
+    return string(data.begin(), data.end());
+}

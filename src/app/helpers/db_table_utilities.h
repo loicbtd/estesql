@@ -1,12 +1,17 @@
 #ifndef ESTESQL_DB_TABLE_UTILITIES_H
 #define ESTESQL_DB_TABLE_UTILITIES_H
 
+#define UINT8_VECTOR_REQUIRED_SIZE 8
+#define UINT8_VECTOR_REQUIRED_SIZE_FOR_DOUBLE_QUICK_WORKAROUND 32
+#define UINT8_VECTOR_REQUIRED_SIZE_FOR_STRING 255
+
 #include <string>
 #include <sys/stat.h>
 #include <filesystem>
 #include <bitset>
 
 #include "app/models/column_definition.h"
+#include "app/exceptions/invalid_uint8_t_vector_size_exception.h"
 #include "string_utilities.h"
 
 using namespace std;
@@ -27,6 +32,14 @@ public:
     static vector<uint8_t> primary_key_to_binary_string_to_vector(unsigned long long value);
 
     static vector<uint8_t> float_to_binary_string_to_vector(double value);
+
+    static unsigned long long uint8_t_vector_to_unsigned_long_long(vector<uint8_t> data);
+
+    static long long uint8_t_vector_to_long_long(vector<uint8_t> data);
+
+    static double uint8_t_vector_to_double(vector<uint8_t> data);
+
+    static string uint8_t_vector_to_string(vector<uint8_t> data);
 };
 
 
