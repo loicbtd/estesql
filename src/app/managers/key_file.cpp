@@ -32,6 +32,8 @@ uint64_t key_file::get_next_key() {
 void key_file::update_key(uint64_t last_value) {
     open();
 
+    ++last_value;
+
     file.seekp(0);
 
     file << bitset<UNSIGNED_LONG_LONG_SIZE_IN_BITS>(last_value);
