@@ -25,6 +25,8 @@ public:
 
     void set_type(const string &type);
 
+    bool is_where_clause_apply(vector<uint8_t> record, vector<string> columns_names);
+
 };
 
 #endif //ESTESQL_WHERE_CLAUSE_H
