@@ -106,7 +106,7 @@ vector<vector<uint8_t>> string_utilities::split_vector_with_type_length(vector<u
             case INT:
             case FLOAT:
             case PRIMARY_KEY:
-                length = 8;
+                length = 64;
                 break;
             case TEXT:
                 length = 255;
@@ -138,4 +138,28 @@ vector<uint8_t> string_utilities::convert_vector_of_vector_uint8t_into_vector(co
     }
 
     return result;
+}
+
+
+string string_utilities::get_value_of_vector(const vector<uint8_t>& vector_record_column, field_type_t type) {
+
+    string result;
+
+    switch (type) {
+        case INT:
+            result = to_string(db_table_utilities::uint8_t_vector_to_long_long(vector_record_column));
+            break;
+        case FLOAT:
+            result = to_string(db_table_utilities::uint8_t_vector_to_double(vector_record_column));
+            break;
+        case PRIMARY_KEY:
+            result = to_string(db_table_utilities::uint8_t_vector_to_unsigned_long_long(vector_record_column));
+            break;
+        case TEXT:
+            result = db_table_utilities::uint8_t_vector_to_string(vector_record_column);
+            break;
+    }
+
+    return result;
+
 }

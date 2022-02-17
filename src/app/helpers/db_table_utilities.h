@@ -10,7 +10,10 @@
 #include <bitset>
 
 #include "app/models/column_definition.h"
+
 #include "app/exceptions/invalid_uint8_t_vector_size_exception.h"
+#include "app/exceptions/wrong_type_exception.h"
+
 #include "string_utilities.h"
 
 using namespace std;

@@ -123,40 +123,84 @@ void select_query::expand() {
 void select_query::execute() {
 
     content_file* content_file = content_file::get_instance();
+    vector<vector<uint8_t>> vector_all_records = content_file->retrieve_all();
+
     index_file* index_file = index_file::get_instance();
+    vector<index_entry> vector_all_indexes = index_file->retrieve_all();
 
-    //Todo retrieve all ative records
-    vector<vector<uint8_t>> all_records;
-    for (int i = 0; i < index_file->get_entries_count(); ++i) {
-        index_entry entry = index_file->get_index_entry(i);
-        if (entry.is_active) {
-            all_records.push_back(content_file->read_record(entry.length,entry.position));
-        }
-    }
+    definition_file* definition_file = definition_file::get_instance();
+    vector<string> columns_name_from_file = definition_file->get_all_columns_names();
+    vector<field_type_t> columns_type_from_file = definition_file->get_all_columns_types();
+
+    vector<vector<uint8_t>> records_to_display;
 
 
-    vector<string> columns_name_from_file = definition_file::get_instance()->get_all_columns_names();
+    for (int i = 0; i < vector_all_indexes.size(); ++i) {
 
-    for (int i = 0; i < columns_name_from_file.size(); ++i) {
-        if (columns_selected_indexes[i]==1) {
-            //Todo put all values of this column into structure => need to be determined
-            //Todo where clause management /!\
+        if (vector_all_indexes.at(i).is_active) {
 
-            pair<string, vector<string>> where_element;
-            for (const auto & element : get_where_clause().get_elements()){
-//            cout << element.first.c_str() << " | " << element.second.at(0) << endl;
-                if (std::find(columns_name_from_file.begin(), columns_name_from_file.end(), element.second.at(0)) != columns_name_from_file.end()) {
-                    where_element = element;
-                    break;
-                }
+            vector<uint8_t> record = vector_all_records.at(i);
+            vector<vector<uint8_t>> columns_record = string_utilities::split_vector_with_type_length(record, columns_type_from_file);
+
+            if (where_clause.is_where_clause_apply(columns_record, columns_name_from_file, columns_type_from_file)) {
+                records_to_display.push_back(record);
             }
 
         }
+
     }
+
+    int nb_columns_displayed = 0;
+    vector<string> columns_names_displayed;
+    for (int i = 0; i < columns_selected_indexes.size(); ++i) {
+        if (columns_selected_indexes.at(i) == 1) {
+            nb_columns_displayed = nb_columns_displayed + 1;
+            columns_names_displayed.push_back(columns_name_from_file.at(i));
+        }
+
+    }
+
+    // header
+    draw_line(nb_columns_displayed);
+    for (const auto& column_name_displayed: columns_names_displayed) {
+        cout << "|" << setw(WIDTH_COLUMN-1) << column_name_displayed;
+    }
+    cout << "|" << endl;
+    draw_line(nb_columns_displayed);
+    // end header
+
+
+    for (int i = 0; i < vector_all_records.size(); ++i) {
+        vector<vector<uint8_t>> columns_record = string_utilities::split_vector_with_type_length(vector_all_records.at(i), columns_type_from_file);
+
+        for (int j = 0; j < columns_selected_indexes.size(); ++j) {
+
+            if (columns_selected_indexes.at(j) == 1) {
+                cout << "|" << setw(WIDTH_COLUMN-1) << string_utilities::get_value_of_vector(columns_record.at(j), columns_type_from_file.at(i));
+            }
+
+        }
+        cout << "|" << endl;
+
+    }
+
+    draw_line(nb_columns_displayed);
 
 }
 
+void select_query::draw_line(int nb_columns_displayed) {
 
+    for (int i = 0; i <= nb_columns_displayed * WIDTH_COLUMN; ++i) {
+        if ((i % WIDTH_COLUMN) == 0) {
+            cout << "|";
+        } else {
+            cout << "-";
+        }
+    }
+
+    cout << endl;
+
+}
 
 const vector<int> &select_query::get_columns_selected_indexes() const {
     return columns_selected_indexes;

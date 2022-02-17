@@ -1,6 +1,8 @@
 #ifndef SELECT_QUERY
 #define SELECT_QUERY
 
+#define WIDTH_COLUMN 30
+
 #include <regex>
 
 #include "table_related_query.h"
@@ -89,6 +91,7 @@ private:
     bool is_where_clause;
     where_clause where_clause;
 
+    static void draw_line(int nb_columns_displayed);
 };
 
 #endif

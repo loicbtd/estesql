@@ -6,6 +6,8 @@
 
 #include "app/constants/string_delimiters.h"
 
+#include "db_table_utilities.h"
+
 #include "app/enumerations/field_type_t.h"
 
 
@@ -37,6 +39,8 @@ public:
     static vector<vector<uint8_t>> split_vector_with_type_length(vector<uint8_t> vector_full_record, vector<field_type_t> vector_type);
 
     static vector<uint8_t> convert_vector_of_vector_uint8t_into_vector(const vector<vector<uint8_t>>& vector_to_transform);
+
+    static string get_value_of_vector(const vector<uint8_t> &vector_record_column, field_type_t type);
 };
 
 
