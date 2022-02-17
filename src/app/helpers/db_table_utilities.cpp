@@ -141,6 +141,8 @@ bool db_table_utilities::compare_STR(const string& left, const string& right, co
         return left != right;
     }
 
+    throw wrong_type_exception();
+
 }
 
 bool db_table_utilities::compare_P_K(unsigned long long int left, unsigned long long int right, const string& comp) {
