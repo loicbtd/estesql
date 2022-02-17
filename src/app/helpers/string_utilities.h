@@ -34,8 +34,7 @@ public:
 
     static vector<uint8_t> append_vector_uint8t_into_another(vector<uint8_t> vector_first, const vector<uint8_t>& vector_second);
 
-    static vector<vector<uint8_t>>
-    static split_vector_with_type_length(vector<uint8_t> vector_full_record, vector<field_type_t> vector_type);
+    static vector<vector<uint8_t>> split_vector_with_type_length(vector<uint8_t> vector_full_record, vector<field_type_t> vector_type);
 
     static vector<uint8_t> convert_vector_of_vector_uint8t_into_vector(const vector<vector<uint8_t>>& vector_to_transform);
 };
