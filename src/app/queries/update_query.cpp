@@ -73,10 +73,9 @@ void update_query::check() {
 //        cout << "pair(" << column_query.first << "," << column_query.second << ")" << endl;
     }
 
-    //Todo check if all types correspond to values
+    // check if all types correspond to values
     bool is_column_in_update_query;
-//    vector<pair<bool, vector<uint8_t>>> vector_pair_is_modify_value;
-//    vector<uint8_t> updated_record;
+
     for (int i = 0; i < columns_name_from_file.size(); ++i) {
 
         is_column_in_update_query = false;
@@ -100,12 +99,10 @@ void update_query::check() {
                 if (columns_type_from_file[i]==INT) {
 
                     temp = db_table_utilities::int_to_binary_string_to_vector(stoll(value));
-//                    updated_record = string_utilities::append_vector_uint8t_into_another(updated_record, temp);
 
                 } else if (columns_type_from_file[i]==FLOAT) {
 
                     temp = db_table_utilities::float_to_binary_string_to_vector(stod(value));
-//                    updated_record = string_utilities::append_vector_uint8t_into_another(updated_record, temp);
 
                 } else if (columns_type_from_file[i]==PRIMARY_KEY) {
 
@@ -117,14 +114,12 @@ void update_query::check() {
                     if (p_key_value_proposed >= p_key) {
 
                         temp = db_table_utilities::primary_key_to_binary_string_to_vector(p_key_value_proposed);
-//                        updated_record = string_utilities::append_vector_uint8t_into_another(updated_record, temp);
 
                         p_key_file->update_key(p_key_value_proposed);
 
                     } else {
 
                         temp = db_table_utilities::primary_key_to_binary_string_to_vector(p_key);
-//                        updated_record = string_utilities::append_vector_uint8t_into_another(updated_record, temp);
 
                         p_key_file->update_key(p_key);
 
@@ -135,7 +130,6 @@ void update_query::check() {
                     value = string_utilities::format_string_for_uint8_t(value);
                     vector<uint8_t> str_to_uint8_t_vector(value.begin(), value.end());
                     temp = string_utilities::append_vector_uint8t_into_another(temp, str_to_uint8_t_vector);
-//                    updated_record = string_utilities::append_vector_uint8t_into_another(updated_record, str_to_uint8_t_vector);
 
                 }
 
@@ -149,12 +143,10 @@ void update_query::check() {
             if (columns_type_from_file[i]==INT) {
 
                 temp = db_table_utilities::int_to_binary_string_to_vector(NULL);
-//                updated_record = string_utilities::append_vector_uint8t_into_another(updated_record, temp);
 
             } else if (columns_type_from_file[i]==FLOAT) {
 
                 temp = db_table_utilities::float_to_binary_string_to_vector(NULL);
-//                updated_record = string_utilities::append_vector_uint8t_into_another(updated_record, temp);
 
             } else if (columns_type_from_file[i]==PRIMARY_KEY) {
 
@@ -162,7 +154,6 @@ void update_query::check() {
                 uint64_t p_key(p_key_file->get_next_key());
 
                 temp = db_table_utilities::primary_key_to_binary_string_to_vector(p_key);
-//                updated_record = string_utilities::append_vector_uint8t_into_another(updated_record, temp);
 
                 p_key_file->update_key(p_key);
 
@@ -171,7 +162,6 @@ void update_query::check() {
                 string empty_str = string_utilities::format_string_for_uint8_t("''");
                 vector<uint8_t> str_to_uint8_t_vector(empty_str.begin(), empty_str.end());
                 temp = string_utilities::append_vector_uint8t_into_another(temp, str_to_uint8_t_vector);
-//                updated_record = string_utilities::append_vector_uint8t_into_another(updated_record, str_to_uint8_t_vector);
 
             }
         }
@@ -220,13 +210,11 @@ void update_query::execute() {
         //for each record
         for (int i = 0; i < vector_all_indexes.size(); ++i) {
 
-
-            //test if is an active record
             if (vector_all_indexes.at(i).is_active) {
 
                 vector<uint8_t> record = vector_all_records.at(i);
                 vector<vector<uint8_t>> columns_record = string_utilities::split_vector_with_type_length(record, columns_type_from_file);
-                //TODO where management
+
                 if (where_clause.is_where_clause_apply(columns_record, columns_name_from_file, columns_type_from_file)) {
 
                     // modify only if it is a column in the query
@@ -250,7 +238,7 @@ void update_query::execute() {
     } // end else clause where
 
 
-    //Todo write records of all modified record into content file with index
+    // write records of all modified record into content file with index
     for (int i = 0; i < indexes_modified_record.size(); ++i) {
         content_file->write_record(all_modified_record.at(i),indexes_modified_record.at(i));
     }
