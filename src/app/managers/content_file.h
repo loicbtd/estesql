@@ -3,7 +3,10 @@
 
 #include <vector>
 #include <cstring>
+
 #include "table_file.h"
+#include "index_file.h"
+
 #include "app/constants/file_extensions.h"
 
 class content_file : public table_file {

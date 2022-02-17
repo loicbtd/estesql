@@ -13,6 +13,13 @@ content_file *content_file::get_instance() {
 void content_file::write_record(const vector<uint8_t> &record, uint32_t offset) {
     open();
 
+    index_entry entry = index_entry();
+    entry.is_active = true;
+    entry.length = record.size();
+    entry.position = offset;
+
+    index_file::get_instance()->write_index_entry(entry, offset);
+
     file.seekg(offset, ios::end);
 
     uint8_t cursor = 1;
