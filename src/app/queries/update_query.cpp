@@ -134,6 +134,7 @@ void update_query::check() {
 
                     value = string_utilities::format_string_for_uint8_t(value);
                     vector<uint8_t> str_to_uint8_t_vector(value.begin(), value.end());
+                    temp = string_utilities::append_vector_uint8t_into_another(temp, str_to_uint8_t_vector);
 //                    updated_record = string_utilities::append_vector_uint8t_into_another(updated_record, str_to_uint8_t_vector);
 
                 }
@@ -169,6 +170,7 @@ void update_query::check() {
 
                 string empty_str = string_utilities::format_string_for_uint8_t("''");
                 vector<uint8_t> str_to_uint8_t_vector(empty_str.begin(), empty_str.end());
+                temp = string_utilities::append_vector_uint8t_into_another(temp, str_to_uint8_t_vector);
 //                updated_record = string_utilities::append_vector_uint8t_into_another(updated_record, str_to_uint8_t_vector);
 
             }
@@ -223,10 +225,9 @@ void update_query::execute() {
             if (vector_all_indexes.at(i).is_active) {
 
                 vector<uint8_t> record = vector_all_records.at(i);
+                vector<vector<uint8_t>> columns_record = string_utilities::split_vector_with_type_length(record, columns_type_from_file);
                 //TODO where management
-                if (where_clause.is_where_clause_apply(record, columns_name_from_file)) {
-
-                    vector<vector<uint8_t>> columns_record = string_utilities::split_vector_with_type_length(record, columns_type_from_file);
+                if (where_clause.is_where_clause_apply(columns_record, columns_name_from_file, columns_type_from_file)) {
 
                     // modify only if it is a column in the query
                     for (int j = 0; j < vector_pair_is_modify_value.size(); ++j) {
