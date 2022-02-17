@@ -69,5 +69,15 @@ void definition_file::write_table_definition(const table_definition &definition)
     close();
 }
 
+uint16_t definition_file::get_record_length() {
+    uint16_t length = 0;
+
+    for (column_definition *column: get_table_definition().get_columns()) {
+        length = length + db_table_utilities::retrieve_persisted_length_of_type(column->get_type());
+    }
+
+    return length;
+}
+
 
 

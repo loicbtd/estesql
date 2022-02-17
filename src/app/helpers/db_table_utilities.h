@@ -11,6 +11,7 @@
 
 #include "app/models/column_definition.h"
 #include "app/exceptions/invalid_uint8_t_vector_size_exception.h"
+#include "app/exceptions/wrong_type_exception.h"
 #include "string_utilities.h"
 
 using namespace std;
@@ -40,10 +41,15 @@ public:
 
     static string uint8_t_vector_to_string(vector<uint8_t> data);
 
-    static bool compare_INT(long long left, long long right, const string& comp);
-    static bool compare_FLOAT(double left, double right, const string& comp);
-    static bool compare_STR(const string& left, const string& right, const string& comp);
-    static bool compare_P_K(unsigned long long left, unsigned long long right, const string& comp);
+    static bool compare_INT(long long left, long long right, const string &comp);
+
+    static bool compare_FLOAT(double left, double right, const string &comp);
+
+    static bool compare_STR(const string &left, const string &right, const string &comp);
+
+    static bool compare_P_K(unsigned long long left, unsigned long long right, const string &comp);
+
+    static uint16_t retrieve_persisted_length_of_type(field_type_t type);
 };
 
 

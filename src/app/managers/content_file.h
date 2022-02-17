@@ -6,6 +6,7 @@
 
 #include "table_file.h"
 #include "index_file.h"
+#include "definition_file.h"
 
 #include "app/constants/file_extensions.h"
 
@@ -23,6 +24,8 @@ public:
     vector<uint8_t> read_record(uint16_t length, uint32_t offset);
 
     vector<vector<uint8_t>> retrieve_all();
+
+    int get_entries_count();
 };
 
 #endif //ESTESQL_CONTENT_FILE_H

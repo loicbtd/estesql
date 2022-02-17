@@ -161,4 +161,17 @@ bool db_table_utilities::compare_P_K(unsigned long long int left, unsigned long 
 
 }
 
+uint16_t db_table_utilities::retrieve_persisted_length_of_type(field_type_t type) {
+    switch (type) {
+        case field_type_t::PRIMARY_KEY:
+        case field_type_t::FLOAT:
+        case field_type_t::INT:
+            return 64;
+        case field_type_t::TEXT:
+            return 255;
+        default:
+            throw wrong_type_exception();
+    }
+}
+
 

@@ -10,8 +10,14 @@ content_file *content_file::get_instance() {
     return content_file_;
 }
 
-void content_file::write_record(const vector<uint8_t> &record, uint32_t offset) {
+void content_file::write_record(const vector <uint8_t> &record, uint32_t offset) {
     open();
+
+    file.seekp((int) record.size() * offset);
+
+    file << string(record.begin(), record.end());
+
+    close();
 
     index_entry entry = index_entry();
     entry.is_active = true;
@@ -19,49 +25,45 @@ void content_file::write_record(const vector<uint8_t> &record, uint32_t offset) 
     entry.position = offset;
 
     index_file::get_instance()->write_index_entry(entry, offset);
-
-    file.seekp(0);
-    string line_buffer;
-    for (long long counter = 0; counter < offset; ++counter) {
-        getline(file, line_buffer);
-    }
-
-    for (uint8_t record_item: record) {
-        file << record_item;
-    }
-    file << endl;
-
-    close();
 }
 
-vector<uint8_t> content_file::read_record(uint16_t length, uint32_t offset) {
+vector <uint8_t> content_file::read_record(uint16_t length, uint32_t offset) {
     open();
 
-    vector<uint8_t> data(istreambuf_iterator<char>(file), {});
+    file.seekg(offset * length);
+
+    char data_buffer[length];
+    file.read(data_buffer, length);
+    string data_string(data_buffer);
 
     close();
 
-    return {data.begin() + offset, data.begin() + offset + length};
+    return vector<uint8_t>(data_string.begin(), data_string.end());
 }
 
-vector<vector<uint8_t>> content_file::retrieve_all() {
+vector <vector<uint8_t>> content_file::retrieve_all() {
     open();
 
-    vector<vector<uint8_t>> contents;
+    vector <vector<uint8_t>> contents;
     string line_buffer;
-    vector<uint8_t> temporary_content;
+    vector <uint8_t> temporary_content;
+
+    uint16_t record_length = definition_file::get_instance()->get_record_length();
+    int entries_count = get_entries_count();
 
     file.seekg(0);
-    while (getline(file, line_buffer)) {
-        temporary_content = {};
-        for (char character: line_buffer) {
-            temporary_content.push_back(character);
-        }
-        contents.push_back(temporary_content);
+    for (int offset = 0; offset < entries_count; ++offset) {
+        contents.push_back(read_record(record_length, offset));
     }
 
     close();
 
     return contents;
+}
+
+int content_file::get_entries_count() {
+    open();
+    close();
+    return get_size() / definition_file::get_instance()->get_record_length();
 }
 

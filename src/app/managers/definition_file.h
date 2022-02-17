@@ -7,6 +7,7 @@
 #include "app/constants/file_extensions.h"
 #include "app/exceptions/file_is_not_open_exception.h"
 #include "app/exceptions/inability_to_create_file_exception.h"
+#include "app/helpers/db_table_utilities.h"
 #include "app/enumerations/field_type_t.h"
 #include "app/models/table_definition.h"
 #include "table_file.h"
@@ -31,6 +32,8 @@ public:
     vector<string> get_all_columns_names();
 
     vector<field_type_t> get_all_columns_types();
+
+    uint16_t get_record_length();
 };
 
 
