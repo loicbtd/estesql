@@ -22,11 +22,11 @@ public:
 
     static bool is_duplicate_columns(vector<column_definition *>);
 
-    static vector<uint8_t> int_to_vector(long long value);
+    static vector<uint8_t> int_to_binary_string_to_vector(long long value);
 
-    static vector<uint8_t> primary_key_to_vector(unsigned long long value);
+    static vector<uint8_t> primary_key_to_binary_string_to_vector(unsigned long long value);
 
-    static vector<uint8_t> float_to_vector(double value);
+    static vector<uint8_t> float_to_binary_string_to_vector(double value);
 };
 
 

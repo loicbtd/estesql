@@ -28,6 +28,8 @@ public:
     static string erase_substring(string &string_, string substring);
 
     static string convert_vector_into_string_delimiter(vector<string> vector_, char delimiter);
+
+    static vector<uint8_t> append_vector_uint8t_into_another(vector<uint8_t> vector_first, const vector<uint8_t>& vector_second);
 };
 
 

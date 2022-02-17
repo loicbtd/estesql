@@ -81,3 +81,15 @@ string string_utilities::convert_vector_into_string_delimiter(vector<string> vec
 
     return string_conv;
 }
+
+vector<uint8_t> string_utilities::append_vector_uint8t_into_another(vector<uint8_t> vector_first, const vector<uint8_t>& vector_second) {
+
+    vector<uint8_t> vector_temp(vector_first);
+
+    for (auto element: vector_second) {
+        vector_temp.push_back(element);
+    }
+
+    return vector_temp;
+
+}

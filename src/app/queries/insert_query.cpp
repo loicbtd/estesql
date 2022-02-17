@@ -70,6 +70,7 @@ void insert_query::check() {
     for (int i = 0; i < columns_name_from_file.size(); ++i) {
 
         is_column_in_insert_query = false;
+        vector<uint8_t> temp;
 
         for (int j = 0; j < columns_vector.size(); ++j) {
 
@@ -88,12 +89,16 @@ void insert_query::check() {
 
                 if (columns_type_from_file[i]==INT) {
 
-                    record.push_back(stoll(value));
+                    temp = db_table_utilities::int_to_binary_string_to_vector(stoll(value));
+                    record = string_utilities::append_vector_uint8t_into_another(record, temp);
+
                     length += 8;
 
                 } else if (columns_type_from_file[i]==FLOAT) {
 
-                    record.push_back(stod(value));
+                    temp = db_table_utilities::float_to_binary_string_to_vector(stod(value));
+                    record = string_utilities::append_vector_uint8t_into_another(record, temp);
+
                     length += 8;
 
                 } else if (columns_type_from_file[i]==PRIMARY_KEY) {
@@ -104,11 +109,19 @@ void insert_query::check() {
                     uint64_t p_key_value_proposed(stoull(value));
 
                     if (p_key_value_proposed >= p_key) {
+
+                        temp = db_table_utilities::primary_key_to_binary_string_to_vector(p_key_value_proposed);
+                        record = string_utilities::append_vector_uint8t_into_another(record, temp);
+
                         p_key_file->update_key(p_key_value_proposed);
-                        record.push_back(p_key_value_proposed);
+
                     } else {
+
+                        temp = db_table_utilities::primary_key_to_binary_string_to_vector(p_key);
+                        record = string_utilities::append_vector_uint8t_into_another(record, temp);
+
                         p_key_file->update_key(p_key);
-                        record.push_back(p_key);
+
                     }
 
                     length += 8;
@@ -117,7 +130,7 @@ void insert_query::check() {
 
                     value = string_utilities::format_string_for_uint8_t(value);
                     vector<uint8_t> str_to_uint8_t_vector(value.begin(), value.end());
-                    record.insert(str_to_uint8_t_vector.end(), str_to_uint8_t_vector.begin(), str_to_uint8_t_vector.end());
+                    record = string_utilities::append_vector_uint8t_into_another(record, str_to_uint8_t_vector);
                     length += 255;
 
                 }
@@ -129,31 +142,40 @@ void insert_query::check() {
 
         if (!is_column_in_insert_query) {
 
-            if ((columns_type_from_file[i]==INT) || (columns_type_from_file[i]==FLOAT)) {
+            if (columns_type_from_file[i]==INT) {
 
-                    record.push_back('\0');
-                    length += 8;
+                temp = db_table_utilities::int_to_binary_string_to_vector(NULL);
+                record = string_utilities::append_vector_uint8t_into_another(record, temp);
 
-                } else if (columns_type_from_file[i]==PRIMARY_KEY) {
+                length += 8;
 
-                    key_file* p_key_file = key_file::get_instance();
-                    uint64_t p_key(p_key_file->get_next_key());
+            } else if (columns_type_from_file[i]==FLOAT) {
 
-                    p_key_file->update_key(p_key);
+                temp = db_table_utilities::float_to_binary_string_to_vector(NULL);
+                record = string_utilities::append_vector_uint8t_into_another(record, temp);
 
-                    record.push_back(p_key);
-                    length += 8;
+                length += 8;
 
-                } else if (columns_type_from_file[i]==TEXT) {
+            } else if (columns_type_from_file[i]==PRIMARY_KEY) {
 
-                    string empty_str = string_utilities::format_string_for_uint8_t("''");
-                    vector<uint8_t> str_to_uint8_t_vector(empty_str.begin(), empty_str.end());
-                    for (auto a : str_to_uint8_t_vector) {
-                        record.push_back(a);
-                    }
-                    length += 255;
+                key_file* p_key_file = key_file::get_instance();
+                uint64_t p_key(p_key_file->get_next_key());
 
-                }
+                temp = db_table_utilities::primary_key_to_binary_string_to_vector(p_key);
+                record = string_utilities::append_vector_uint8t_into_another(record, temp);
+
+                p_key_file->update_key(p_key);
+
+                length += 8;
+
+            } else if (columns_type_from_file[i]==TEXT) {
+
+                string empty_str = string_utilities::format_string_for_uint8_t("''");
+                vector<uint8_t> str_to_uint8_t_vector(empty_str.begin(), empty_str.end());
+                record = string_utilities::append_vector_uint8t_into_another(record, str_to_uint8_t_vector);
+                length += 255;
+
+            }
         }
 
     }

@@ -40,15 +40,15 @@ bool db_table_utilities::is_duplicate_columns(vector<column_definition *> column
     return is_duplicate_columns(columns_name);
 }
 
-vector<uint8_t> db_table_utilities::int_to_vector(long long value) {
-    string data = string_utilities::format_string_for_uint8_t(bitset<sizeof(long long)>(value).to_string());
+vector<uint8_t> db_table_utilities::int_to_binary_string_to_vector(long long value) {
+    string data = bitset<sizeof(long long)>(value).to_string();
 
     vector<uint8_t> u_data(data.begin(), data.end());
 
     return u_data;
 }
 
-vector<uint8_t> db_table_utilities::primary_key_to_vector(unsigned long long value) {
+vector<uint8_t> db_table_utilities::primary_key_to_binary_string_to_vector(unsigned long long value) {
     string data = string_utilities::format_string_for_uint8_t(bitset<sizeof(unsigned long long)>(value).to_string());
 
     vector<uint8_t> u_data(data.begin(), data.end());
@@ -56,7 +56,7 @@ vector<uint8_t> db_table_utilities::primary_key_to_vector(unsigned long long val
     return u_data;
 }
 
-vector<uint8_t> db_table_utilities::float_to_vector(double value) {
+vector<uint8_t> db_table_utilities::float_to_binary_string_to_vector(double value) {
     string data = string_utilities::format_string_for_uint8_t(bitset<sizeof(double)>(value).to_string());
 
     vector<uint8_t> u_data(data.begin(), data.end());
