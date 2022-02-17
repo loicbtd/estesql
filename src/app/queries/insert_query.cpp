@@ -60,12 +60,24 @@ void insert_query::check() {
     vector<string> columns_name_from_file = definition_file::get_instance()->get_all_columns_names();
     vector<field_type_t> columns_type_from_file = definition_file::get_instance()->get_all_columns_types();
 
+    // 5 check if columns in query are in definition_file
+    for (auto & i : columns_vector) {
+        bool is_column_in_definition_file = false;
+        for (auto & j : columns_name_from_file) {
+            if (i == j) {
+                is_column_in_definition_file = true;
+                break;
+            }
+        }
+        if (!is_column_in_definition_file) {
+            throw column_non_existing_exception();
+        }
+    }
 
     // 6.1 compare types values/columns from definition_file -> check if "'"
     // 6.2 convert int, float, PK in long long, ... -> in uint8_t + complete string to be have 255 characters
     // 6.3 primary_key management
     // 6.4 put every column in the correct order
-
     bool is_column_in_insert_query;
     for (int i = 0; i < columns_name_from_file.size(); ++i) {
 

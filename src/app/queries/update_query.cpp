@@ -58,96 +58,31 @@ void update_query::check() {
     vector<field_type_t> columns_type_from_file = definition_file->get_all_columns_types();
 
     //Todo check if all columns are in the table
-    for(auto a : columns_values_vector) {
-        cout << "pair(" << a.first << "," << a.second << ")" << endl;
-    }
-
-    bool is_column_in_insert_query;
-    for (int i = 0; i < columns_name_from_file.size(); ++i) {
-
-        is_column_in_insert_query = false;
-
-        for (int j = 0; j < columns_values_vector.size(); ++j) {
-
-            if (columns_values_vector.at(j).first == columns_name_from_file[i]) {
-
-                is_column_in_insert_query = true;
-
-                string value = columns_values_vector.at(j).second;
-
-                if (
-                        (string_utilities::contains(value, "'") &&
-                         (columns_type_from_file[i] == INT || columns_type_from_file[i] == FLOAT ||
-                          columns_type_from_file[i] == PRIMARY_KEY))
-                        || (string_utilities::contains(value, ".") &&
-                            (columns_type_from_file[i] == INT || columns_type_from_file[i] == PRIMARY_KEY ||
-                             ((columns_type_from_file[i] != TEXT && !string_utilities::contains(value, "'")))))
-                        ) {
-                    throw wrong_type_exception();
-                }
-
-                if (columns_type_from_file[i] == INT) {
-
-                    updated_record.push_back(stoll(value));
-
-                } else if (columns_type_from_file[i] == FLOAT) {
-
-                    updated_record.push_back(stod(value));
-
-                } else if (columns_type_from_file[i] == PRIMARY_KEY) {
-
-                    throw update_primary_key_exception();
-
-                } else if (columns_type_from_file[i] == TEXT) {
-
-                    value = string_utilities::format_string_for_uint8_t(value);
-                    vector<uint8_t> str_to_uint8_t_vector(value.begin(), value.end());
-                    updated_record.insert(str_to_uint8_t_vector.end(), str_to_uint8_t_vector.begin(),
-                                          str_to_uint8_t_vector.end());
-
-                }
-
+    for(const auto& column_query : columns_values_vector) {
+        bool is_column = false;
+        for (const auto& column_name : columns_name_from_file) {
+            if (column_query.first == column_name) {
+                is_column = true;
                 break;
             }
-
-            if (!is_column_in_insert_query) {
-
-                if ((columns_type_from_file[i] == INT) || (columns_type_from_file[i] == FLOAT)) {
-
-                    updated_record.push_back('\0');
-
-                } else if (columns_type_from_file[i] == PRIMARY_KEY) {
-
-                    key_file *p_key_file = key_file::get_instance();
-                    uint64_t p_key(p_key_file->get_next_key());
-
-                    p_key_file->update_key(p_key);
-
-                    updated_record.push_back(p_key);
-
-                } else if (columns_type_from_file[i] == TEXT) {
-
-                    string empty_str = string_utilities::format_string_for_uint8_t("''");
-                    vector<uint8_t> str_to_uint8_t_vector(empty_str.begin(), empty_str.end());
-                    updated_record.insert(str_to_uint8_t_vector.end(), str_to_uint8_t_vector.begin(),
-                                          str_to_uint8_t_vector.end());
-
-                }
-            }
-
         }
 
-
-        if (is_where_clause_get()) {
-            set_where_clause(build_where_clause::build_where(get_query(), UPDATE_SYNTAX, columns_name_from_file));
+        if (!is_column) {
+            throw column_non_existing_exception();
         }
+//        cout << "pair(" << column_query.first << "," << column_query.second << ")" << endl;
+    }
+
+    //Todo check if all types correspond to values
+
+
+    if (is_where_clause_get()) {
+        set_where_clause(build_where_clause::build_where(get_query(), UPDATE_SYNTAX, columns_name_from_file));
     }
 
 }
 
-void update_query::expand() {
-
-}
+void update_query::expand() {}
 
 void update_query::execute() {
 
