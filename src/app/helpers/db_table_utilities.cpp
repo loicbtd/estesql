@@ -41,7 +41,7 @@ bool db_table_utilities::is_duplicate_columns(vector<column_definition *> column
 }
 
 vector<uint8_t> db_table_utilities::int_to_binary_string_to_vector(long long value) {
-    string data = bitset<sizeof(long long)>(value).to_string();
+    string data = bitset<sizeof(long long) * 8>(value).to_string();
 
     vector<uint8_t> u_data(data.begin(), data.end());
 
@@ -49,7 +49,7 @@ vector<uint8_t> db_table_utilities::int_to_binary_string_to_vector(long long val
 }
 
 vector<uint8_t> db_table_utilities::primary_key_to_binary_string_to_vector(unsigned long long value) {
-    string data = bitset<sizeof(unsigned long long)>(value).to_string();
+    string data = bitset<sizeof(unsigned long long) * 8>(value).to_string();
 
     vector<uint8_t> u_data(data.begin(), data.end());
 
@@ -57,7 +57,7 @@ vector<uint8_t> db_table_utilities::primary_key_to_binary_string_to_vector(unsig
 }
 
 vector<uint8_t> db_table_utilities::float_to_binary_string_to_vector(double value) {
-    string data = bitset<sizeof(double)>(value).to_string();
+    string data = bitset<sizeof(double) * 8>(value).to_string();
 
     vector<uint8_t> u_data(data.begin(), data.end());
 
@@ -65,7 +65,7 @@ vector<uint8_t> db_table_utilities::float_to_binary_string_to_vector(double valu
 }
 
 unsigned long long db_table_utilities::uint8_t_vector_to_unsigned_long_long(vector<uint8_t> data) {
-    if(data.size() != UINT8_VECTOR_REQUIRED_SIZE) {
+    if (data.size() != UINT8_VECTOR_REQUIRED_SIZE) {
         throw invalid_uint8_t_vector_size_exception();
     }
 
@@ -73,7 +73,7 @@ unsigned long long db_table_utilities::uint8_t_vector_to_unsigned_long_long(vect
 }
 
 long long db_table_utilities::uint8_t_vector_to_long_long(vector<uint8_t> data) {
-    if(data.size() != UINT8_VECTOR_REQUIRED_SIZE) {
+    if (data.size() != UINT8_VECTOR_REQUIRED_SIZE) {
         throw invalid_uint8_t_vector_size_exception();
     }
 
@@ -81,7 +81,7 @@ long long db_table_utilities::uint8_t_vector_to_long_long(vector<uint8_t> data) 
 }
 
 double db_table_utilities::uint8_t_vector_to_double(vector<uint8_t> data) {
-    if(data.size() != UINT8_VECTOR_REQUIRED_SIZE_FOR_DOUBLE_QUICK_WORKAROUND) {
+    if (data.size() != UINT8_VECTOR_REQUIRED_SIZE) {
         throw invalid_uint8_t_vector_size_exception();
     }
 
@@ -89,7 +89,7 @@ double db_table_utilities::uint8_t_vector_to_double(vector<uint8_t> data) {
 }
 
 string db_table_utilities::uint8_t_vector_to_string(vector<uint8_t> data) {
-    if(data.size() != UINT8_VECTOR_REQUIRED_SIZE_FOR_STRING) {
+    if (data.size() != UINT8_VECTOR_REQUIRED_SIZE_FOR_STRING) {
         throw invalid_uint8_t_vector_size_exception();
     }
 
