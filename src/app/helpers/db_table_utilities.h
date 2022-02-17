@@ -2,7 +2,7 @@
 #define ESTESQL_DB_TABLE_UTILITIES_H
 
 #define UINT8_VECTOR_REQUIRED_SIZE 8
-#define UINT8_VECTOR_REQUIRED_SIZE_FOR_DOUBLE_QUICK_WORKAROUND 32
+#define UINT8_VECTOR_REQUIRED_SIZE_FOR_DOUBLE_QUICK_WORKAROUND 8
 #define UINT8_VECTOR_REQUIRED_SIZE_FOR_STRING 255
 
 #include <string>
@@ -40,6 +40,11 @@ public:
     static double uint8_t_vector_to_double(vector<uint8_t> data);
 
     static string uint8_t_vector_to_string(vector<uint8_t> data);
+
+    static bool compare_INT(long long left, long long right, const string& comp);
+    static bool compare_FLOAT(double left, double right, const string& comp);
+    static bool compare_STR(const string& left, const string& right, const string& comp);
+    static bool compare_P_K(unsigned long long left, unsigned long long right, const string& comp);
 };
 
 

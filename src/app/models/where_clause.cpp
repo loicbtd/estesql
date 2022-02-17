@@ -25,30 +25,34 @@ bool where_clause::is_where_clause_apply(vector<vector<uint8_t>> record, const v
             if (elements.at(j).second.at(0) == columns_names.at(i)) {
 
                 bool compare_result;
+                long long record_value_ll;
+                unsigned long long record_value_ull;
+                double record_value_d;
+                string record_value_str;
 
                 switch (columns_types.at(i)) {
 
                     case INT:
 
-                        long long record_value_ll = db_table_utilities::uint8_t_vector_to_long_long(record.at(i));
+                        record_value_ll = db_table_utilities::uint8_t_vector_to_long_long(record.at(i));
                         compare_result = db_table_utilities::compare_INT(record_value_ll, stoll(elements.at(j).second.at(1)), elements.at(j).first);
                         break;
 
                     case FLOAT:
 
-                        double record_value_d = db_table_utilities::uint8_t_vector_to_double(record.at(i));
+                        record_value_d = db_table_utilities::uint8_t_vector_to_double(record.at(i));
                         compare_result = db_table_utilities::db_table_utilities::compare_FLOAT(record_value_d, stod(elements.at(j).second.at(1)), elements.at(j).first);
                         break;
 
                     case PRIMARY_KEY:
 
-                        unsigned long long record_value_ull = db_table_utilities::uint8_t_vector_to_unsigned_long_long(record.at(i));
+                        record_value_ull = db_table_utilities::uint8_t_vector_to_unsigned_long_long(record.at(i));
                         compare_result = db_table_utilities::compare_P_K(record_value_ull, stoull(elements.at(j).second.at(1)), elements.at(j).first);
                         break;
 
                     case TEXT:
 
-                        string record_value_str = db_table_utilities::uint8_t_vector_to_string(record.at(i));
+                        record_value_str = db_table_utilities::uint8_t_vector_to_string(record.at(i));
                         compare_result = db_table_utilities::compare_STR(record_value_str, elements.at(j).second.at(1), elements.at(j).first);
                         break;
 
@@ -75,21 +79,4 @@ bool where_clause::is_where_clause_apply(vector<vector<uint8_t>> record, const v
 
 }
 
-compare_P_K(record_value_ull, stoull(elements.at(j).second.at(1)), elements.at(j).first);
-void blop() {
 
-    if (comp == "<") {
-        return left < right;
-    } else if (comp == ">") {
-        return left > right;
-    } else if (comp == "<=") {
-        return left <= right;
-    } else if (comp == ">=") {
-        return left >= right;
-    } else if (comp == "=") {
-        return left == right;
-    } else if (comp == "<>") {
-        return left != right;
-    }
-    
-}

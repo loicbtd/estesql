@@ -95,3 +95,70 @@ string db_table_utilities::uint8_t_vector_to_string(vector<uint8_t> data) {
 
     return string(data.begin(), data.end());
 }
+
+
+bool db_table_utilities::compare_INT(long long left, long long right, const string& comp) {
+
+    if (comp == "<") {
+        return left < right;
+    } else if (comp == ">") {
+        return left > right;
+    } else if (comp == "<=") {
+        return left <= right;
+    } else if (comp == ">=") {
+        return left >= right;
+    } else if (comp == "=") {
+        return left == right;
+    } else if (comp == "<>") {
+        return left != right;
+    }
+
+}
+
+bool db_table_utilities::compare_FLOAT(double left, double right, const string& comp) {
+
+    if (comp == "<") {
+        return left < right;
+    } else if (comp == ">") {
+        return left > right;
+    } else if (comp == "<=") {
+        return left <= right;
+    } else if (comp == ">=") {
+        return left >= right;
+    } else if (comp == "=") {
+        return left == right;
+    } else if (comp == "<>") {
+        return left != right;
+    }
+
+}
+
+bool db_table_utilities::compare_STR(const string& left, const string& right, const string& comp) {
+
+    if (comp == "=") {
+        return left == right;
+    } else if (comp == "<>") {
+        return left != right;
+    }
+
+}
+
+bool db_table_utilities::compare_P_K(unsigned long long int left, unsigned long long int right, const string& comp) {
+
+    if (comp == "<") {
+        return left < right;
+    } else if (comp == ">") {
+        return left > right;
+    } else if (comp == "<=") {
+        return left <= right;
+    } else if (comp == ">=") {
+        return left >= right;
+    } else if (comp == "=") {
+        return left == right;
+    } else if (comp == "<>") {
+        return left != right;
+    }
+
+}
+
+
