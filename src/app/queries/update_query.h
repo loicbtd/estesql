@@ -26,7 +26,7 @@ class update_query : public table_related_query {
 private:
     bool is_where_clause;
     where_clause where_clause;
-    vector<uint8_t> updated_record;
+    vector<pair<bool, vector<uint8_t>>> vector_pair_is_modify_value;
 
 public:
 

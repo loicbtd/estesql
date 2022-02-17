@@ -15,3 +15,7 @@ const string &where_clause::get_type() const {
 void where_clause::set_type(const string &type) {
     where_clause::type = type;
 }
+
+bool where_clause::is_where_clause_apply(vector<uint8_t> record, vector<string> columns_names) {
+    return false;
+}
