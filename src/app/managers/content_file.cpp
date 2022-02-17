@@ -45,6 +45,23 @@ vector<uint8_t> content_file::read_record(uint16_t length, uint32_t offset) {
 }
 
 vector<vector<uint8_t>> content_file::retrieve_all() {
-    return vector<vector<uint8_t>>();
+    open();
+
+    vector<vector<uint8_t>> contents;
+    string line_buffer;
+    vector<uint8_t> temporary_content;
+
+    file.seekg(0);
+    while (getline(file, line_buffer)) {
+        temporary_content = {};
+        for (char character: line_buffer) {
+            temporary_content.push_back(character);
+        }
+        contents.push_back(temporary_content);
+    }
+
+    close();
+
+    return contents;
 }
 
