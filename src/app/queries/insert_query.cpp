@@ -191,6 +191,7 @@ void insert_query::execute() {
     // execute insert
     content_file* content_file_ = content_file::get_instance();
     index_file* index_file = index_file::get_instance();
+    vector<uint8_t> blop = get_record();
     content_file_->write_record(get_record(), index_file->get_first_inactive_index());
 
 }

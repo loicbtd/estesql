@@ -49,7 +49,7 @@ vector<uint8_t> db_table_utilities::int_to_binary_string_to_vector(long long val
 }
 
 vector<uint8_t> db_table_utilities::primary_key_to_binary_string_to_vector(unsigned long long value) {
-    string data = string_utilities::format_string_for_uint8_t(bitset<sizeof(unsigned long long)>(value).to_string());
+    string data = bitset<sizeof(unsigned long long)>(value).to_string();
 
     vector<uint8_t> u_data(data.begin(), data.end());
 
@@ -57,7 +57,7 @@ vector<uint8_t> db_table_utilities::primary_key_to_binary_string_to_vector(unsig
 }
 
 vector<uint8_t> db_table_utilities::float_to_binary_string_to_vector(double value) {
-    string data = string_utilities::format_string_for_uint8_t(bitset<sizeof(double)>(value).to_string());
+    string data = bitset<sizeof(double)>(value).to_string();
 
     vector<uint8_t> u_data(data.begin(), data.end());
 
