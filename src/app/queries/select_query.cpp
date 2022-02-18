@@ -64,24 +64,17 @@ void select_query::check() {
         throw select_number_columns_exception();
     }
 
-    // 3 memorize indexes of selected columns + test if all columns from query exist + set length for reading
+    // 3 memorize indexes of selected columns + test if all columns from query exist
     bool is_column_exist;
-    offset = 0;
     vector<int> columns_selected_indexes_(columns_name_from_file.size(),0);
-    for (int i = 0; i < columns_name_from_file.size(); ++i) {
-
-        if (columns_type_from_file[i] == INT || columns_type_from_file[i] == FLOAT || columns_type_from_file[i] == PRIMARY_KEY) {
-            offset += 8;
-        } else {
-            offset += 255;
-        }
+    for (int i = 0; i < columns_select_vector.size(); ++i) {
 
         is_column_exist = false;
-        for (int j = 0; j < columns_select_vector.size(); ++j) {
+        for (int j = 0; j < columns_name_from_file.size(); ++j) {
 
-            if (columns_select_vector[j] == columns_name_from_file[i]) {
+            if (columns_select_vector[i] == columns_name_from_file[j]) {
                 is_column_exist = true;
-                columns_selected_indexes_.at(i) = 1;
+                columns_selected_indexes_.at(j) = 1;
                 break;
             }
 
