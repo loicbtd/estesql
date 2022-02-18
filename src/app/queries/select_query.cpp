@@ -176,7 +176,7 @@ void select_query::execute() {
         for (int j = 0; j < columns_selected_indexes.size(); ++j) {
 
             if (columns_selected_indexes.at(j) == 1) {
-                cout << "|" << setw(WIDTH_COLUMN-1) << string_utilities::get_value_of_vector(columns_record.at(j), columns_type_from_file.at(i));
+                cout << "|" << setw(WIDTH_COLUMN-1) << string_utilities::get_value_of_vector(columns_record.at(j), columns_type_from_file.at(j));
             }
 
         }

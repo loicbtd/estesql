@@ -157,6 +157,7 @@ string string_utilities::get_value_of_vector(const vector<uint8_t>& vector_recor
             break;
         case TEXT:
             result = db_table_utilities::uint8_t_vector_to_string(vector_record_column);
+            result.resize(WIDTH_COLUMN_STR);
             break;
     }
 

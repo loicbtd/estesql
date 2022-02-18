@@ -1,6 +1,8 @@
 #ifndef ESTESQL_STRING_UTILITIES_H
 #define ESTESQL_STRING_UTILITIES_H
 
+#define WIDTH_COLUMN_STR 29
+
 #include <string>
 #include <regex>
 
