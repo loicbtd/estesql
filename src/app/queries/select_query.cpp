@@ -86,10 +86,9 @@ void select_query::check() {
 
     }
 
-    //clear vector
-    columns_selected_indexes.clear();
-    //copy * in attribute
-    copy(columns_selected_indexes_.begin(), columns_selected_indexes_.end(), back_inserter(columns_selected_indexes));
+    for (auto col: columns_selected_indexes_) {
+        columns_selected_indexes.push_back(col);
+    }
 
     if (is_where_clause_get()) {
         set_where_clause(build_where_clause::build_where(get_query(), SELECT_SYNTAX, columns_name_from_file));
@@ -127,21 +126,33 @@ void select_query::execute() {
 
     vector<vector<uint8_t>> records_to_display;
 
+    if (is_where_clause_get()) {
+        for (int i = 0; i < vector_all_indexes.size(); ++i) {
 
-    for (int i = 0; i < vector_all_indexes.size(); ++i) {
+            if (vector_all_indexes.at(i).is_active) {
 
-        if (vector_all_indexes.at(i).is_active) {
+                vector<uint8_t> record = vector_all_records.at(i);
+                vector<vector<uint8_t>> columns_record = string_utilities::split_vector_with_type_length(record, columns_type_from_file);
 
-            vector<uint8_t> record = vector_all_records.at(i);
-            vector<vector<uint8_t>> columns_record = string_utilities::split_vector_with_type_length(record, columns_type_from_file);
+                if (where_clause.is_where_clause_apply(columns_record, columns_name_from_file, columns_type_from_file)) {
+                    records_to_display.push_back(record);
+                }
 
-            if (where_clause.is_where_clause_apply(columns_record, columns_name_from_file, columns_type_from_file)) {
+            }
+
+        }
+    } else {
+        for (int i = 0; i < vector_all_indexes.size(); ++i) {
+
+            if (vector_all_indexes.at(i).is_active) {
+                vector<uint8_t> record = vector_all_records.at(i);
                 records_to_display.push_back(record);
             }
 
         }
-
     }
+
+
 
     int nb_columns_displayed = 0;
     vector<string> columns_names_displayed;
@@ -163,8 +174,8 @@ void select_query::execute() {
     // end header
 
 
-    for (int i = 0; i < vector_all_records.size(); ++i) {
-        vector<vector<uint8_t>> columns_record = string_utilities::split_vector_with_type_length(vector_all_records.at(i), columns_type_from_file);
+    for (int i = 0; i < records_to_display.size(); ++i) {
+        vector<vector<uint8_t>> columns_record = string_utilities::split_vector_with_type_length(records_to_display.at(i), columns_type_from_file);
 
         for (int j = 0; j < columns_selected_indexes.size(); ++j) {
 
