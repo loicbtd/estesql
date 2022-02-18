@@ -77,7 +77,7 @@ uint32_t index_file::get_first_inactive_index() {
 vector<index_entry> index_file::retrieve_all() {
 
     uintmax_t size = get_entries_count();
-    vector<index_entry> entries(size);
+    vector<index_entry> entries;
     for (int position = 0; position < size; ++position) {
         entries.push_back(get_index_entry(position));
     }
