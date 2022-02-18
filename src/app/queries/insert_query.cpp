@@ -2,6 +2,12 @@
 
 void insert_query::parse() {
 
+    definition_file* definition_file = definition_file::get_instance();
+
+    if (!definition_file->exists()) {
+        throw non_existing_table_exception();
+    }
+
     string str_regex ("insert into ");
     str_regex.append(get_table_name()).append(" \\\([a-z0-9_-]+(( )?,( )?[a-z0-9_-]+)*\\\) values \\\(('[.\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?)(( )?,( )?('[.\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?))*\\\)( )?;");
     regex regex_ (str_regex);
@@ -15,12 +21,6 @@ void insert_query::parse() {
 void insert_query::check() {
 
     parse();
-
-    definition_file* definition_file = definition_file::get_instance();
-
-    if (!definition_file->exists()) {
-        throw non_existing_table_exception();
-    }
 
     // 1 retrieve all columns from query -> vector<string> OK
     smatch smatch_;

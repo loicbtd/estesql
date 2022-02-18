@@ -2,6 +2,12 @@
 
 void select_query::parse() {
 
+    definition_file* definition_file = definition_file::get_instance();
+
+    if (!definition_file->exists()) {
+        throw non_existing_table_exception();
+    }
+
     string all_columns("select * from ");
 
     if (get_query().find(all_columns) != string::npos) {
@@ -40,10 +46,6 @@ void select_query::check() {
 
     definition_file* definition_file = definition_file::get_instance();
 
-    if (!definition_file->exists()) {
-        throw non_existing_table_exception();
-    }
-    
     // 1 retrieve all columns from query
     smatch smatch_;
     string columns = "select [a-z0-9_-]+(( )?,( )?[a-z0-9_-]+)* from ";

@@ -3,6 +3,12 @@
 
 void update_query::parse() {
 
+    definition_file* definition_file = definition_file::get_instance();
+
+    if (!definition_file->exists()) {
+        throw non_existing_table_exception();
+    }
+
     string str_regex ("update ");
     str_regex.append(get_table_name()).append(" set [a-z0-9_-]+( )?=( )?('[.\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?)(( )?,( )?[a-z0-9_-]+( )?=( )?('[.\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?))*");
 
@@ -30,14 +36,10 @@ void update_query::parse() {
 }
 
 void update_query::check() {
-
+    
     parse();
 
     definition_file* definition_file = definition_file::get_instance();
-
-    if (!definition_file->exists()) {
-        throw non_existing_table_exception();
-    }
 
     string regx_str = "set [a-z0-9_-]+( )?=( )?('[a-z0-9_-]+'|[0-9]+(.[0-9]+)?)(( )?,( )?[a-z0-9_-]+( )?=( )?('[a-z0-9_-]+'|[0-9]+(.[0-9]+)?))*";
     smatch all;

@@ -2,6 +2,12 @@
 
 void delete_query::parse() {
 
+    definition_file* definition_file = definition_file::get_instance();
+
+    if (!definition_file->exists()) {
+        throw non_existing_table_exception();
+    }
+
     string str_regex ("delete from ");
     str_regex.append(get_table_name());
 
@@ -33,11 +39,6 @@ void delete_query::check() {
     parse();
 
     definition_file* definition_file = definition_file::get_instance();
-
-    if (!definition_file->exists()) {
-        throw non_existing_table_exception();
-    }
-
 
     if (is_where_clause_get()) {
         vector<string> columns_name_from_file = definition_file->get_all_columns_names();
