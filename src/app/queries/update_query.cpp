@@ -4,7 +4,7 @@
 void update_query::parse() {
 
     string str_regex ("update ");
-    str_regex.append(get_table_name()).append(" set [a-z0-9_-]+( )?=( )?('[a-z0-9_-]+'|[0-9]+(.[0-9]+)?)(( )?,( )?[a-z0-9_-]+( )?=( )?('[a-z0-9_-]+'|[0-9]+(.[0-9]+)?))*");
+    str_regex.append(get_table_name()).append(" set [a-z0-9_-]+( )?=( )?('[.\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?)(( )?,( )?[a-z0-9_-]+( )?=( )?('[.\\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?))*");
 
     string where_clause_str = " where ";
     smatch smatch_;
@@ -106,24 +106,7 @@ void update_query::check() {
 
                 } else if (columns_type_from_file[i]==PRIMARY_KEY) {
 
-                    key_file* p_key_file = key_file::get_instance();
-                    uint64_t p_key(p_key_file->get_next_key());
-
-                    uint64_t p_key_value_proposed(stoull(value));
-
-                    if (p_key_value_proposed >= p_key) {
-
-                        temp = db_table_utilities::primary_key_to_binary_string_to_vector(p_key_value_proposed);
-
-                        p_key_file->update_key(p_key_value_proposed);
-
-                    } else {
-
-                        temp = db_table_utilities::primary_key_to_binary_string_to_vector(p_key);
-
-                        p_key_file->update_key(p_key);
-
-                    }
+                    throw update_primary_key_exception();
 
                 } else if (columns_type_from_file[i]==TEXT) {
 

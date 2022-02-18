@@ -5,7 +5,7 @@ where_clause build_where_clause::build_where(const string& query, const string& 
     where_clause where_clause_result;
 
     smatch smatch_where;
-    string where_regex("where [a-z0-9_-]+( )?(<=|>=|=|<>|>|<)( )?[a-z0-9_-]+( (and|or) [a-z0-9_-]+( )?(<=|>=|=|<>|>|<)( )?[a-z0-9_-]+)*");
+    string where_regex("where [a-z0-9_-]+( )?(<=|>=|=|<>|>|<)( )?('[.\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?)( (and|or) [a-z0-9_-]+( )?(<=|>=|=|<>|>|<)( )?('[.\\sa-z0-9_-]{0,255}'|[0-9]+(.[0-9]+)?))*");
     regex_search(query, smatch_where, regex(where_regex));
     string where_str = smatch_where[0];
 
