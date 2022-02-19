@@ -1,4 +1,8 @@
 #include "db_table_utilities.h"
+#include "app/managers/definition_file.h"
+#include "app/managers/content_file.h"
+#include "app/managers/key_file.h"
+#include "file_set_up.h"
 
 struct stat info;
 
@@ -19,6 +23,44 @@ bool db_table_utilities::exists(const char *path) {
 }
 
 void db_table_utilities::delete_db_or_table_folder(const string &db_table_path) {
+
+    try {
+        definition_file *def = definition_file::get_instance();
+//    def->open();
+        def->close();
+
+
+    } catch (exception&) {
+
+    }
+
+    try {
+        content_file *content = content_file::get_instance();
+//    content->open();
+        content->close();
+
+    } catch (exception&) {}
+
+    try {
+
+        index_file *index = index_file::get_instance();
+//    index->open();
+        index->close();
+
+
+    } catch (exception&) {}
+
+    try {
+        key_file *key = key_file::get_instance();
+//    key->open();
+        key->close();
+    } catch (exception&) {
+
+    }
+
+
+//    file_set_up::set_up_source_file("");
+
     filesystem::remove_all(db_table_path);
 }
 
